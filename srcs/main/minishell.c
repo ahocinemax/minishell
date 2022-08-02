@@ -11,3 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../includes/struct.h"
+
+void	function(void)
+{
+	return ;
+}

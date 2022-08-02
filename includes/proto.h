@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   proto.h                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,3 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "struct.h"
+#include "../libft/libft.h"
+# include <stdlib.h>
+# include <fcntl.h>
+#ifndef PROTO_H
+# define PROTO_H
+
+# define _STD_OUT	1
+# define _STD_ERR	2
+# define ENV_PATH	""
+
+int		ft_check_path(char *path);
+void	ft_echo(char *var);
+void	ft_cd(char *str);
+
+#endif

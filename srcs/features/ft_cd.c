@@ -66,13 +66,8 @@ void	ft_cd(char *str)
 		str--;
 	i = ft_strlen(path) - 1;
 	while (nb_of_prev && path[i])
-	{
-		if (path[i] == '/')
-		{
+		if (path[i--] == '/')
 			nb_of_prev--;
-		}
-		i--;
-	}
 	res = ft_strdup(path);
 	res[i + 1] = 0;
 	ft_strcat(res, str);

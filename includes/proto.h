@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "struct.h"
-#include "../libft/libft.h"
-# include <stdlib.h>
-# include <fcntl.h>
 #ifndef PROTO_H
 # define PROTO_H
+# include "struct.h"
+# include "../libft/libft.h"
+# include <stdlib.h>
+# include <fcntl.h>
 
 # define _STD_OUT	1
 # define _STD_ERR	2

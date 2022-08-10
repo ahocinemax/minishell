@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../../includes/minishell.h"
+#include "../../includes/proto.h"
 
 char	*get_env(char *env)
 {
@@ -20,7 +19,7 @@ char	*get_env(char *env)
 	return (NULL);
 }
 
-void	ft_env()
+void	ft_env(void)
 {
 	ft_cat(ENV_PATH);
 }

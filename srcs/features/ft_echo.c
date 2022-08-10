@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/proto.h"
 #include <stdio.h>
 
 static int	ft_parse_flags(char *str, char flag)
@@ -38,7 +38,7 @@ static int	ft_parse_flags(char *str, char flag)
 
 void	ft_echo(char *var)
 {
-	int flag;
+	int	flag;
 
 	flag = ft_parse_flags(var, 'n');
 	if (flag)

@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# IDE config files
+*.vscode
+
 # Object files
 *.o
 *.ko

@@ -1,4 +1,5 @@
-CC = gcc
+FLAGS	= -Werror -Wextra -Wall
 
-FLAGS = -Werror -Wextra -Wall
+NAME	= minishell
 
+CC		= gcc

@@ -12,10 +12,14 @@
 
 #ifndef PROTO_H
 # define PROTO_H
+
 # include "struct.h"
-# include "../libft/libft.h"
+# include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define _STD_OUT	1
 # define _STD_ERR	2

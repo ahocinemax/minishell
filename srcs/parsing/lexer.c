@@ -25,24 +25,21 @@ void	ft_lexer(char *line)
 	nb_args = 0;
 	nb_cmds = 0;
 	i = 0;
-	while (line[i] && ft_isspace(line[i]))
-		i++;
+	ft_skip_spaces(line, &i);
 	if (line[i] && !ft_isspace(line[i]))
 	{
 		nb_cmds++;
 		while (line[i] && !ft_isspace(line[i]))
 			i++;
 	}
-	while (line[i] && ft_isspace(line[i]))
-		i++;
+	ft_skip_spaces(line, &i);
 	if (line[i] && line[i] == '-')
 	{
 		nb_flags++;
 		while (line[i] && !ft_isspace(line[i]))
 			i++;
 	}
-	while (line[i] && ft_isspace(line[i]))
-		i++;
+	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
 		if (line[i] && !ft_isspace(line[i]))
@@ -51,18 +48,17 @@ void	ft_lexer(char *line)
 			while (line[i] && !ft_isspace(line[i]))
 				i++;
 		}
-		while (line[i] && ft_isspace(line[i]))
-			i++;
+		ft_skip_spaces(line, &i);
 	}
 	printf("cmds : %d && flags : %d && args : %d\n", nb_cmds, nb_flags, nb_args);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    if (ac == 2)
-    {
-        av++;
-        ft_lexer(*av);
-    }
-    return (0);
+	if (ac == 2)
+	{
+		av++;
+		ft_lexer(*av);
+	}
+	return (0);
 }

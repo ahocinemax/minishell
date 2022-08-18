@@ -2,7 +2,9 @@
 *.d
 
 # IDE config files
-*.vscode
+.vscode
+*.log
+*.json
 
 # Object files
 *.o

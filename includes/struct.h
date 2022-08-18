@@ -9,3 +9,21 @@
 /*   Updated: 2022/07/22 02:19:42 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef STRUCT_H
+# define STRUCT_H
+
+
+typedef struct s_args
+{
+	struct s_args	*next;
+	char	*arg;
+}				t_args;
+
+typedef struct s_cmds
+{
+	struct s_cmds	*next;
+	char	*cmd;
+}				t_cmds;
+
+#endif

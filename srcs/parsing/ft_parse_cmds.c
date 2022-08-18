@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_prompt.c                                        :+:      :+:    :+:   */
+/*   ft_parse_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,15 +12,7 @@
 
 #include "../../includes/proto.h"
 
-void	ft_display_prompt(char *actual_forlder_name)
+void	ft_parse_cmds(void)
 {
-	size_t	len;
-
-	len = 0;
-	if (!actual_forlder_name)
-		return ;
-	while (actual_forlder_name[len])
-		len++;
-	write(1, actual_forlder_name, len + 1);
-	write (1, " -> ", 4);
+	return ;
 }

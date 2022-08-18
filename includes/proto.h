@@ -14,6 +14,7 @@
 # define PROTO_H
 
 # include "struct.h"
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -25,7 +26,19 @@
 # define _STD_ERR	2
 # define ENV_PATH	""
 
+//////////////////////////////////////////////////////////
+//                    PARSER - LEXER                    //
+//////////////////////////////////////////////////////////
+
+void	ft_parse_args(char *line, t_args *args);
 int		ft_check_path(char *path);
+void	ft_lexer(char *line);
+void	ft_parse_cmds(void);
+
+/////////////////////////////////////////////////////////
+//                      BUILDS-IN                      //
+/////////////////////////////////////////////////////////
+
 void	ft_echo(char *var);
 void	ft_cd(char *str);
 

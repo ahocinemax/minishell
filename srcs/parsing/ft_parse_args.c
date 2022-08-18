@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_prompt.c                                        :+:      :+:    :+:   */
+/*   ft_parse_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,15 +12,25 @@
 
 #include "../../includes/proto.h"
 
-void	ft_display_prompt(char *actual_forlder_name)
+void	ft_parse_args(char *line, t_args **stack)
 {
-	size_t	len;
+	char	**split;
+	int		len;
+	size_t	i;
+	t_args	*args;
+	t_args	*new;
 
-	len = 0;
-	if (!actual_forlder_name)
+	if (!line)
 		return ;
-	while (actual_forlder_name[len])
-		len++;
-	write(1, actual_forlder_name, len + 1);
-	write (1, " -> ", 4);
+	i = 0;
+	split = ft_split(line, 32);
+	len = ft_arrsize(split);
+	args = ft_lstnew(NULL);
+	while (split[i])
+	{
+		ft_lstnew(split[i++]);
+		ft_lstadd_back(&args, new);
+		args = args->next;
+	}
+	return ;
 }

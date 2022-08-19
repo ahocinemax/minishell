@@ -13,17 +13,23 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-
 typedef struct s_args
 {
 	struct s_args	*next;
-	char	*arg;
+	char			*arg;
 }				t_args;
 
 typedef struct s_cmds
 {
 	struct s_cmds	*next;
-	char	*cmd;
+	char			*cmd;
 }				t_cmds;
+
+typedef struct s_env
+{
+	char	*str;
+	int		declare;
+	t_env	*next;
+}				t_env;
 
 #endif

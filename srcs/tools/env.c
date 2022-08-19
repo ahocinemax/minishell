@@ -12,14 +12,94 @@
 
 #include "../../includes/proto.h"
 
-char	*get_env(char *env)
+int	ft_add_front(char *env, t_env **start, int declare)
 {
-	if (!env)
-		return (NULL);
-	return (NULL);
+	t_env	*new_env;
+
+	new_env = (t_env *)malloc(sizeof(t_env));
+	if (!new_env)
+		return (50);
+	new_env->str = env;
+	new_env->declare = declare;
+	if (!new_env->str)
+		return (50);
+	new_env->next = *start;
+	*start = new_env;
+	return (0);
 }
 
-void	ft_env(void)
+void	ft_clean_env_list(t_env **env)
 {
-	ft_cat(ENV_PATH);
+	t_env	*new;
+	t_env	*tmp;
+
+	new = *env;
+	tmp = new;
+	while (tmp)
+	{
+		tmp = new;
+		new = new->next;
+		free(tmp->str);
+		free(tmp);
+	}
+}
+
+static int	ft_init_env(t_env **env_list)
+{
+	char	*str;
+
+	str = ft_strjoin("PWD=", getcwd(NULL, 0));
+	if (!str)
+		return (50);
+	if (ft_add_front("SHLVL1=", env_list, 1) == 50)
+	{
+		ft_clean_env_list(env_list);
+		return (50);
+	}
+	if (ft_add_front(str, env_list, 1) == 50)
+	{
+		free(str);
+		ft_clean_env_list(env_list);
+		return (50);
+	}
+	free(str);
+	if (ft_add_front("OLDPWD=", env_list, 1) == 50)
+	{
+		ft_clean_env_list(env_list);
+		return (50);
+	}
+	return (0);
+}
+
+t_env	**ft_get_env(void)
+{
+	static t_env	*new;
+
+	new = NULL;
+	return (&new);
+}
+
+int	ft_init_t_env(t_env **env)
+{
+	t_env	**env_list;
+	int		i;
+
+	env_list = ft_get_env();
+	i = 0;
+	while (env[i])
+		i++;
+	if (i == 0)
+		if (ft_init_env(env[i]) == 50)
+			return (50);
+	i--;
+	while (i >= 0)
+	{
+		if (ft_add_front(env[i], env_list, 0) == 50)
+		{
+			ft_clean_env_list(env_list);
+			return (50);
+		}
+		i--;
+	}
+	return (0);
 }

@@ -15,8 +15,8 @@
 
 void	main(int argc, char **argv, char **env)
 {
-	char	*line;
 	t_cmds	*cmd_line;
+	char	*line;
 
 	(void)argc;
 	(void)argv;

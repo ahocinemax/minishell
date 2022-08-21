@@ -32,7 +32,7 @@
 
 void	ft_parse_args(char *line, t_args *args);
 int		ft_check_path(char *path);
-void	ft_lexer(char *line);
+char	**ft_lexer(char *line);
 void	ft_parse_cmds(void);
 
 /////////////////////////////////////////////////////////

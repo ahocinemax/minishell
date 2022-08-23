@@ -12,14 +12,36 @@
 
 #include "../../includes/proto.h"
 
+static void	free_split(char **split)
+{
+	int i;
+
+	i = 0;
+	if (split)
+	{
+		while (split[i])
+			free(split[i++]);
+		free(split);
+	}
+}
+
 static int	isExpension(char c)
 {
 	return (c == '$');
 }
 
-static int	isRedirect(char c)
+static int	isRedirect(t_lexer **lex, char c)
 {
-	return (c == '<' || c == '>');
+	if (c == '<')
+	{
+		ft_lstlast(*lex)->type = infile;
+		ft_lstadd_back(lex, ft_lstnew(redirection));
+	}
+	else if (c == '>')
+	{
+		ft_lstadd_back(lex, ft_lstnew(redirection));
+		ft_lstadd_back(lex, ft_lstnew(outfile));
+	}
 }
 
 t_lexer	*ft_lexer(char *line)
@@ -37,29 +59,20 @@ t_lexer	*ft_lexer(char *line)
 	{
 		if (split[i][0] && split[i][0] == '-')
 			ft_lstadd_back(&lex, ft_lstnew(flag));
-		else if (split[i][0] && isRedirect(split[i][0]))
+		else if (split[i][0] && (split[i][0] == '<' || split[i][0] == '>'))
 		{
-			if (split[i][0] == '<')
-			{
-				ft_lstlast(lex)->type = infile;
-				ft_lstadd_back(&lex, ft_lstnew(redirection));
-			}
-			else if (split[i][0] == '>')
-			{
-				ft_lstadd_back(&lex, ft_lstnew(redirection));
-				ft_lstadd_back(&lex, ft_lstnew(outfile));
+			isRedirect(&lex, split[i][0]);
+			if (split[i][0] == '>')
 				i++;
-			}
 		}
 		else if (split[i][0] && split[i][0] == '|')
 			ft_lstadd_back(&lex, ft_lstnew(pipes));
-		else if (split[i][0] && split[i][0] == '$')
+		else if (split[i][0] && (split[i][0] == '$' || split[i][0] == '~'))
 			ft_lstadd_back(&lex, ft_lstnew(expender));
 		else
 			ft_lstadd_back(&lex, ft_lstnew(str));
-		free(split[i++]);
 	}
-	free(split);
+	free_split(split);
 	return (lex);
 }
 

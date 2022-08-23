@@ -13,40 +13,27 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-typedef enum e_type
-{
-	flag,
-	str,
-	pipes,
-	redirection,
-	infile,
-	outfile
-}			t_type;
+typedef struct s_args	t_args;
+typedef struct s_cmds	t_cmds;
+typedef struct s_env	t_env;
 
-typedef struct s_args
+struct s_args
 {
-	struct s_args	*next;
-	char			*arg;
-}				t_args;
+	t_args		*next;
+	char		*arg;
+};
 
-typedef struct s_cmds
+struct s_cmds
 {
-	struct s_cmds	*next;
-	char			*cmd;
-}				t_cmds;
+	t_cmds		*next;
+	char		*cmd;
+};
 
-typedef struct s_lexer
+struct s_env
 {
-	struct s_lexer	*next;
-	t_type	type;
-}				t_lexer;
-
-
-typedef struct s_env
-{
-	char	*str;
-	int		declare;
-	struct s_env	*next;
-}				t_env;
+	char		*str;
+	int			declare;
+	t_env		*next;
+};
 
 #endif

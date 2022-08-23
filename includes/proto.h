@@ -32,7 +32,7 @@
 
 void	ft_parse_args(char *line, t_args *args);
 int		ft_check_path(char *path);
-char	**ft_lexer(char *line);
+t_lexer	*ft_lexer(char *line);
 void	ft_parse_cmds(void);
 
 /////////////////////////////////////////////////////////
@@ -41,5 +41,8 @@ void	ft_parse_cmds(void);
 
 void	ft_echo(char *var);
 void	ft_cd(char *str);
+
+
+t_env	**ft_get_env(void);
 
 #endif

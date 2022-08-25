@@ -13,19 +13,20 @@
 #include "../../includes/proto.h"
 #include "../../includes/struct.h"
 
-int	main(int argc __attribute__((unused)), char **argv __attribute__((unused)), char **envp __attribute__((unused)))
+int	main(int argc, char **argv, char **envp)
 {
 	t_lexer	*lexer;
 	t_env	**env;
 	char	*line;
 
 	env = ft_get_env();
+	ft_init_t_env(envp);
 	while (1)
 	{
 		line = readline("minishell$> ");
 		add_history(line);
 		if (!line)
-			return(free(line));
+			return(free(line), 1);
 		lexer = ft_lexer(line);
 		if (check_line(line))
 			return (ERROR);

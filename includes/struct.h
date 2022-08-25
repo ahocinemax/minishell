@@ -13,11 +13,12 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-typedef struct s_args	t_args;
-typedef struct s_cmds	t_cmds;
-typedef struct s_env	t_env;
-typedef struct s_lexer	t_lexer;
-typedef enum   e_type	t_type;
+typedef struct s_args		t_args;
+typedef struct s_cmds		t_cmds;
+typedef struct s_env		t_env;
+typedef struct s_lexer		t_lexer;
+typedef struct s_garbage	t_garbage;
+typedef enum   e_type		t_type;
 
 enum e_type
 {
@@ -55,6 +56,12 @@ struct s_lexer
 {
 	t_lexer	*next;
 	t_type	type;
+};
+
+struct s_garbage
+{
+	void		*to_free;
+	t_garbage	*next;
 };
 
 #endif

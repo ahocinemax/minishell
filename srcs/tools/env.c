@@ -51,7 +51,7 @@ static int	ft_init_env(t_env **env_list)
 	str = ft_strjoin("PWD=", getcwd(NULL, 0));
 	if (!str)
 		return (50);
-	if (ft_add_front("SHLVL1=", env_list, 1) == 50)
+	if (ft_add_front("SHLVL=1", env_list, 1) == 50)
 	{
 		ft_clean_env_list(env_list);
 		return (50);

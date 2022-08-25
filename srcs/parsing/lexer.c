@@ -14,7 +14,7 @@
 
 static void	free_split(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (split)
@@ -25,65 +25,70 @@ static void	free_split(char **split)
 	}
 }
 
-static int	isExpension(char c)
+static void	is_redirect(t_lexer **lex, char *str, int *i)
 {
-	return (c == '$');
-}
-
-static int	isRedirect(t_lexer **lex, char c)
-{
-	if (c == '<')
+	if (!strncmp(str, "<<", 2))
 	{
-		ft_lstlast(*lex)->type = infile;
-		ft_lstadd_back(lex, ft_lstnew(redirection));
+		(t_lexer *)ft_lstlast(*lex)->content = double_infile;
+		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
+		i += 2;
 	}
-	else if (c == '>')
+	else if (!strncmp(str, ">>", 2))
 	{
-		ft_lstadd_back(lex, ft_lstnew(redirection));
-		ft_lstadd_back(lex, ft_lstnew(outfile));
+		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
+		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(double_outfile));
+		i += 2;
+	}
+	else if (!strncmp(str, '<', 1))
+	{
+		(t_lexer *)ft_lstlast(*lex)->content = infile;
+		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
+		i++;
+	}
+	else if (!strncmp(str, '>', 1))
+	{
+		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
+		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(outfile));
+		i++;
 	}
 }
 
 t_lexer	*ft_lexer(char *line)
 {
 	t_lexer	*lex;
-	int	i;
-	char **split;
+	int		i;
 
-	split = ft_split(line, " \"");
-	if (!split)
-		return (NULL);
 	lex = NULL;
 	i = 0;
-	while (split[i])
+	while (line[i])
 	{
-		if (split[i][0] && split[i][0] == '-')
+		if (line[i] == '-')
 			ft_lstadd_back(&lex, ft_lstnew(flag));
-		else if (split[i][0] && (split[i][0] == '<' || split[i][0] == '>'))
+		else if ((line[i] == '<' || line[i] == '>'))
+			is_redirect(&lex, line + i, &i);
+		else if (line[i] == '|')
+			ft_lstadd_back(&lex, ft_lstnew(pipes));
+		else if (line[i] == '$')
+			ft_lstadd_back(&lex, ft_lstnew(expender));
+		else if (ft_isspace(line[i]))
+			i++;
+		else
 		{
-			isRedirect(&lex, split[i][0]);
-			if (split[i][0] == '>')
+			ft_lstadd_back(&lex, ft_lstnew(str));
+			while (ft_isalpha(line[i]))
 				i++;
 		}
-		else if (split[i][0] && split[i][0] == '|')
-			ft_lstadd_back(&lex, ft_lstnew(pipes));
-		else if (split[i][0] && (split[i][0] == '$' || split[i][0] == '~'))
-			ft_lstadd_back(&lex, ft_lstnew(expender));
-		else
-			ft_lstadd_back(&lex, ft_lstnew(str));
+		i++;
 	}
-	free_split(split);
 	return (lex);
 }
 
 int	main(int ac, char **av)
 {
-	t_lexer	*res;
 	if (ac == 2)
 	{
 		av++;
-		res = ft_lexer(*av);
-		ft_lstprint(res);
+		ft_lstprint(ft_lexer(*av));
 	}
 	return (0);
 }

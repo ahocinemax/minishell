@@ -12,43 +12,41 @@
 
 #include "../../includes/proto.h"
 
-static void	free_split(char **split)
+static int	ft_dont_skip(char c)
 {
-	int	i;
-
-	i = 0;
-	if (split)
-	{
-		while (split[i])
-			free(split[i++]);
-		free(split);
-	}
+	return (c == '<' || c == '>' || c == '|' || c == '$');
 }
 
 static void	is_redirect(t_lexer **lex, char *str, int *i)
 {
 	if (!strncmp(str, "<<", 2))
 	{
-		(t_lexer *)ft_lstlast(*lex)->content = double_infile;
-		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
+		ft_lstlast((t_list *)*lex)->content = (void *)double_infile;
+		ft_lstadd_back((t_list **)lex, \
+		(t_list *)ft_lstnew((void *)redirection));
 		i += 2;
 	}
 	else if (!strncmp(str, ">>", 2))
 	{
-		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
-		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(double_outfile));
+		ft_lstadd_back((t_list **)lex, \
+		(t_list *)ft_lstnew((void *)redirection));
+		ft_lstadd_back((t_list **)lex, \
+		(t_list *)ft_lstnew((void *)double_outfile));
 		i += 2;
 	}
-	else if (!strncmp(str, '<', 1))
+	else if (!strncmp(str, "<", 1))
 	{
-		(t_lexer *)ft_lstlast(*lex)->content = infile;
-		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
+		ft_lstlast((t_list *)*lex)->content = (void *)infile;
+		ft_lstadd_back((t_list **)lex, \
+		(t_list *)ft_lstnew((void *)redirection));
 		i++;
 	}
-	else if (!strncmp(str, '>', 1))
+	else if (!strncmp(str, ">", 1))
 	{
-		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(redirection));
-		ft_lstadd_back((t_lexer **)lex, (t_lexer *)ft_lstnew(outfile));
+		ft_lstadd_back((t_list **)lex, \
+		(t_list *)ft_lstnew((void *)redirection));
+		ft_lstadd_back((t_list **)lex, \
+		(t_list *)ft_lstnew((void *)outfile));
 		i++;
 	}
 }
@@ -63,23 +61,42 @@ t_lexer	*ft_lexer(char *line)
 	while (line[i])
 	{
 		if (line[i] == '-')
-			ft_lstadd_back(&lex, ft_lstnew(flag));
+		{
+			if (line[i + 1] && ft_isalnum(line[i + 1]))
+			{
+				ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)flag));
+				while (line[i] && (!ft_isspace(line[i]) && !ft_dont_skip(line[i])))
+					i++;
+			}
+			else
+				i++;
+		}
 		else if ((line[i] == '<' || line[i] == '>'))
+		{
 			is_redirect(&lex, line + i, &i);
+			printf("%c\n", line[i]);
+			i++;
+		}
 		else if (line[i] == '|')
-			ft_lstadd_back(&lex, ft_lstnew(pipes));
+		{
+			ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)pipes));
+			i++;
+		}
 		else if (line[i] == '$')
-			ft_lstadd_back(&lex, ft_lstnew(expender));
-		else if (ft_isspace(line[i]))
+		{
+			ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)expender));
+			i++;
+		}
+		else if ((line[i]) && ft_isspace(line[i]))
 			i++;
 		else
 		{
-			ft_lstadd_back(&lex, ft_lstnew(str));
-			while (ft_isalpha(line[i]))
+			ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)str));
+			while (line[i] && !ft_isspace(line[i]) && !ft_dont_skip(line[i]))
 				i++;
 		}
-		i++;
 	}
+	ft_lstlast((t_list *)lex)->next = NULL;
 	return (lex);
 }
 
@@ -88,7 +105,21 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		av++;
-		ft_lstprint(ft_lexer(*av));
+		int len = ft_strlen(*av);
+		char *arg = (char *)malloc(sizeof(char) * (len + 1));
+		ft_strlcpy(arg, (const char *)*av, len);
+		arg[len] = 0;
+		t_lexer *new = ft_lexer(arg);
+		t_lexer *tmp;
+		while (new)
+		{
+			printf("[%d] ", new->type);
+			tmp = new->next;
+			ft_lstdelone((t_list *)new, NULL);
+			new = tmp;
+		}
+		printf("\n");
+		free(tmp);
 	}
 	return (0);
 }

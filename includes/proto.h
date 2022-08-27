@@ -18,12 +18,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define _STD_OUT	1
-# define _STD_ERR	2
 # define ENV_PATH	""
 
 /////////////////////////////////////////////////////////
@@ -35,10 +34,10 @@ int		ft_check_path(char *path);
 t_lexer	*ft_lexer(char *line);
 void	ft_parse_cmds(void);
 
-void	ft_is_pipe(t_lexer **lex, char *str, int *i);
 void	ft_is_expend(t_lexer **lex, char *str, int *i);
 void	is_redirect(t_lexer **lex, char *str, int *i);
 void	ft_is_str(t_lexer **lex, char *s, int *i);
+void	ft_is_pipe(t_lexer **lex, int *i);
 
 /////////////////////////////////////////////////////////
 //                     BUILDS - IN                     //

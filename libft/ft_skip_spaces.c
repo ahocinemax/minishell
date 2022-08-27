@@ -14,7 +14,7 @@
 
 void	ft_skip_spaces(char *line, int *i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (!line)

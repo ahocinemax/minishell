@@ -35,7 +35,7 @@ t_lexer	*ft_lexer(char *s)
 		if ((s[i] == '<' || s[i] == '>'))
 			is_redirect(&lex, s, &i);
 		else if (s[i] == '|')
-			ft_is_pipe(&lex, s, &i);
+			ft_is_pipe(&lex, &i);
 		else if (s[i] == '$')
 			ft_is_expend(&lex, s, &i);
 		else if ((s[i]) && ft_isspace(s[i]))

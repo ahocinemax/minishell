@@ -15,13 +15,13 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_cmds	*cmds;
 	char	*line;
-	t_cmd	*cmds;
 
 	ft_init_t_env(envp);
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
-	if (!av && !ac)
+	if (!argv && !argc)
 		return (0);
 	while (1)
 	{
@@ -30,12 +30,12 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
-			return(free(line), 1);
+			return (free(line), 1);
 		if (check_line(line))
 			return (ERROR);
 		else
 			ft_exec_cmd(cmd_line, line);
 		free_cmd();
 	}
-	return 0;
+	return (0);
 }

@@ -13,24 +13,24 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
+typedef struct s_garbage	t_garbage;
+typedef struct s_lexer		t_lexer;
 typedef struct s_args		t_args;
 typedef struct s_cmds		t_cmds;
 typedef struct s_env		t_env;
-typedef struct s_lexer		t_lexer;
-typedef struct s_garbage	t_garbage;
-typedef enum   e_type		t_type;
+typedef enum e_type			t_type;
 
 enum e_type
 {
-	flag,			// 0
-	str,			// 1
-	pipes,			// 2
-	redirection,	// 3
-	infile,			// 4
-	double_infile,	// 5
-	outfile,		// 6
-	double_outfile,	// 7
-	expender		// 8
+	flag,
+	str,
+	pipes,
+	redirection,
+	infile,
+	double_infile,
+	outfile,
+	double_outfile,
+	expender
 };
 
 struct s_args

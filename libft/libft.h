@@ -21,6 +21,9 @@
 # ifndef _STD_OUT
 #  define _STD_OUT	1
 # endif
+# ifndef _STD_ERR
+#  define _STD_ERR	2
+# endif
 
 typedef struct s_list	t_list;
 

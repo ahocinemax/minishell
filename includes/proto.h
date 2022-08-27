@@ -35,6 +35,11 @@ int		ft_check_path(char *path);
 t_lexer	*ft_lexer(char *line);
 void	ft_parse_cmds(void);
 
+void	ft_is_pipe(t_lexer **lex, char *str, int *i);
+void	ft_is_expend(t_lexer **lex, char *str, int *i);
+void	is_redirect(t_lexer **lex, char *str, int *i);
+void	ft_is_str(t_lexer **lex, char *s, int *i);
+
 /////////////////////////////////////////////////////////
 //                     BUILDS - IN                     //
 /////////////////////////////////////////////////////////

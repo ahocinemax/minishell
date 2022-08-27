@@ -17,109 +17,92 @@ static int	ft_dont_skip(char c)
 	return (c == '<' || c == '>' || c == '|' || c == '$');
 }
 
-static void	is_redirect(t_lexer **lex, char *str, int *i)
+static void	ft_skip_word(char *str, int *i)
 {
-	if (!strncmp(str, "<<", 2))
-	{
-		ft_lstlast((t_list *)*lex)->content = (void *)double_infile;
-		ft_lstadd_back((t_list **)lex, \
-		(t_list *)ft_lstnew((void *)redirection));
-		i += 2;
-	}
-	else if (!strncmp(str, ">>", 2))
-	{
-		ft_lstadd_back((t_list **)lex, \
-		(t_list *)ft_lstnew((void *)redirection));
-		ft_lstadd_back((t_list **)lex, \
-		(t_list *)ft_lstnew((void *)double_outfile));
-		i += 2;
-	}
-	else if (!strncmp(str, "<", 1))
-	{
-		ft_lstlast((t_list *)*lex)->content = (void *)infile;
-		ft_lstadd_back((t_list **)lex, \
-		(t_list *)ft_lstnew((void *)redirection));
-		i++;
-	}
-	else if (!strncmp(str, ">", 1))
-	{
-		ft_lstadd_back((t_list **)lex, \
-		(t_list *)ft_lstnew((void *)redirection));
-		ft_lstadd_back((t_list **)lex, \
-		(t_list *)ft_lstnew((void *)outfile));
-		i++;
-	}
+	while (str[*i] && !ft_dont_skip(str[*i]) && !ft_isspace(str[*i]))
+		(*i)++;
 }
 
-t_lexer	*ft_lexer(char *line)
+t_lexer	*ft_lexer(char *s)
 {
 	t_lexer	*lex;
 	int		i;
 
 	lex = NULL;
 	i = 0;
-	while (line[i])
+	while (s[i])
 	{
-		if (line[i] == '-')
-		{
-			if (line[i + 1] && ft_isalnum(line[i + 1]))
-			{
-				ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)flag));
-				while (line[i] && (!ft_isspace(line[i]) && !ft_dont_skip(line[i])))
-					i++;
-			}
-			else
-				i++;
-		}
-		else if ((line[i] == '<' || line[i] == '>'))
-		{
-			is_redirect(&lex, line + i, &i);
-			printf("%c\n", line[i]);
-			i++;
-		}
-		else if (line[i] == '|')
-		{
-			ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)pipes));
-			i++;
-		}
-		else if (line[i] == '$')
-		{
-			ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)expender));
-			i++;
-		}
-		else if ((line[i]) && ft_isspace(line[i]))
-			i++;
+		if ((s[i] == '<' || s[i] == '>'))
+			is_redirect(&lex, s, &i);
+		else if (s[i] == '|')
+			ft_is_pipe(&lex, s, &i);
+		else if (s[i] == '$')
+			ft_is_expend(&lex, s, &i);
+		else if ((s[i]) && ft_isspace(s[i]))
+			ft_skip_spaces(s, &i);
 		else
-		{
-			ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)str));
-			while (line[i] && !ft_isspace(line[i]) && !ft_dont_skip(line[i]))
-				i++;
-		}
+			ft_is_str(&lex, s, &i);
 	}
 	ft_lstlast((t_list *)lex)->next = NULL;
 	return (lex);
 }
 
-int	main(int ac, char **av)
-{
-	if (ac == 2)
-	{
-		av++;
-		int len = ft_strlen(*av);
-		char *arg = (char *)malloc(sizeof(char) * (len + 1));
-		ft_strlcpy(arg, (const char *)*av, len);
-		arg[len] = 0;
-		t_lexer *new = ft_lexer(arg);
-		t_lexer *tmp;
-		while (new)
-		{
-			printf("[%d] ", new->type);
-			tmp = new->next;
-			ft_lstdelone((t_list *)new, NULL);
-			new = tmp;
-		}
-		printf("\n");
-		free(tmp);
-	}
-	return (0);
-}
+// int	main(int ac, char **av)
+// {
+// 	if (ac == 2)
+// 	{
+// 		av++;
+// 		int len = ft_strlen(*av);
+// 		char *arg = (char *)malloc(sizeof(char) * (len + 1));
+// 		ft_strlcpy(arg, (const char *)*av, len);
+// 		arg[len] = 0;
+// 		t_lexer *new = ft_lexer(arg);
+// 		t_lexer *tmp;
+// 		int i = 0;
+// 		int size = ft_lstsize((t_list *)new);
+// 		while (new)
+// 		{
+// 			switch (new->type)
+// 			{
+// 				case flag:
+// 					printf("FLAG");
+// 					break;
+// 				case str:
+// 					printf("STR");
+// 					break;
+// 				case pipes:
+// 					printf("PIPES");
+// 					break;
+// 				case redirection:
+// 					printf("REDIRECTION");
+// 					break;
+// 				case infile:
+// 					printf("INFILE");
+// 					break;
+// 				case double_infile:
+// 					printf("D_INFILE");
+// 					break;
+// 				case outfile:
+// 					printf("OUTFILE");
+// 					break;
+// 				case double_outfile:
+// 					printf("D_OUTFILE");
+// 					break;
+// 				case expender:
+// 					printf("EXPENDER");
+// 					break;
+// 				default:
+// 					printf("ERR");
+// 			}
+// 			if (i < size - 1)
+// 				printf(" -> ");
+// 			i++;
+// 			tmp = new->next;
+// 			ft_lstdelone((t_list *)new, NULL);
+// 			new = tmp;
+// 		}
+// 		printf("\n");
+// 		free(tmp);
+// 	}
+// 	return (0);
+// }

@@ -29,7 +29,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t		len1;
 	size_t		len2;
 
-	if (!s1 || !s2)
+	if (!s1)
 		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
@@ -37,7 +37,8 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	if (!res)
 		return (NULL);
 	ft_strcpy((char *)res, s1);
-	ft_strcpy((char *)&res[len1], s2);
+	if (s2)
+		ft_strcpy((char *)&res[len1], s2);
 	res[len1 + len2] = '\0';
 	return (res);
 }

@@ -12,9 +12,8 @@
 
 #include "../../includes/proto.h"
 
-void	ft_parse_cmds(t_cmds **commands, char *line)
+void	ft_parse_cmds(t_cmds **command, char *line)
 {
-	(void)commands;
-	(void)str;
+	ft_parse_args(command, line);
 	return ;
 }

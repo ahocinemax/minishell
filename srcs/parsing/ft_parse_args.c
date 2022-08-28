@@ -12,12 +12,13 @@
 
 #include "../../includes/proto.h"
 
-void	ft_parse_cmds(t_cmds **commands, char *str);
+void	ft_parse_cmds(t_cmds **command, char *line);
 
-void	ft_parse_args(char *line, t_cmds **command)
+void	ft_parse_args(t_cmds **command, char *line)
 {
 	t_lexer	*lex;
 
-	lexer = ft_lexer(line);
-	
+	lex = ft_lexer(line);
+	(void)command;
+	(void)lex;
 }

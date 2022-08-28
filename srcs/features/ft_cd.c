@@ -70,14 +70,14 @@ void	ft_cd(char *str)
 			nb_of_prev--;
 	res = ft_strdup(path);
 	res[i + 1] = 0;
-	ft_strcat(res, str);
+	ft_strlcat(res, str, ft_strlen(str));
 }
 
-int	main(int ac, char **av)
-{
-	if (ac != 2)
-		return (-1);
-	av++;
-	ft_cd(*av);
-	return (0);
-}
+// int	main(int ac, char **av)
+// {
+// 	if (ac != 2)
+// 		return (-1);
+// 	av++;
+// 	ft_cd(*av);
+// 	return (0);
+// }

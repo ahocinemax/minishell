@@ -66,24 +66,23 @@ t_env	**ft_get_env(void)
 	return (&new);
 }
 
-int	ft_init_t_env(t_env **env)
+int	ft_init_t_env(char **env)
 {
 	t_env	**env_list;
 	int		i;
 
 	env_list = ft_get_env();
+	if (!env_list)
+		return (0);
 	i = 0;
 	while (env[i])
 		i++;
 	if (!i)
-		if (!ft_init_env(env[i]))
+		if (!ft_init_env(env_list))
 			return (0);
 	i--;
 	while (i >= 0)
-	{
-		if (!ft_add_front(env[i], env_list, 0))
+		if (!ft_add_front(env[i--], env_list, 0))
 			return (ft_clean_env_list(env_list), 0);
-		i--;
-	}
 	return (1);
 }

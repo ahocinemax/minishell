@@ -63,12 +63,9 @@ void	is_redirect(t_lexer **lex, char *str, int *i)
 	else if (!strncmp(str + *i, ">", 1))
 		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew((void *)outfile));
 	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
-	printf("%d %s\n", *i, str + *i);
 	while (str[*i] && (str[*i] == '>' || str[*i] == '<'))
 		(*i)++;
-	printf("%d\n", *i);
-	ft_skip_spaces(str, i);
-	printf("%d\n", *i);
+	while (str[*i] && ft_isspace(str[*i]))
+		(*i)++;
 	ft_skip_word(str, i);
-	printf("%d\n", *i);
 }

@@ -12,6 +12,8 @@
 
 #include "../../includes/proto.h"
 
+int	g_signal;
+
 int	ft_quote(char *str, char sep)
 {
 	int	count;
@@ -42,12 +44,12 @@ void	stop_cmd(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		ft_putchar_fd("Quit (core dumped)\n", _STD_ERR);
+		ft_putstr_fd("Quit (core dumped)\n", _STD_ERR);
 		exit (EXIT_FAILURE);
 	}
 }
 
-int	check_str(char *str)
+static int	check_line(char *str)
 {
 	int	i;
 	int	dif;
@@ -78,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (!ft_init_t_env(envp))
 		return (0);
+	g_signal = 0;
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)

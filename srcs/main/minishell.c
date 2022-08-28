@@ -23,10 +23,10 @@ int	ft_quote(char *str, char sep)
 	while (str[i])
 	{
 		if (str[i] == sep)
-			c++;
+			count++;
 		i++;
 	}
-	return (c);
+	return (count);
 }
 
 void	signal_cmd(int sig)
@@ -75,10 +75,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_cmds	*cmds;
 	char	*line;
-	t_lexer	*lex;
 
-	ft_init_t_env(envp);
-	signal(SIGINT, stop_cmd);
+	if (!ft_init_t_env(envp))
+		return (0);
+	// signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)
 		return (0);
@@ -86,16 +86,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell$> ");
 		add_history(line);
-		signal(SIGINT, stop_cmd);
+		// signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
 			return (free(line), 1);
-		if (check_line(line))
-			return (free(line), 0);
+		// if (check_line(line))
+			// return (ERROR);
 		// else
-		// 	ft_exec_cmd(cmd_line, line);
+			// ft_exec_cmd(cmd_line, line);
 		// free_cmd();
-		free(line);
 	}
 	return (0);
 }

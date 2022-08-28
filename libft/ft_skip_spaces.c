@@ -19,7 +19,6 @@ void	ft_skip_spaces(char *line, int *i)
 	j = 0;
 	if (!line)
 		return ;
-	while (ft_isspace(line[j]))
-		j++;
-	*i += j;
+	while (ft_isspace(line[*i]))
+		(*i)++;
 }

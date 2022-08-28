@@ -34,7 +34,7 @@ extern	int	g_signal;
 void	ft_parse_args(char *line, t_args *args);
 int		ft_check_path(char *path);
 t_lexer	*ft_lexer(char *line);
-void	ft_parse_cmds(void);
+void	ft_parse_cmds(t_cmds **commands, char *str);
 
 void	ft_is_expend(t_lexer **lex, char *str, int *i);
 void	is_redirect(t_lexer **lex, char *str, int *i);

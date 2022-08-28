@@ -29,7 +29,7 @@ int	ft_quote(char *str, char sep)
 	return (count);
 }
 
-void	signal_cmd(int sig)
+void	stop_cmd(int sig)
 {
 	g_signal += sig;
 	if (sig == 2)
@@ -43,7 +43,7 @@ void	signal_cmd(int sig)
 	if (sig == SIGQUIT)
 	{
 		ft_putchar_fd("Quit (core dumped)\n", _STD_ERR);
-		exit (1);
+		exit (EXIT_FAILURE);
 	}
 }
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (!ft_init_t_env(envp))
 		return (0);
-	// signal(SIGINT, stop_cmd);
+	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)
 		return (0);
@@ -86,14 +86,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell$> ");
 		add_history(line);
-		// signal(SIGINT, stop_cmd);
+		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
 			return (free(line), 1);
-		// if (check_line(line))
-			// return (ERROR);
-		// else
-			// ft_exec_cmd(cmd_line, line);
+		if (check_line(line))
+			exit(EXIT_FAILURE);
+		else
+			ft_parse_cmds(&cmds, line);
 		// free_cmd();
 	}
 	return (0);

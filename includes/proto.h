@@ -15,15 +15,18 @@
 
 # include "struct.h"
 # include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <unistd.h>
 # include <signal.h>
-# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-# define ENV_PATH	""
+# include <stdbool.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <errno.h>
 
 extern	int	g_signal;
 
@@ -40,6 +43,8 @@ void	ft_is_expend(t_lexer **lex, char *str, int *i);
 void	is_redirect(t_lexer **lex, char *str, int *i);
 void	ft_is_str(t_lexer **lex, char *s, int *i);
 void	ft_is_pipe(t_lexer **lex, char *s, int *i);
+void	ft_skip_word(char *str, int *i);
+int 	ft_dont_skip(char c);
 
 /////////////////////////////////////////////////////////
 //                     BUILDS - IN                     //

@@ -12,8 +12,6 @@
 
 #include "../../includes/proto.h"
 
-void	ft_skip_word(char *str, int *i);
-
 void	ft_is_str(t_lexer **lex, char *s, int *i)
 {
 	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew((void *)str));

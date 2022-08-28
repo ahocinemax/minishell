@@ -21,5 +21,4 @@ void	ft_parse_args(t_cmds **command, char *line)
 	printf("enter\n");
 	ft_lstprint((t_list *)lex);
 	(void)command;
-	// (void)lex;
 }

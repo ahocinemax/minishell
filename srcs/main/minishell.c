@@ -97,7 +97,6 @@ int	main(int argc, char **argv, char **envp)
 			exit(EXIT_FAILURE);
 		else
 			ft_parse_cmds(&cmds, line);
-		// free_cmd();
 	}
 	return (0);
 }

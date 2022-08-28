@@ -15,7 +15,6 @@
 
 typedef struct s_garbage	t_garbage;
 typedef struct s_lexer		t_lexer;
-typedef struct s_args		t_args;
 typedef struct s_cmds		t_cmds;
 typedef struct s_env		t_env;
 typedef enum e_type			t_type;
@@ -31,12 +30,6 @@ enum e_type
 	outfile,
 	double_outfile,
 	expender
-};
-
-struct s_args
-{
-	t_args		*next;
-	char		*arg;
 };
 
 struct s_cmds
@@ -56,6 +49,7 @@ struct s_lexer
 {
 	t_lexer	*next;
 	t_type	type;
+	int		index;
 };
 
 struct s_garbage

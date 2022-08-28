@@ -35,11 +35,11 @@ t_lexer	*ft_lexer(char *s)
 		if ((s[i] == '<' || s[i] == '>'))
 			is_redirect(&lex, s, &i);
 		else if (s[i] == '|')
-			ft_is_pipe(&lex, &i);
+			ft_is_pipe(&lex, s, &i);
 		else if (s[i] == '$')
 			ft_is_expend(&lex, s, &i);
 		else if ((s[i]) && ft_isspace(s[i]))
-			ft_skip_spaces(s, &i);
+			i++;
 		else
 			ft_is_str(&lex, s, &i);
 	}
@@ -57,12 +57,12 @@ int	main(int ac, char **av)
 		ft_strlcpy(arg, (const char *)*av, len);
 		arg[len] = 0;
 		t_lexer *new = ft_lexer(arg);
-		t_lexer *tmp;
+		t_lexer *tmp = new;
 		int i = 0;
 		int size = ft_lstsize((t_list *)new);
-		while (new)
+		while (tmp)
 		{
-			switch (new->type)
+			switch (tmp->type)
 			{
 				case flag:
 					printf("FLAG");
@@ -97,12 +97,10 @@ int	main(int ac, char **av)
 			if (i < size - 1)
 				printf(" -> ");
 			i++;
-			tmp = new->next;
-			ft_lstdelone((t_list *)new, NULL);
-			new = tmp;
+			tmp = tmp->next;
 		}
 		printf("\n");
-		free(tmp);
+		free(new);
 	}
 	return (0);
 }

@@ -12,25 +12,12 @@
 
 #include "../../includes/proto.h"
 
-void	ft_parse_args(char *line, t_args **stack)
-{
-	char	**split;
-	int		len;
-	size_t	i;
-	t_args	*args;
-	t_args	*new;
+void	ft_parse_cmds(t_cmds **commands, char *str);
 
-	if (!line)
-		return ;
-	i = 0;
-	split = ft_split(line, 32);
-	len = ft_arrsize(split);
-	args = ft_lstnew(NULL);
-	while (split[i])
-	{
-		ft_lstnew(split[i++]);
-		ft_lstadd_back(&args, new);
-		args = args->next;
-	}
-	return ;
+void	ft_parse_args(char *line, t_cmds **command)
+{
+	t_lexer	*lex;
+
+	lexer = ft_lexer(line);
+	
 }

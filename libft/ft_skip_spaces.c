@@ -14,9 +14,7 @@
 
 void	ft_skip_spaces(char *line, int *i)
 {
-	int	j;
-
-	j = 0;
+	printf("[%c]\n", line[*i]);
 	if (!line)
 		return ;
 	while (ft_isspace(line[*i]))

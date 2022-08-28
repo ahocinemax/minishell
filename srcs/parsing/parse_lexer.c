@@ -17,18 +17,30 @@ void	ft_skip_word(char *str, int *i);
 void	ft_is_str(t_lexer **lex, char *s, int *i)
 {
 	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew((void *)str));
+	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
 	ft_skip_word(s, i);
 }
 
-void	ft_is_pipe(t_lexer **lex, int *i)
+void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)pipes));
+	int	quote;
+	int	a;
+
+	quote = 0;
+	a = -1;
+	while (++a < *i)
+		if (s[a] == '|')
+			quote++;
+	if (quote % 2 == 0)
+		ft_lstadd_back((t_list **)&lex, ft_lstnew((void *)pipes));
+	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
 	(*i)++;
 }
 
 void	ft_is_expend(t_lexer **lex, char *str, int *i)
 {
 	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew((void *)expender));
+	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
 	(*i)++;
 	ft_skip_word(str, i);
 }
@@ -50,8 +62,13 @@ void	is_redirect(t_lexer **lex, char *str, int *i)
 		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew((void *)infile));
 	else if (!strncmp(str + *i, ">", 1))
 		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew((void *)outfile));
+	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
+	printf("%d %s\n", *i, str + *i);
 	while (str[*i] && (str[*i] == '>' || str[*i] == '<'))
 		(*i)++;
+	printf("%d\n", *i);
 	ft_skip_spaces(str, i);
+	printf("%d\n", *i);
 	ft_skip_word(str, i);
+	printf("%d\n", *i);
 }

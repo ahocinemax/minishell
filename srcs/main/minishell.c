@@ -14,7 +14,7 @@
 
 int	g_signal;
 
-int	ft_quote(char *str, char sep)
+static int	ft_check_quote(char *str, char sep)
 {
 	int	count;
 	int	i;
@@ -68,7 +68,7 @@ static int	check_line(char *str)
 		}
 		i++;
 	}
-	if (!(ft_quote(str, '\"') % 2) || !(ft_quote(str, '\'') % 2))
+	if (!(ft_check_quote(str, '\"') % 2) || !(ft_check_quote(str, '\'') % 2))
 		return (0);
 	return (1);
 }
@@ -88,13 +88,13 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell$> ");
-		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
 			return (free(line), 1);
+		add_history(line);
 		if (check_line(line))
-			exit(EXIT_FAILURE);
+			free(line);
 		else
 			ft_parse_cmds(&cmds, line);
 	}

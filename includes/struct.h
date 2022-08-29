@@ -13,24 +13,33 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
+# define flag 				"flag"
+# define string				"string"
+# define pipes				"pipes"
+# define redirection		"redirection"
+# define infile				"infile"
+# define d_infile			"double_infile"
+# define outfile			"outfile"
+# define d_outfile			"double_outfile"
+# define expender			"expender"
+
 typedef struct s_garbage	t_garbage;
 typedef struct s_lexer		t_lexer;
 typedef struct s_cmds		t_cmds;
 typedef struct s_env		t_env;
-typedef enum e_type			t_type;
-
-enum e_type
-{
-	flag,
-	str,
-	pipes,
-	redirection,
-	infile,
-	double_infile,
-	outfile,
-	double_outfile,
-	expender
-};
+// typedef enum e_type			t_type;
+// enum e_type
+// {
+// 	flag,
+// 	str,
+// 	pipes,
+// 	redirection,
+// 	infile,
+// 	d_infile,
+// 	outfile,
+// 	d_outfile,
+// 	expender
+// };
 
 struct s_cmds
 {
@@ -48,7 +57,7 @@ struct s_env
 struct s_lexer
 {
 	t_lexer	*next;
-	t_type	type;
+	char	*type;
 	int		index;
 };
 

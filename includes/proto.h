@@ -39,10 +39,12 @@ void	ft_parse_args(t_cmds **command, char *line);
 int		ft_check_path(char *path);
 t_lexer	*ft_lexer(char *line);
 
+void	ft_is_redirect(t_lexer **lex, char *str, int *i);
 void	ft_is_expend(t_lexer **lex, char *str, int *i);
-void	is_redirect(t_lexer **lex, char *str, int *i);
-void	ft_is_str(t_lexer **lex, char *s, int *i);
 void	ft_is_pipe(t_lexer **lex, char *s, int *i);
+void	ft_is_str(t_lexer **lex, char *s, int *i);
+void	ft_is_quote(t_lexer **lex, char *str, int *i);
+
 void	ft_skip_word(char *str, int *i);
 int		ft_dont_skip(char c);
 
@@ -57,8 +59,8 @@ void	ft_cd(char *str);
 //                    TOOLS - UTILS                    //
 /////////////////////////////////////////////////////////
 
+void	ft_add_trash(void *to_free);
 int		ft_init_t_env(char **env);
 t_env	**ft_get_env(void);
-void	ft_add_trash(void *to_free);
 
 #endif

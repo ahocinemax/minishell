@@ -50,27 +50,27 @@ t_lexer	*ft_lexer(char *s)
 	return (lex);
 }
 
-int	main(int ac, char **av)
-{
-	if (ac == 2)
-	{
-		av++;
-		int len = ft_strlen(*av);
-		char *arg = (char *)malloc(sizeof(char) * (len + 1));
-		ft_strlcpy(arg, (const char *)*av, len);
-		arg[len] = 0;
-		t_lexer *new = ft_lexer(arg);
-		t_lexer *tmp = new;
-		int i = 0;
-		int size = ft_lstsize((t_list *)new);
-		ft_lstprint((t_list *)new);
-		while (i < size)
-		{
-			printf("%s\n", arg+tmp->index);
-			tmp = tmp->next;
-			i++;
-		}
-		free(new);
-	}
-	return (0);
-}
+// int	main(int ac, char **av)
+// {
+// 	if (ac == 2)
+// 	{
+// 		av++;
+// 		int len = ft_strlen(*av);
+// 		char *arg = (char *)malloc(sizeof(char) * (len + 1));
+// 		ft_strlcpy(arg, (const char *)*av, len);
+// 		arg[len] = 0;
+// 		t_lexer *new = ft_lexer(arg);
+// 		t_lexer *tmp = new;
+// 		int i = 0;
+// 		int size = ft_lstsize((t_list *)new);
+// 		ft_lstprint((t_list *)new);
+// 		while (i < size)
+// 		{
+// 			printf("%s\n", arg+tmp->index);
+// 			tmp = tmp->next;
+// 			i++;
+// 		}
+// 		free(new);
+// 	}
+// 	return (0);
+// }

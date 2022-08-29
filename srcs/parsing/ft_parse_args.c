@@ -17,7 +17,8 @@ void	ft_parse_args(t_cmds **command, char *line)
 	t_lexer	*lex;
 
 	lex = ft_lexer(line);
-	(void)command;
+	ft_lstprint((t_list *)lex);
 	free(lex);
 	lex->next = NULL;
+	(void)command;
 }

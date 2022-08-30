@@ -73,6 +73,21 @@ static int	check_line(char *str)
 	return (1);
 }
 
+void	ft_free_cmd(t_cmds *command)
+{
+	t_cmds	*tmp;
+
+	if (!command)
+		return ;
+	while (command)
+	{
+		tmp = command;
+		free(tmp->cmd);
+		command = command->next;
+		free(command);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmds	*cmds;
@@ -87,18 +102,19 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)
 		return (0);
-	// while (1)
-	// {
+	while (1)
+	{
 		line = readline("minishell$> ");
+		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
 			return (free(line), 1);
-		add_history(line);
 		if (check_line(line))
 			free(line);
 		else
 			ft_parse_cmds(&cmds, line);
-	// }
+		ft_free_cmd(cmds);
+	}
 	return (0);
 }

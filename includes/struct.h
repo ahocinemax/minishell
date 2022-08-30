@@ -13,7 +13,6 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# define flag 				"flag"
 # define string				"string"
 # define pipes				"pipes"
 # define redirection		"redirection"

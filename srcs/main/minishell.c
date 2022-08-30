@@ -82,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	g_signal = 0;
 	line = NULL;
+	cmds = NULL;
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)

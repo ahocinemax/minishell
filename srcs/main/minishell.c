@@ -81,12 +81,13 @@ int	main(int argc, char **argv, char **envp)
 	if (!ft_init_t_env(envp))
 		return (0);
 	g_signal = 0;
+	line = NULL;
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)
 		return (0);
-	while (1)
-	{
+	// while (1)
+	// {
 		line = readline("minishell$> ");
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
@@ -97,6 +98,6 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 		else
 			ft_parse_cmds(&cmds, line);
-	}
+	// }
 	return (0);
 }

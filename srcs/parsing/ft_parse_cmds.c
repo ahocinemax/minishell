@@ -14,6 +14,5 @@
 
 void	ft_parse_cmds(t_cmds **command, char *line)
 {
-	ft_parse_args(command, line);
-	return ;
+	return (ft_parse_args(command, line));
 }

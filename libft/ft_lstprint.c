@@ -23,6 +23,7 @@ void	ft_lstprint(t_list *lst)
 			ft_putchar_fd('[', _STD_OUT);
 			ft_putstr_fd((char *)lst->content, _STD_OUT);
 			ft_putstr_fd("] ", _STD_OUT);
+			ft_putstr_fd("-> ", _STD_OUT);
 			lst = lst->next;
 		}
 	}

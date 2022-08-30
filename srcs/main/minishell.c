@@ -73,9 +73,9 @@ static int	check_line(char *str)
 	return (1);
 }
 
-void	ft_free_cmd(t_cmds *command)
+void	ft_free_cmd(t_lexer *command, char *line)
 {
-	t_cmds	*tmp;
+	t_lexer	*tmp;
 
 	if (!command)
 		return ;
@@ -84,19 +84,19 @@ void	ft_free_cmd(t_cmds *command)
 		tmp = command;
 		free(tmp->cmd);
 		command = command->next;
-		free(command);
+		free(tmp);
 	}
+	free(line);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmds	*cmds;
+	t_lexer	*cmds;
 	char	*line;
 
 	if (!ft_init_t_env(envp))
 		return (0);
 	g_signal = 0;
-	line = NULL;
 	cmds = NULL;
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
@@ -104,7 +104,8 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	while (1)
 	{
-		line = readline("minishell$> ");
+		line = NULL;
+		line = readline("\nminishell$> ");
 		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
@@ -114,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 		else
 			ft_parse_cmds(&cmds, line);
-		ft_free_cmd(cmds);
+		ft_free_cmd(cmds, line);
 	}
 	return (0);
 }

@@ -58,6 +58,7 @@ struct s_lexer
 	t_lexer	*next;
 	char	*type;
 	int		index;
+	char	*cmd;
 };
 
 struct s_garbage

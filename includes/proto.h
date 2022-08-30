@@ -34,8 +34,8 @@ extern int	g_signal;
 //                   PARSEUR - LEXER                   //
 /////////////////////////////////////////////////////////
 
-void	ft_parse_cmds(t_cmds **commands, char *line);
-void	ft_parse_args(t_cmds **command, char *line);
+void	ft_parse_cmds(t_lexer **commands, char *line);
+void	ft_parse_args(t_lexer **lexer, char *line);
 int		ft_check_path(char *path);
 t_lexer	*ft_lexer(char *line);
 

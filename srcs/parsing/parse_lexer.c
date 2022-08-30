@@ -21,15 +21,21 @@ void	ft_is_str(t_lexer **lex, char *s, int *i)
 
 void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 {
-	int	quote;
+	int	s_quote;
+	int	d_quote;
 	int	a;
 
-	quote = 0;
+	s_quote = 0;
+	d_quote = 0;
 	a = -1;
 	while (++a < *i)
-		if (s[a] == '|')
-			quote++;
-	if (quote % 2 == 0)
+	{
+		if (s[a] == '\'')
+			s_quote++;
+		if (s[a] == '\"')
+			d_quote++;
+	}
+	if (d_quote % 2 == 0 && s_quote % 2 == 0)
 	{
 		ft_lstadd_back((t_list **)&lex, ft_lstnew(pipes));
 		((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;

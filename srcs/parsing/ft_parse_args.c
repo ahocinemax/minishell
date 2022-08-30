@@ -15,10 +15,16 @@
 void	ft_parse_args(t_cmds **command, char *line)
 {
 	t_lexer	*lex;
+	t_lexer	*tmp;
 
 	lex = ft_lexer(line);
+	tmp = lex;
+	while (tmp)
+	{
+		ft_lstadd_back(command);
+		tmp = tmp->next;
+	}
 	ft_lstprint((t_list *)lex);
 	free(lex);
-	lex->next = NULL;
 	(void)command;
 }

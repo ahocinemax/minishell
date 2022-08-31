@@ -36,7 +36,7 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 		if (s[a] == '\"')
 			d_quote++;
 	}
-	if (d_quote % 2 == 0 && s_quote % 2 == 	0)
+	if (d_quote % 2 == 0 && s_quote % 2 == 0)
 	{
 		ft_lstadd_back(lex, ft_lstnew(pipes, TYPE));
 		ft_lstlast(*lex)->index = *i;

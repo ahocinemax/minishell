@@ -65,10 +65,11 @@ void ft_parse_cmds(t_lexer **lexer, char *line)
 	cmd1 = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	tmp = *lexer;
 	i = 0;
-	while (i < cmd_size)
-	{
-		cmd1[i++] = tmp->cmd;
-		tmp = tmp->next;
-	}
-	cmd1[i] = 0;
+	
+		while (i < cmd_size)
+		{
+			cmd1[i++] = tmp->cmd;
+			tmp = tmp->next;
+		}
+		cmd1[i] = 0;
 }

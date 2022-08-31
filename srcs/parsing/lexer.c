@@ -15,7 +15,7 @@
 int	ft_dont_skip(char c)
 {
 	return (c == '<' || c == '>' || c == '|' || c == '$' || c == '\'' || \
-	c == '\"');
+	c == '\"' || c == '\\');
 }
 
 void	ft_skip_word(char *s, int *i)
@@ -35,21 +35,20 @@ t_lexer	*ft_lexer(char *s)
 		return (NULL);
 	while (s[i])
 	{
-		printf("%p\n", lex);
 		if (s[i] == '<' || s[i] == '>')
 			ft_is_redirect(&lex, s, &i);
 		else if (s[i] == '|')
 			ft_is_pipe(&lex, s, &i);
 		else if (s[i] == '$')
 			ft_is_expend(&lex, s, &i);
-		else if ((s[i]) && ft_isspace(s[i]))
+		else if ((s[i]) && (ft_isspace(s[i])))
 			i++;
-		else if (s[i] == '\'' || s[i] == '\"')
+		else if ((s[i] == '\\' && (s[i + 1] == '\'' || s[i + 1] == '\"')) \
+			|| (s[i] == '\'' || s[i] == '\"'))
 			ft_is_quote(&lex, s, &i);
 		else
 			ft_is_str(&lex, s, &i);
 	}
-	// ft_lstlast((t_list *)lex)->next = NULL;
 	return (lex);
 }
 

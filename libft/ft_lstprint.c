@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_lstprint(t_list *lst)
+void	ft_lstprint(t_lexer *lst, int key)
 {
 	if (!lst)
 		ft_putstr_fd("liste vide", _STD_OUT);
@@ -21,7 +21,10 @@ void	ft_lstprint(t_list *lst)
 		while (lst)
 		{
 			ft_putchar_fd('[', _STD_OUT);
-			ft_putstr_fd((char *)lst->content, _STD_OUT);
+			if (key == COMMAND)
+				ft_putstr_fd((char *)lst->cmd, _STD_OUT);
+			else
+				ft_putstr_fd((char *)lst->type, _STD_OUT);
 			ft_putstr_fd("] ", _STD_OUT);
 			ft_putstr_fd("-> ", _STD_OUT);
 			lst = lst->next;

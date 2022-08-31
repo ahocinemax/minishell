@@ -14,10 +14,9 @@
 
 void	ft_is_str(t_lexer **lex, char *s, int *i)
 {
-	// write(1, "ENTER IsSTR\n", 11);
-	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(string));
+	ft_lstadd_back(lex, ft_lstnew(string, TYPE));
+	ft_lstlast(*lex)->index = *i;
 	(*i)++;
-	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
 	ft_skip_word(s, i);
 }
 
@@ -39,45 +38,45 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 	}
 	if (d_quote % 2 == 0 && s_quote % 2 == 	0)
 	{
-		ft_lstadd_back((t_list **)&lex, (t_list *)ft_lstnew(pipes));
-		((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
+		ft_lstadd_back(lex, ft_lstnew(pipes, TYPE));
+		ft_lstlast(*lex)->index = *i;
 	}
 	(*i)++;
 }
 
 void	ft_is_expend(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(expender));
-	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
+	ft_lstadd_back(lex, ft_lstnew(expender, TYPE));
+	ft_lstlast(*lex)->index = *i;
 	(*i)++;
 	ft_skip_word(s, i);
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(redirection));
-	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
+	ft_lstadd_back(lex, ft_lstnew(redirection, TYPE));
+	ft_lstlast(*lex)->index = *i;
 	if (!strncmp(s + *i, "<<", 2))
-		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(d_infile));
+		ft_lstadd_back(lex, ft_lstnew(d_infile, TYPE));
 	else if (!strncmp(s + *i, ">>", 2))
-		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(d_outfile));
+		ft_lstadd_back(lex, ft_lstnew(d_outfile, TYPE));
 	else if (!strncmp(s + *i, "<", 1))
-		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(infile));
+		ft_lstadd_back(lex, ft_lstnew(infile, TYPE));
 	else if (!strncmp(s + *i, ">", 1))
-		ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(outfile));
-	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
+		ft_lstadd_back(lex, ft_lstnew(outfile, TYPE));
+	ft_lstlast(*lex)->index = *i;
 	(*i)++;
 	if (s[*i] && (s[*i] == '>' || s[*i] == '<'))
 		(*i)++;
 	if (s[*i] && (s[*i] == '>' || s[*i] == '<'))
-		printf("ERROR REDIRECTION SYMBOL\n");
+		ft_putstr_fd("ERROR REDIRECTION SYMBOL\n", _STD_ERR);
 	while (s[*i] && ft_isspace(s[*i]))
 		(*i)++;
 	if (!s[*i] || ft_dont_skip(s[*i]))
-		printf("ERROR REDIRECTION FILE\n");
+		ft_putstr_fd("ERROR REDIRECTION FILE\n", _STD_ERR);
 	while (s[*i] && ft_isspace(s[*i]))
 		(*i)++;
-	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
+	ft_lstlast(*lex)->index = *i;
 	ft_skip_word(s, i);
 }
 
@@ -86,9 +85,11 @@ void	ft_is_quote(t_lexer **lex, char *s, int *i)
 	char	quote;
 	t_lexer	*new;
 
-	new = (t_lexer *)ft_lstnew(string);
-	ft_lstadd_back((t_list **)lex, (t_list *)new);
+	new = ft_lstnew(string, TYPE);
+	ft_lstadd_back(lex, new);
 	new->index = *i;
+	if (s[*i] == '\\')
+		(*i)++;
 	quote = s[*i];
 	(*i)++;
 	while (s + *i && *(s + *i) != quote)

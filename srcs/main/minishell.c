@@ -9,7 +9,7 @@
 /*   Updated: 2022/07/22 02:16:42 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+// cp -r ../../includes ../../../0.piscine/|grep \"cat echo\" >> outfile
 #include "../../includes/proto.h"
 
 int	g_signal;
@@ -73,20 +73,22 @@ static int	check_line(char *str)
 	return (1);
 }
 
-void	ft_free_cmd(t_lexer *command, char *line)
+void	ft_free_cmd(t_lexer **command, char *line)
 {
 	t_lexer	*tmp;
 
-	if (!command)
+	if (!*command)
 		return ;
-	while (command)
+	while (*command)
 	{
-		tmp = command;
-		free(tmp->cmd);
-		command = command->next;
+		tmp = *command;
+		*command = (*command)->next;
+		if (tmp->cmd)
+			free(tmp->cmd);
 		free(tmp);
 	}
-	free(line);
+	if (line)
+		free(line);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -105,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = NULL;
-		line = readline("\nminishell$> ");
+		line = readline("minishell$> ");
 		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
@@ -114,8 +116,10 @@ int	main(int argc, char **argv, char **envp)
 		if (check_line(line))
 			free(line);
 		else
+		{
 			ft_parse_cmds(&cmds, line);
-		ft_free_cmd(cmds, line);
+			// ft_free_cmd(&cmds, line);
+		}
 	}
 	return (0);
 }

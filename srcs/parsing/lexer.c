@@ -31,8 +31,11 @@ t_lexer	*ft_lexer(char *s)
 
 	lex = NULL;
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i])
 	{
+		printf("%p\n", lex);
 		if (s[i] == '<' || s[i] == '>')
 			ft_is_redirect(&lex, s, &i);
 		else if (s[i] == '|')
@@ -46,7 +49,7 @@ t_lexer	*ft_lexer(char *s)
 		else
 			ft_is_str(&lex, s, &i);
 	}
-	ft_lstlast((t_list *)lex)->next = NULL;
+	// ft_lstlast((t_list *)lex)->next = NULL;
 	return (lex);
 }
 

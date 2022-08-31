@@ -14,7 +14,9 @@
 
 void	ft_is_str(t_lexer **lex, char *s, int *i)
 {
+	// write(1, "ENTER IsSTR\n", 11);
 	ft_lstadd_back((t_list **)lex, (t_list *)ft_lstnew(string));
+	(*i)++;
 	((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
 	ft_skip_word(s, i);
 }
@@ -35,9 +37,9 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 		if (s[a] == '\"')
 			d_quote++;
 	}
-	if (d_quote % 2 == 0 && s_quote % 2 == 0)
+	if (d_quote % 2 == 0 && s_quote % 2 == 	0)
 	{
-		ft_lstadd_back((t_list **)&lex, ft_lstnew(pipes));
+		ft_lstadd_back((t_list **)&lex, (t_list *)ft_lstnew(pipes));
 		((t_lexer *)ft_lstlast((t_list *)*lex))->index = *i;
 	}
 	(*i)++;

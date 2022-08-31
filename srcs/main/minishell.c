@@ -118,7 +118,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			ft_parse_cmds(&cmds, line);
-			// ft_free_cmd(&cmds, line);
+			ft_free_cmd(&cmds, line);
 		}
 	}
 	return (0);

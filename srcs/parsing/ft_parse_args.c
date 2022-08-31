@@ -12,6 +12,21 @@
 
 #include "../../includes/proto.h"
 
+int	ft_count_args(t_lexer *lexer)
+{
+	int	size;
+
+	size = 0;
+	if (!lexer)
+		return (0);
+	while (lexer && !ft_strncmp(lexer->type, string, 6))
+	{
+		size++;
+		lexer = lexer->next;
+	}
+	return (size);
+}
+
 static char *ft_malloc_cmd(t_lexer *lex, char *line)
 {
 	char *res;
@@ -32,17 +47,28 @@ static char *ft_malloc_cmd(t_lexer *lex, char *line)
 
 void ft_parse_cmds(t_lexer **lexer, char *line)
 {
-	t_lexer *tmp;
-	char *split;
+	t_lexer	*tmp;
+	char	*split;
+	char	**cmd1;
+	int		cmd_size;
+	int		i;
 
 	*lexer = ft_lexer(line);
 	tmp = *lexer;
-	ft_lstprint(*lexer, TYPE);
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
 		tmp->cmd = split;
 		tmp = tmp->next;
 	}
-	ft_lstprint(*lexer, COMMAND);
+	cmd_size = ft_count_args(*lexer);
+	cmd1 = (char **)malloc(sizeof(char *) * (cmd_size + 1));
+	tmp = *lexer;
+	i = 0;
+	while (i < cmd_size)
+	{
+		cmd1[i++] = tmp->cmd;
+		tmp = tmp->next;
+	}
+	cmd1[i] = 0;
 }

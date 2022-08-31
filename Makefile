@@ -62,11 +62,13 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 
 clean:
 	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)
+	make clean -C $(LIB_DIR)
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo $(CURSIVE)$(GRAY) "     - Removing $(NAME)..." $(NONE)
 	@rm -f $(NAME)
+	make fclean -C $(LIB_DIR)
 	@echo $(YELLOW)"- Project removed -"$(NONE)
 
 re: fclean all

@@ -22,13 +22,14 @@
 # define d_outfile			"double_outfile"
 # define expender			"expender"
 
-typedef struct s_env		t_env;
 typedef struct s_garbage	t_garbage;
+typedef struct s_lexer		t_lexer;
+typedef struct s_env		t_env;
 
 struct s_env
 {
-	int			declare;
 	char		*str;
+	int			declare;
 	t_env		*next;
 };
 

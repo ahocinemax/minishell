@@ -14,7 +14,7 @@
 
 void	ft_is_str(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back(lex, ft_lstnew(string, TYPE));
+	ft_lstadd_back(lex, ft_lstnew(STRING, TYPE));
 	ft_lstlast(*lex)->index = *i;
 	(*i)++;
 	ft_skip_word(s, i);
@@ -38,7 +38,7 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 	}
 	if (d_quote % 2 == 0 && s_quote % 2 == 0)
 	{
-		ft_lstadd_back(lex, ft_lstnew(pipes, TYPE));
+		ft_lstadd_back(lex, ft_lstnew(PIPES, TYPE));
 		ft_lstlast(*lex)->index = *i;
 	}
 	(*i)++;
@@ -46,24 +46,24 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 
 void	ft_is_expend(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back(lex, ft_lstnew(expender, TYPE));
-	ft_lstlast(*lex)->index = *i;
+	ft_lstadd_back(lex, ft_lstnew(EXPENDER, TYPE));
 	(*i)++;
+	ft_lstlast(*lex)->index = *i;
 	ft_skip_word(s, i);
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back(lex, ft_lstnew(redirection, TYPE));
+	ft_lstadd_back(lex, ft_lstnew(REDIRECTION, TYPE));
 	ft_lstlast(*lex)->index = *i;
 	if (!strncmp(s + *i, "<<", 2))
-		ft_lstadd_back(lex, ft_lstnew(d_infile, TYPE));
+		ft_lstadd_back(lex, ft_lstnew(D_INFILE, TYPE));
 	else if (!strncmp(s + *i, ">>", 2))
-		ft_lstadd_back(lex, ft_lstnew(d_outfile, TYPE));
+		ft_lstadd_back(lex, ft_lstnew(D_OUTFILE, TYPE));
 	else if (!strncmp(s + *i, "<", 1))
-		ft_lstadd_back(lex, ft_lstnew(infile, TYPE));
+		ft_lstadd_back(lex, ft_lstnew(INFILE, TYPE));
 	else if (!strncmp(s + *i, ">", 1))
-		ft_lstadd_back(lex, ft_lstnew(outfile, TYPE));
+		ft_lstadd_back(lex, ft_lstnew(OUTFILE, TYPE));
 	ft_lstlast(*lex)->index = *i;
 	(*i)++;
 	if (s[*i] && (s[*i] == '>' || s[*i] == '<'))
@@ -85,7 +85,7 @@ void	ft_is_quote(t_lexer **lex, char *s, int *i)
 	char	quote;
 	t_lexer	*new;
 
-	new = ft_lstnew(string, TYPE);
+	new = ft_lstnew(STRING, TYPE);
 	ft_lstadd_back(lex, new);
 	new->index = *i;
 	if (s[*i] == '\\')

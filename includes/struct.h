@@ -13,18 +13,27 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# define string				"string"
-# define pipes				"pipes"
-# define redirection		"redirection"
-# define infile				"infile"
-# define d_infile			"double_infile"
-# define outfile			"outfile"
-# define d_outfile			"double_outfile"
-# define expender			"expender"
+# define STRING				"string"
+# define PIPES				"pipes"
+# define REDIRECTION		"redirection"
+# define INFILE				"infile"
+# define D_INFILE			"double_infile"
+# define OUTFILE			"outfile"
+# define D_OUTFILE			"double_outfile"
+# define EXPENDER			"expender"
 
 typedef struct s_garbage	t_garbage;
 typedef struct s_lexer		t_lexer;
 typedef struct s_env		t_env;
+typedef struct s_cmd		t_cmd;
+
+struct	s_cmd
+{
+	char	**argv;
+	int		fd_in;
+	int		fd_out;
+	t_cmd	*next;
+};
 
 struct s_env
 {

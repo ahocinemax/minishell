@@ -24,7 +24,31 @@ void	ft_skip_word(char *s, int *i)
 		(*i)++;
 }
 
-t_lexer	*ft_lexer(char *s)
+char	**ft_lexer_command(t_lexer **lexer, char *line)
+{
+	t_lexer	*tmp;
+	char	**command;
+	int		i;
+	char	*split;
+
+	command = (char **)malloc(sizeof(char *) * (ft_count_args(*lexer) + 1));
+	if (!command)
+		return (ft_putstr_fd("MALLOC **CMD FAILED\n", _STD_ERR), NULL);
+	tmp = *lexer;
+	i = 0;
+	while (tmp)
+	{
+		split = ft_malloc_cmd(tmp, line);
+		if (i < ft_count_args(*lexer))
+			command[i++] = split;
+		tmp->cmd = split;
+		tmp = tmp->next;
+	}
+	command[i] = NULL;
+	return (command);
+}
+
+t_lexer	*ft_lexer_type(char *s)
 {
 	t_lexer	*lex;
 	int		i;

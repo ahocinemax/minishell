@@ -36,7 +36,10 @@ extern int	g_signal;
 
 void	ft_parse_cmds(t_lexer **commands, char *line, char **envp);
 int		ft_check_path(char *path);
-t_lexer	*ft_lexer(char *line);
+t_lexer	*ft_lexer_type(char *line);
+char	**ft_lexer_command(t_lexer **lexer, char *line);
+int	    ft_count_args(t_lexer *lexer);
+char     *ft_malloc_cmd(t_lexer *lex, char *line);
 
 void	ft_is_redirect(t_lexer **lex, char *str, int *i);
 void	ft_is_expend(t_lexer **lex, char *str, int *i);

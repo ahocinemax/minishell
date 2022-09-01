@@ -33,6 +33,8 @@ char	*ft_get_path(char *cmd)
 	start = 0;
 	while ((*env)->str[start] && (*env)->str[start] != '=')
 		start++;
+	if ((*env)->str[start] && (*env)->str[start] == '=')
+		start++;
 	end = start + 1;
 	int	i = 0;
 	while (fd < 0 && (*env)->str[start] && i < 25)
@@ -45,7 +47,6 @@ char	*ft_get_path(char *cmd)
 		ft_strlcpy(path, (*env)->str + start, end - start + 1);
 		ft_strlcat(path, "/", end - start + 2);
 		ft_strlcat(path, cmd, ft_strlen(cmd) + ft_strlen(path) + 1);
-		printf("path test : %s\n", path);
 		start = end + 1;
 		fd = open(path, O_RDONLY);
 		if (fd < 0)
@@ -59,7 +60,7 @@ char	*ft_get_path(char *cmd)
 	return (close(fd), path);
 }
 
-static char *ft_malloc_cmd(t_lexer *lex, char *line)
+char *ft_malloc_cmd(t_lexer *lex, char *line)
 {
 	char *res;
 	int len;
@@ -73,8 +74,8 @@ static char *ft_malloc_cmd(t_lexer *lex, char *line)
 	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
-	res[len] = 0;
 	ft_strlcpy(res, line + lex->index, len);
+	res[len] = 0;
 	return (res);
 }
 
@@ -85,7 +86,7 @@ int	ft_count_args(t_lexer *lexer)
 	count = 0;
 	if (!lexer)
 		return (0);
-	while (lexer && ft_strncmp(lexer->type, pipes, 5))
+	while (lexer && ft_strncmp(lexer->type, PIPES, 5))
 	{
 		count++;
 		lexer = lexer->next;
@@ -95,38 +96,22 @@ int	ft_count_args(t_lexer *lexer)
 
 void ft_parse_cmds(t_lexer **lexer, char *line, char **envp)
 {
-	t_lexer	*tmp;
-	char	*split;
+	// t_lexer	*tmp;
 	char	**command;
-	int		size_cmd;
 	int		i;
 	char	*path_to_cmd;
 
-	*lexer = ft_lexer(line);
-	size_cmd = ft_count_args(*lexer);
-	tmp = *lexer;
-	command = (char **)malloc(sizeof(char *) * (size_cmd + 1));
+	*lexer = ft_lexer_type(line);
+	// ft_expend(lexer);
+	command = ft_lexer_command(lexer, line);
 	if (!command)
 		return (ft_putstr_fd("MALLOC **CMD FAILED\n", _STD_ERR));
-	while (tmp)
-	{
-		split = ft_malloc_cmd(tmp, line);
-		tmp->cmd = split;
-		tmp = tmp->next;
-	}
 	ft_lstprint(*lexer, TYPE);
 	ft_lstprint(*lexer, COMMAND);
-	tmp = *lexer;
-	i = 0;
-	while (tmp && i < size_cmd)
-	{
-		command[i++] = tmp->cmd;
-		tmp = tmp->next;
-	}
-	tmp = *lexer;
-	while (tmp && !ft_strncmp(tmp->type, string, 6))
-		tmp = tmp->next;
-	path_to_cmd = ft_get_path((*lexer)->cmd);
-	printf("path : %s\n", path_to_cmd);
-	execve(path_to_cmd, command, envp);
+	i = -1;
+	while (command[++i])
+		printf("command[%d] : [%s]\n", i + 1, command[i]);
+	(void)path_to_cmd;
+	(void)envp;
+	ft_free_cmd(cmds, line);
 }

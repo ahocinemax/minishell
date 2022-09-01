@@ -107,7 +107,6 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	while (1)
 	{
-		line = NULL;
 		line = readline("minishell$> ");
 		add_history(line);
 		signal(SIGINT, stop_cmd);
@@ -117,10 +116,7 @@ int	main(int argc, char **argv, char **envp)
 		if (check_line(line))
 			free(line);
 		else
-		{
 			ft_parse_cmds(&cmds, line, envp);
-			ft_free_cmd(&cmds, line);
-		}
 	}
 	return (0);
 }

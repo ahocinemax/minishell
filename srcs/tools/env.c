@@ -62,7 +62,6 @@ t_env	**ft_get_env(void)
 {
 	static t_env	*new;
 
-	new = NULL;
 	return (&new);
 }
 

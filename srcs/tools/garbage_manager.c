@@ -12,7 +12,8 @@
 
 #include "../../includes/proto.h"
 
-void	ft_add_trash(void *to_free)
+void	ft_add_trash(t_garbage **bin, void *to_free)
 {
+	ft_lstadd_back(bin, ft_lstnew(to_free);)
 	(void)to_free;
 }

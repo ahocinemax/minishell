@@ -25,7 +25,8 @@ static int	ft_check_quote(char *str, char sep)
 	while (str[i])
 	{
 		if (str[i] == sep)
-			count++;
+			if (!i || (i && str[i - 1] != '\\'))
+				count++;
 		i++;
 	}
 	return (count);
@@ -117,7 +118,7 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 		else
 		{
-			ft_parse_cmds(&cmds, line);
+			ft_parse_cmds(&cmds, line, envp);
 			ft_free_cmd(&cmds, line);
 		}
 	}

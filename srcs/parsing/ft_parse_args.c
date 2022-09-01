@@ -102,8 +102,8 @@ void ft_parse_cmds(t_lexer **lexer, char *line, char **envp)
 	char	*path_to_cmd;
 
 	*lexer = ft_lexer_type(line);
-	// ft_expend(lexer);
 	command = ft_lexer_command(lexer, line);
+	ft_expender(*lexer);
 	if (!command)
 		return (ft_putstr_fd("MALLOC **CMD FAILED\n", _STD_ERR));
 	ft_lstprint(*lexer, TYPE);
@@ -113,5 +113,5 @@ void ft_parse_cmds(t_lexer **lexer, char *line, char **envp)
 		printf("command[%d] : [%s]\n", i + 1, command[i]);
 	(void)path_to_cmd;
 	(void)envp;
-	ft_free_cmd(cmds, line);
+	ft_free_cmd(lexer, line);
 }

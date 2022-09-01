@@ -40,12 +40,15 @@ t_lexer	*ft_lexer_type(char *line);
 char	**ft_lexer_command(t_lexer **lexer, char *line);
 int	    ft_count_args(t_lexer *lexer);
 char     *ft_malloc_cmd(t_lexer *lex, char *line);
+void	ft_free_cmd(t_lexer **command, char *line);
+
 
 void	ft_is_redirect(t_lexer **lex, char *str, int *i);
 void	ft_is_expend(t_lexer **lex, char *str, int *i);
 void	ft_is_pipe(t_lexer **lex, char *s, int *i);
 void	ft_is_str(t_lexer **lex, char *s, int *i);
 void	ft_is_quote(t_lexer **lex, char *str, int *i);
+void	ft_expender(t_lexer *lexer);
 
 void	ft_skip_word(char *str, int *i);
 int		ft_dont_skip(char c);

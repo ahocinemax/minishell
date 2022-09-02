@@ -14,6 +14,6 @@
 
 void	ft_add_trash(t_garbage **bin, void *to_free)
 {
-	ft_lstadd_back(bin, ft_lstnew(to_free);)
+	ft_lstadd_back(bin, ft_lstnew(to_free, 0, COMMAND);)
 	(void)to_free;
 }

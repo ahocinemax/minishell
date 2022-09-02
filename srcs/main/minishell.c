@@ -9,7 +9,7 @@
 /*   Updated: 2022/07/22 02:16:42 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-// cp -r ../../includes ../../../0.piscine/|grep \"cat echo\" >> outfile
+// cp -r ../../includes ../../../0.piscine/|grep "cat echo" >> outfile
 #include "../../includes/proto.h"
 
 int	g_signal;

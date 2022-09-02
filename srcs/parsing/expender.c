@@ -26,13 +26,9 @@ char	*ft_expender(t_lexer **lexer, char *to_find)
 		while (*env)
 		{
 			if (!ft_strncmp(to_find, (*env)->str, ft_strlen((*env)->str)))
-			{
-				tmp_lex->cmd = (*env)->value;
-				break ;
-			}
+				return (tmp_lex->cmd = strdup((*env)->value));
 			(*env) = (*env)->next;
 		}
-		return (tmp_lex->cmd);
 	}
 	return (NULL);
 }

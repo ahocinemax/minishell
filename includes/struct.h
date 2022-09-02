@@ -13,16 +13,6 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# define STRING				"string"
-# define CMD				"command"
-# define PIPES				"pipes"
-# define REDIRECTION		"redirection"
-# define INFILE				"infile"
-# define D_INFILE			"double_infile"
-# define OUTFILE			"outfile"
-# define D_OUTFILE			"double_outfile"
-# define EXPENDER			"expender"
-
 typedef struct s_garbage	t_garbage;
 typedef struct s_lexer		t_lexer;
 typedef struct s_env		t_env;

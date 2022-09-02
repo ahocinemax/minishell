@@ -29,6 +29,20 @@
 
 typedef struct s_list	t_list;
 typedef struct s_lexer	t_lexer;
+typedef	enum e_type		t_type;
+
+enum	e_type
+{
+	STRING,
+	CMD,
+	PIPES,
+	REDIRECTION,
+	INFILE,
+	D_INFILE,
+	OUTFILE,
+	D_OUTFILE,
+	EXPENDER
+};
 
 struct s_list
 {
@@ -39,13 +53,13 @@ struct s_list
 struct s_lexer
 {
 	int		index;
-	char	*type;
+	t_type	type;
 	char	*cmd;
 	t_lexer	*next;
 };
 
 /*	Linked lists	*/
-t_lexer	*ft_lstnew(char *content, int key);
+t_lexer	*ft_lstnew(char *content, int val, int key);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 int		ft_lstsize(t_lexer *lst);
 t_lexer	*ft_lstlast(t_lexer *lst);

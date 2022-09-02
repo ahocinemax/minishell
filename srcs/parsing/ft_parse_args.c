@@ -23,12 +23,12 @@ char	*ft_get_path(char *cmd)
 	env = ft_get_env();
 	while (*env)
 	{
-		if (ft_strnstr((*env)->str, "PATH=", 5))
+		if (ft_strncmp((*env)->str, "PATH=", 5))
 			break ;
 		*env = (*env)->next;
 	}
 	if (!(*env))
-		return (NULL);
+		return (printf("ENV NULL\n"), NULL);
 	fd = -1;
 	start = 0;
 	end = start + 1;
@@ -80,7 +80,7 @@ int	ft_cnt_arg(t_lexer *lexer)
 	count = 0;
 	if (!lexer)
 		return (0);
-	while (lexer && ft_strncmp(lexer->type, PIPES, 5))
+	while (lexer && lexer->type != PIPES)
 	{
 		count++;
 		lexer = lexer->next;
@@ -91,12 +91,19 @@ int	ft_cnt_arg(t_lexer *lexer)
 void ft_parse_cmds(t_lexer **lexer, char *line)
 {
 	char	**command;
+	t_lexer	*tmp;
 
 	*lexer = ft_lexer_type(line);
 	command = ft_lexer_command(lexer, line);
-	ft_lstprint(*lexer, TYPE);
-	ft_lstprint(*lexer, COMMAND);
 	if (!command || !*lexer)
 		return (ft_putstr_fd("PARSING FAILED. ABORT\n", _STD_ERR));
-	ft_free_cmd(lexer, line);
+	tmp = *lexer;
+	while (tmp)
+	{
+		if (tmp->type == CMD)
+			tmp->cmd = ft_get_path(tmp->cmd);
+		tmp = tmp->next;
+	}
+	ft_lstprint(*lexer, TYPE);
+	ft_lstprint(*lexer, COMMAND);
 }

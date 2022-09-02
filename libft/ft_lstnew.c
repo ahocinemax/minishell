@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_lexer	*ft_lstnew(char *content, int key)
+t_lexer	*ft_lstnew(char *content, int val, int key)
 {
 	t_lexer	*new;
 
@@ -22,7 +22,7 @@ t_lexer	*ft_lstnew(char *content, int key)
 	if (key == COMMAND)
 		new->cmd = content;
 	else
-		new->type = content;
+		new->type = val;
 	new->next = NULL;
 	return (new);
 }

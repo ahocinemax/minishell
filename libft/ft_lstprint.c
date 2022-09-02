@@ -24,7 +24,7 @@ void	ft_lstprint(t_lexer *lst, int key)
 			if (key == COMMAND)
 				ft_putstr_fd((char *)lst->cmd, _STD_OUT);
 			else
-				ft_putstr_fd((char *)lst->type, _STD_OUT);
+				ft_putnbr_fd(lst->type, _STD_OUT);
 			ft_putstr_fd("] ", _STD_OUT);
 			ft_putstr_fd("-> ", _STD_OUT);
 			lst = lst->next;

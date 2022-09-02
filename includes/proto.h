@@ -43,12 +43,13 @@ char     *ft_malloc_cmd(t_lexer *lex, char *line);
 void	ft_free_cmd(t_lexer **command, char *line);
 
 
-void	ft_is_redirect(t_lexer **lex, char *str, int *i);
-void	ft_is_expend(t_lexer **lex, char *str, int *i);
-void	ft_is_pipe(t_lexer **lex, char *s, int *i);
-void	ft_is_str(t_lexer **lex, char *s, int *i);
-void	ft_is_quote(t_lexer **lex, char *str, int *i);
-char	*ft_expender(t_lexer **lexer, char *to_find);
+void	ft_is_redirect(t_lexer **lexer, char *str, int *index_of_line);
+void	ft_is_expend(t_lexer **lexer, char *str, int *index_of_line);
+void	ft_is_pipe(t_lexer **lexer, char *s, int *index_of_line);
+void	ft_is_str(t_lexer **lexer, char *s, int *index_of_line);
+void	ft_is_quote(t_lexer **lexer, char *str, int *index_of_line);
+char	*ft_expender(t_lexer **lexer, char *env_to_find);
+char	*ft_get_path(char *command_to_find);
 
 void	ft_skip_word(char *str, int *i);
 int		ft_dont_skip(char c);

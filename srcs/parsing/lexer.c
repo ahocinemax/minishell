@@ -39,8 +39,11 @@ char	**ft_lexer_command(t_lexer **lex, char *line)
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
-		if (i < ft_cnt_arg(*lex) && tmp->type == EXPENDER)
+		printf("Type : %d\n", tmp->type);
+		if (tmp->type == EXPENDER)
 			split = ft_expender(&tmp, split);
+		else if (tmp->type == CMD)
+			split = ft_get_path(split);
 		if (!split)
 			return (ft_putstr_fd("ENV VARIABLE NOT FOUND\n", _STD_ERR), NULL);
 		command[i++] = split;

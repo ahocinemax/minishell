@@ -12,18 +12,18 @@
 
 #include "../../includes/proto.h"
 
-void	ft_is_str(t_lexer **lex, char *s, int *i)
+void	ft_is_str(t_lexer **lex, char *s, int *index)
 {
 	if (!(*lex) || ft_lstlast(*lex)->type == PIPES)
 		ft_lstadd_back(lex, ft_lstnew(NULL, CMD, TYPE));
 	else
 		ft_lstadd_back(lex, ft_lstnew(NULL, STRING, TYPE));
-	ft_lstlast(*lex)->index = *i;
-	(*i)++;
-	ft_skip_word(s, i);
+	ft_lstlast(*lex)->index = *index;
+	(*index)++;
+	ft_skip_word(s, index);
 }
 
-void	ft_is_pipe(t_lexer **lex, char *s, int *i)
+void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 {
 	int	s_quote;
 	int	d_quote;
@@ -32,7 +32,7 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 	s_quote = 0;
 	d_quote = 0;
 	a = -1;
-	while (++a < *i)
+	while (++a < *index)
 	{
 		if (s[a] == '\'')
 			s_quote++;
@@ -42,17 +42,17 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *i)
 	if (d_quote % 2 == 0 && s_quote % 2 == 0)
 	{
 		ft_lstadd_back(lex, ft_lstnew(NULL, PIPES, TYPE));
-		ft_lstlast(*lex)->index = *i;
+		ft_lstlast(*lex)->index = *index;
 	}
-	(*i)++;
+	(*index)++;
 }
 
-void	ft_is_expend(t_lexer **lex, char *s, int *i)
+void	ft_is_expend(t_lexer **lex, char *s, int *index)
 {
 	ft_lstadd_back(lex, ft_lstnew(NULL, EXPENDER, TYPE));
-	(*i)++;
-	ft_lstlast(*lex)->index = *i;
-	ft_skip_word(s, i);
+	(*index)++;
+	ft_lstlast(*lex)->index = *index;
+	ft_skip_word(s, index);
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)

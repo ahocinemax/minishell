@@ -14,6 +14,7 @@
 # define STRUCT_H
 
 # define STRING				"string"
+# define CMD				"command"
 # define PIPES				"pipes"
 # define REDIRECTION		"redirection"
 # define INFILE				"infile"
@@ -38,6 +39,7 @@ struct	s_cmd
 struct s_env
 {
 	char		*str;
+	char		*value;
 	int			declare;
 	t_env		*next;
 };

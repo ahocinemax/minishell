@@ -24,23 +24,27 @@ void	ft_skip_word(char *s, int *i)
 		(*i)++;
 }
 
-char	**ft_lexer_command(t_lexer **lexer, char *line)
+char	**ft_lexer_command(t_lexer **lex, char *line)
 {
 	t_lexer	*tmp;
 	char	**command;
 	int		i;
 	char	*split;
 
-	command = (char **)malloc(sizeof(char *) * (ft_count_args(*lexer) + 1));
+	command = (char **)malloc(sizeof(char *) * (ft_cnt_arg(*lex) + 1));
 	if (!command)
 		return (ft_putstr_fd("MALLOC **CMD FAILED\n", _STD_ERR), NULL);
-	tmp = *lexer;
+	tmp = *lex;
 	i = 0;
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
-		if (i < ft_count_args(*lexer))
+		if (i < ft_cnt_arg(*lex) && ft_strncmp(tmp->type, EXPENDER, 8))
 			command[i++] = split;
+		else if (i < ft_cnt_arg(*lex) && !ft_strncmp(tmp->type, EXPENDER, 8))
+			split = ft_expender(&tmp);
+		if (!split)
+			return (ft_putstr_fd("ERROR SPLIT CMD EXPENDER\n", _STD_ERR), NULL);
 		tmp->cmd = split;
 		tmp = tmp->next;
 	}

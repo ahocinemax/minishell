@@ -52,23 +52,6 @@ void	stop_cmd(int sig)
 
 static int	check_line(char *str)
 {
-	int	i;
-	int	dif;
-
-	i = 0;
-	dif = 0;
-	while (str[i])
-	{
-		if (str[i] != ' ' && str[i] != '|')
-			dif = 1;
-		if (str[i] == '|')
-		{
-			if (dif == 0)
-				return (0);
-			dif = 0;
-		}
-		i++;
-	}
 	if (!(ft_check_quote(str, '\"') % 2) || !(ft_check_quote(str, '\'') % 2))
 		return (0);
 	return (1);
@@ -109,6 +92,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell$> ");
 		add_history(line);
+		printf("line : {%s}\n", line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
@@ -116,7 +100,8 @@ int	main(int argc, char **argv, char **envp)
 		if (check_line(line))
 			free(line);
 		else
-			ft_parse_cmds(&cmds, line, envp);
+			ft_parse_cmds(&cmds, line);
+		stop_cmd(50);
 	}
 	return (0);
 }

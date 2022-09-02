@@ -14,7 +14,14 @@
 
 void	ft_is_str(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back(lex, ft_lstnew(STRING, TYPE));
+	if (!(*lex) || !ft_strncmp(ft_lstlast(*lex)->type, OUTFILE, 7) || \
+	!ft_strncmp(ft_lstlast(*lex)->type, INFILE, 6) || \
+	!ft_strncmp(ft_lstlast(*lex)->type, D_INFILE, 8) || \
+	!ft_strncmp(ft_lstlast(*lex)->type, D_OUTFILE, 9) || \
+	!ft_strncmp(ft_lstlast(*lex)->type, PIPES, 5))
+		ft_lstadd_back(lex, ft_lstnew(CMD, TYPE));
+	else
+		ft_lstadd_back(lex, ft_lstnew(STRING, TYPE));
 	ft_lstlast(*lex)->index = *i;
 	(*i)++;
 	ft_skip_word(s, i);

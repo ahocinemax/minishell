@@ -15,13 +15,23 @@
 int	ft_add_front(char *env, t_env **start, int declare)
 {
 	t_env	*new_env;
+	int		i;
 
+	i = 0;
 	new_env = (t_env *)malloc(sizeof(t_env));
 	if (!new_env)
 		return (0);
 	new_env->str = env;
+	while (env[i])
+	{
+		if (env[i++] == '=')
+		{
+			env[i - 1] = '\0';
+			new_env->value = env + i;
+		}
+	}
 	new_env->declare = declare;
-	if (!new_env->str)
+	if (!new_env->value)
 		return (0);
 	new_env->next = *start;
 	*start = new_env;

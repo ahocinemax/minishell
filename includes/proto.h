@@ -48,7 +48,7 @@ void	ft_is_expend(t_lexer **lex, char *str, int *i);
 void	ft_is_pipe(t_lexer **lex, char *s, int *i);
 void	ft_is_str(t_lexer **lex, char *s, int *i);
 void	ft_is_quote(t_lexer **lex, char *str, int *i);
-char	*ft_expender(t_lexer **lexer);
+char	*ft_expender(t_lexer **lexer, char *to_find);
 
 void	ft_skip_word(char *str, int *i);
 int		ft_dont_skip(char c);

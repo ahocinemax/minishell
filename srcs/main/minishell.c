@@ -92,7 +92,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell$> ");
 		add_history(line);
-		printf("line : {%s}\n", line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)

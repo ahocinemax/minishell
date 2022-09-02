@@ -39,12 +39,12 @@ char	**ft_lexer_command(t_lexer **lex, char *line)
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
-		if (i < ft_cnt_arg(*lex) && ft_strncmp(tmp->type, EXPENDER, 8))
-			command[i++] = split;
-		else if (i < ft_cnt_arg(*lex) && !ft_strncmp(tmp->type, EXPENDER, 8))
-			split = ft_expender(&tmp);
+		// printf("split:%s\n", split);
+		if (i < ft_cnt_arg(*lex) && !ft_strncmp(tmp->type, EXPENDER, 8))
+			split = ft_expender(&tmp, split);
 		if (!split)
-			return (ft_putstr_fd("ERROR SPLIT CMD EXPENDER\n", _STD_ERR), NULL);
+			return (ft_putstr_fd("ENV VARIABLE NOT FOUND\n", _STD_ERR), NULL);
+		command[i++] = split;
 		tmp->cmd = split;
 		tmp = tmp->next;
 	}

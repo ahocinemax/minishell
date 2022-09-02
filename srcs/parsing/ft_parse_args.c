@@ -97,7 +97,6 @@ void ft_parse_cmds(t_lexer **lexer, char *line)
 	ft_lstprint(*lexer, TYPE);
 	ft_lstprint(*lexer, COMMAND);
 	if (!command || !*lexer)
-		return (ft_putstr_fd("PARSING FLAG FAILED\n", _STD_ERR));
-	
-	// ft_free_cmd(lexer, line);
+		return (ft_putstr_fd("PARSING FAILED. ABORT\n", _STD_ERR));
+	ft_free_cmd(lexer, line);
 }

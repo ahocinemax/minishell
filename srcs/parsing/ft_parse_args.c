@@ -99,5 +99,9 @@ void ft_parse_cmds(t_lexer **lexer, char *line)
 	printf("BEFORE PARSING\n");
 	ft_lstprint(*lexer, TYPE);
 	ft_lstprint(*lexer, COMMAND);
-	
+	t_lexer *this = (*lexer)->next->next;
+	t_lexer *target = (*lexer)->next;
+	ft_lstinsert(lexer, target, this);
+	ft_lstprint(*lexer, TYPE);
+	ft_lstprint(*lexer, COMMAND);
 }

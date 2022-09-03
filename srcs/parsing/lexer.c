@@ -53,7 +53,7 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
-		printf("{%s}\n", split);
+		// printf("{%s}\n", split);
 		if (tmp->type == EXPENDER)
 			split = ft_expender(&tmp, split);
 		else if (tmp->type == CMD)

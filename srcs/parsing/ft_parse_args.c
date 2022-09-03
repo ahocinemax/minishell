@@ -51,6 +51,7 @@ char	*ft_get_path(char *cmd)
 	}
 	if (fd < 0)
 		return (NULL);
+	free(cmd);
 	return (close(fd), path);
 }
 

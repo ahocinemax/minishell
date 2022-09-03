@@ -39,7 +39,6 @@ char	**ft_lexer_command(t_lexer **lex, char *line)
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
-		printf("Type : %d\n", tmp->type);
 		if (tmp->type == EXPENDER)
 			split = ft_expender(&tmp, split);
 		else if (tmp->type == CMD)
@@ -73,8 +72,7 @@ t_lexer	*ft_lexer_type(char *s)
 			ft_is_expend(&lex, s, &i);
 		else if ((s[i]) && (ft_isspace(s[i])))
 			i++;
-		else if ((s[i] == '\\' && (s[i + 1] == '\'' || s[i + 1] == '\"')) \
-			|| (s[i] == '\'' || s[i] == '\"'))
+		else if (s[i] == '\'' || s[i] == '\"')
 			ft_is_quote(&lex, s, &i);
 		else
 			ft_is_str(&lex, s, &i);

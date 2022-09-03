@@ -91,11 +91,10 @@ void	ft_is_quote(t_lexer **lex, char *s, int *i)
 	new = ft_lstnew(NULL, STRING, TYPE);
 	ft_lstadd_back(lex, new);
 	new->index = *i;
-	if (s[*i] == '\\')
-		(*i)++;
 	quote = s[*i];
 	(*i)++;
-	while (s + *i && *(s + *i) != quote)
+	while (s + *i && (*(s + *i) != quote || (*(s + *i - 1) == '\\' && \
+	*(s + *i) == quote)))
 		(*i)++;
 	if (s + *i && *(s + *i) == quote)
 		(*i)++;

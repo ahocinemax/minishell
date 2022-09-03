@@ -38,7 +38,7 @@ void	stop_cmd(int sig)
 	if (sig == 2)
 	{
 		g_signal = 130;
-		printf("\n");
+		printf("exit\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

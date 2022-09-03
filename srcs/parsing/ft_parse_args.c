@@ -20,7 +20,6 @@ char	*ft_get_path(char *cmd)
 	int		end;
 	char	*path;
 
-	printf("to_find : %s\n", cmd);
 	env = ft_get_env();
 	while (*env)
 	{
@@ -97,6 +96,8 @@ void ft_parse_cmds(t_lexer **lexer, char *line)
 	command = ft_lexer_command(lexer, line);
 	if (!command || !*lexer)
 		return (ft_putstr_fd("PARSING FAILED. ABORT\n", _STD_ERR));
+	printf("BEFORE PARSING\n");
 	ft_lstprint(*lexer, TYPE);
 	ft_lstprint(*lexer, COMMAND);
+	
 }

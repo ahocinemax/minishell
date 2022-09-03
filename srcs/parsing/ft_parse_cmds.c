@@ -146,16 +146,16 @@ void	ft_remove_redirection(t_lexer ***start)
 
 void ft_parse_cmds(char *line)
 {
-	t_lexer	**lexer;
+	t_lexer	*lexer;
 
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
-	if (!*lexer)
+	if (!lexer)
 		return (ft_putstr_fd("LEXER/PARSER FAILED. ABORT...\n", _STD_ERR));
 	// printf("----------BEFORE PARSING----------\n");
 	// printf("----------AFTER PARSING----------\n");
 	// ft_remove_redirection(&lexer);
 	// ft_push_fd_back();
-	// ft_lstprint(*lexer, TYPE);
-	// ft_lstprint(*lexer, COMMAND);
+	ft_lstprint(lexer, TYPE);
+	ft_lstprint(lexer, COMMAND);
 }

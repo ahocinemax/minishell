@@ -42,13 +42,12 @@ int	ft_count_pipes(char *str)
 	return (count);
 }
 
-void	ft_lexer_command(t_lexer **lex, char *line)
+void	ft_lexer_command(t_lexer *lex, char *line)
 {
 	t_lexer	*tmp;
-	char	**command;
-	int		i;
 	char	*split;
 
+	tmp = lex;
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);

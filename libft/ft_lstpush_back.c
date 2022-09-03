@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstinsert.c                                     :+:      :+:    :+:   */
+/*   ft_lstpush_back.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,53 +12,22 @@
 
 #include "libft.h"
 
-void	ft_lstinsert(t_lexer **start, t_lexer *target, t_lexer *this)
+void	ft_lstpush_back(t_lexer **start, t_lexer *this)
 {
-	t_lexer	*prev_target;
-	int		index_target;
 	t_lexer	*prev_this;
-	int		index_this;
 
-	if (!start || !target || !this)
+	if (!start || !this || !this->next)
 		return ;
-	index_target = 0;
-	prev_target = NULL;
-	if (*start != target)
-	{
-		prev_target = *start;
-		while (prev_target && prev_target->next != target)
-		{
-			index_target++;
-			prev_target = prev_target->next;
-		}
-	}
-	index_this = 0;
 	prev_this = NULL;
 	if (*start != this)
 	{
 		prev_this = *start;
-		while (prev_this && prev_this->next != this)
-		{
-			index_this++;
+		while (prev_this && prev_this->next && prev_this->next != this)
 			prev_this = prev_this->next;
-		}
 	}
-	if (index_this < index_target)
-	{
-		if (index_this != 0)
-			prev_this->next = this->next;
-		else
-			*start = this->next;
-		prev_target->next = this;
-		this->next = target;
-	}
-	else if (index_target < index_this)
-	{
+	if (prev_this)
 		prev_this->next = this->next;
-		if (index_target != 0)
-			prev_target->next = this;
-		else
-			*start = this;
-		this->next = target;
-	}
+	else
+		*start = this->next;
+	ft_lstadd_back(start, this);
 }

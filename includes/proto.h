@@ -34,13 +34,14 @@ extern int	g_signal;
 //                   PARSEUR - LEXER                   //
 /////////////////////////////////////////////////////////
 
-void	ft_parse_cmds(t_lexer **commands, char *line);
+void	ft_parse_cmds(char *line);
 int		ft_check_path(char *path);
 t_lexer	*ft_lexer_type(char *line);
-char	**ft_lexer_command(t_lexer **lexer, char *line);
+void    ft_lexer_command(t_lexer **lexer, char *line);
 int	    ft_cnt_arg(t_lexer *lexer);
 char     *ft_malloc_cmd(t_lexer *lex, char *line);
 void	ft_free_cmd(t_lexer **command, char *line);
+void	ft_remove_redirection(t_lexer ***lexer);
 
 
 void	ft_is_redirect(t_lexer **lexer, char *str, int *index_of_line);

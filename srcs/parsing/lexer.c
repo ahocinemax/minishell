@@ -24,18 +24,31 @@ void	ft_skip_word(char *s, int *i)
 		(*i)++;
 }
 
-char	**ft_lexer_command(t_lexer **lex, char *line)
+int	ft_count_pipes(char *str)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 1;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '|')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+void	ft_lexer_command(t_lexer **lex, char *line)
 {
 	t_lexer	*tmp;
 	char	**command;
 	int		i;
 	char	*split;
 
-	command = (char **)malloc(sizeof(char *) * (ft_cnt_arg(*lex) + 1));
-	if (!command)
-		return (ft_putstr_fd("MALLOC **CMD FAILED\n", _STD_ERR), NULL);
-	tmp = *lex;
-	i = 0;
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
@@ -44,13 +57,10 @@ char	**ft_lexer_command(t_lexer **lex, char *line)
 		else if (tmp->type == CMD)
 			split = ft_get_path(split);
 		if (!split)
-			return (ft_putstr_fd("ENV VARIABLE NOT FOUND\n", _STD_ERR), NULL);
-		command[i++] = split;
+			return (ft_putstr_fd("ENV VARIABLE NOT FOUND\n", _STD_ERR));
 		tmp->cmd = split;
 		tmp = tmp->next;
 	}
-	command[i] = NULL;
-	return (command);
 }
 
 t_lexer	*ft_lexer_type(char *s)

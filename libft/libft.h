@@ -64,13 +64,13 @@ void	ft_lstadd_front(t_list **alst, t_list *new);
 int		ft_lstsize(t_lexer *lst);
 t_lexer	*ft_lstlast(t_lexer *lst);
 void	ft_lstadd_back(t_lexer **alst, t_lexer *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void	ft_lstdelone(t_lexer *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstprint(t_lexer *lst, int key);
 void	ft_free_arr(void **array);
-void	ft_lstinsert(t_lexer **start, t_lexer *insert_here, t_lexer *this);
+void	ft_lstpush_back(t_lexer **start, t_lexer *this);
 
 /*	Mandatory		*/
 void	*ft_memset(void *dest, int c, size_t len);

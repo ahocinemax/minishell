@@ -15,7 +15,7 @@ CC			= gcc
 SRC_DIR 	=	srcs/
 SRCS 		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
 SRC_FILE 	=	parsing/lexer.c parsing/parse_lexer.c \
-				parsing/ft_parse_args.c parsing/expender.c \
+				parsing/ft_parse_cmds.c parsing/expender.c \
 				main/minishell.c tools/env.c
 
 #------------------------------------#

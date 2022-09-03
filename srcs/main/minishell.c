@@ -77,13 +77,11 @@ void	ft_free_cmd(t_lexer **command, char *line)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_lexer	*cmds;
 	char	*line;
 
 	if (!ft_init_t_env(envp))
 		return (0);
 	g_signal = 0;
-	cmds = NULL;
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);
 	if (!argv && !argc)
@@ -99,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		if (check_line(line))
 			free(line);
 		else
-			ft_parse_cmds(&cmds, line);
+			ft_parse_cmds(line);
 		stop_cmd(50);
 	}
 	return (0);

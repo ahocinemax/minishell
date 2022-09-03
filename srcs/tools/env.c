@@ -18,7 +18,7 @@ int	ft_add_front(char *env, t_env **start, int declare)
 	int		i;
 
 	i = 0;
-	new_env = (t_env *)malloc(sizeof(t_env));
+	new_env = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!new_env)
 		return (0);
 	new_env->str = env;

@@ -15,19 +15,21 @@
 char	*ft_expender(t_lexer **lexer, char *to_find)
 {
 	t_env	**env;
+	t_env	*tmp;
 	t_lexer	*tmp_lex;
 
 	if (!to_find)
 		return (NULL);
 	env = ft_get_env();
+	tmp = *env;
 	tmp_lex = *lexer;
 	if (tmp_lex)
 	{
-		while (*env)
+		while (tmp)
 		{
-			if (!ft_strncmp(to_find, (*env)->str, ft_strlen((*env)->str)))
-				return (tmp_lex->cmd = strdup((*env)->value));
-			(*env) = (*env)->next;
+			if (!ft_strncmp(to_find, tmp->str, ft_strlen(tmp->str)))
+				return (tmp_lex->cmd = strdup(tmp->value));
+			tmp = tmp->next;
 		}
 	}
 	return (NULL);

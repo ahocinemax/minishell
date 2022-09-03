@@ -26,15 +26,27 @@ void	ft_skip_word(char *s, int *i)
 
 int	ft_count_pipes(char *str)
 {
-	int	count;
-	int	i;
+	char	quote;
+	int		count;
+	int		i;
 
-	count = 0;
-	i = 1;
+	count = 1;
+	i = 0;
 	if (!str)
 		return (0);
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
+			i++;
+			while (str[i] && str[i] != quote)
+			{
+				if (str[i] == '\\' && str[i + 1] && str[i + 1] == quote)
+					i++;
+				i++;
+			}
+		}
 		if (str[i] == '|')
 			count++;
 		i++;
@@ -58,9 +70,13 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 			split = ft_expender(&tmp, split);
 		else if (tmp->type == CMD)
 			split = ft_get_path(split);
-		if (!split)
-			return (ft_putstr_fd("ENV VARIABLE NOT FOUND\n", _STD_ERR));
-		tmp->cmd = split;
+		if (split)
+			tmp->cmd = split;
+		else
+		{
+			free(split);
+			tmp->cmd = ft_malloc_cmd(tmp, line);;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -82,6 +98,8 @@ t_lexer	*ft_lexer_type(char *s)
 			ft_is_expend(&lex, s, &i);
 		else if ((s[i]) && (ft_isspace(s[i])))
 			i++;
+		else if ((s[i]) && s[i] == '|')
+			ft_is_pipe(&lex, s, &i);
 		else if (s[i] == '\'' || s[i] == '\"')
 			ft_is_quote(&lex, s, &i);
 		else

@@ -15,31 +15,33 @@
 char	*ft_get_path(char *cmd)
 {
 	t_env	**env;
+	t_env	*tmp;
 	int		fd;
 	int		start;
 	int		end;
 	char	*path;
 
 	env = ft_get_env();
-	while (*env)
+	tmp = *env;
+	while (tmp)
 	{
-		if (ft_strncmp((*env)->str, "PATH=", 5))
+		if (!ft_strncmp(tmp->str, "PATH", 5))
 			break ;
-		*env = (*env)->next;
+		tmp = (tmp)->next;
 	}
-	if (!(*env))
-		return (printf("ENV NULL\n"), NULL);
+	if (!(tmp))
+		return (printf("ENV PATH IS NULL\n"), NULL);
 	fd = -1;
 	start = 0;
 	end = start + 1;
-	while (fd < 0 && (*env)->value[start])
+	while (fd < 0 && (tmp)->value[start])
 	{
-		while ((*env)->value[end] != ':')
+		while (tmp->value[end] != ':')
 			end++;
 		path = ft_calloc(end - start + ft_strlen(cmd) + 2, sizeof(char));
 		if (!path)
 			return (ft_putstr_fd("MALLOC FAILED, NO_PATH\n", _STD_ERR), NULL);
-		ft_strlcpy(path, (*env)->value + start, end - start + 1);
+		ft_strlcpy(path, tmp->value + start, end - start + 1);
 		ft_strlcat(path, "/", end - start + 2);
 		ft_strlcat(path, cmd, ft_strlen(cmd) + ft_strlen(path) + 1);
 		start = end + 1;
@@ -138,18 +140,20 @@ void	ft_remove_redirection(t_lexer **start)
 void ft_parse_cmds(char *line)
 {
 	t_lexer **cmds;
-	int		id_cmd;
-	char	**split;
+	t_lexer	*lexer;
+	// int		id_cmd;
+	// char	**split;
 	
-	split = ft_split(line, "|");
+	// split = ft_split(line, "|");
 	cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), ft_count_pipes(line) + 1);
-	id_cmd = -1;
-	while (split[++id_cmd])
-	{
-		cmds[id_cmd] = ft_lexer_type(split[id_cmd]);
-		ft_lexer_command(cmds[id_cmd], split[id_cmd]);
-		ft_remove_redirection(cmds + id_cmd);
-		ft_lstprint(cmds[id_cmd], TYPE);
-		ft_lstprint(cmds[id_cmd], COMMAND);
-	}
+	cmds[ft_count_pipes(line)] = NULL;
+	// id_cmd = -1;
+	// while (split[++id_cmd])
+	// {
+	lexer = ft_lexer_type(line);
+	ft_lexer_command(lexer, line);
+	// ft_remove_redirection(&lexer);
+	ft_lstprint(lexer, TYPE);
+	ft_lstprint(lexer, COMMAND);
+	// }
 }

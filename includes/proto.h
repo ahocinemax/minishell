@@ -41,7 +41,8 @@ void    ft_lexer_command(t_lexer *lexer, char *line);
 int	    ft_cnt_arg(t_lexer *lexer);
 char     *ft_malloc_cmd(t_lexer *lex, char *line);
 void	ft_free_cmd(t_lexer **command, char *line);
-void	ft_remove_redirection(t_lexer ***lexer);
+void	ft_remove_redirection(t_lexer **lexer);
+int	    ft_count_pipes(char *str);
 
 
 void	ft_is_redirect(t_lexer **lexer, char *str, int *index_of_line);

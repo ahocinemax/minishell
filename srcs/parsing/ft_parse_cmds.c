@@ -111,51 +111,45 @@ void	ft_push_fd_back(t_lexer **lexer)
 	}
 }
 
-void	ft_remove_redirection(t_lexer ***start)
+void	ft_remove_redirection(t_lexer **start)
 {
 	t_lexer	*tmp;
 	t_lexer	*to_del;
-	int		cmd_num;
 
-	cmd_num = 0;
-
-	while (*start && *start[cmd_num])
+	tmp = *start;
+	while (tmp)
 	{
-		tmp = *start[cmd_num];
-		while (tmp)
+		if (tmp && tmp->type == REDIRECTION && tmp == *start)
 		{
-			if (tmp && tmp->type == REDIRECTION)
-			{
-				if (tmp == *start[cmd_num])
-				{
-					*start[cmd_num] = tmp->next;
-					ft_lstdelone(tmp, free);
-					tmp = *start[cmd_num];
-				}
-			}
-			else if (tmp->next && tmp->next->type == REDIRECTION)
-			{
-				to_del = tmp->next;
-				tmp->next = to_del->next;
-				ft_lstdelone(to_del, free);
-			}
-			tmp = tmp->next;
+			*start = tmp->next;
+			ft_lstdelone(tmp, NULL);
+			tmp = *start;
 		}
+		else if (tmp->next && tmp->next->type == REDIRECTION)
+		{
+			to_del = tmp->next;
+			tmp->next = to_del->next;
+			ft_lstdelone(to_del, NULL);
+		}
+		tmp = tmp->next;
 	}
 }
 
 void ft_parse_cmds(char *line)
 {
-	t_lexer	*lexer;
-
-	lexer = ft_lexer_type(line);
-	ft_lexer_command(lexer, line);
-	if (!lexer)
-		return (ft_putstr_fd("LEXER/PARSER FAILED. ABORT...\n", _STD_ERR));
-	// printf("----------BEFORE PARSING----------\n");
-	// printf("----------AFTER PARSING----------\n");
-	// ft_remove_redirection(&lexer);
-	// ft_push_fd_back();
-	ft_lstprint(lexer, TYPE);
-	ft_lstprint(lexer, COMMAND);
+	t_lexer **cmds;
+	int		id_cmd;
+	char	**split;
+	
+	split = ft_split(line, "|");
+	cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), ft_count_pipes(line) + 1);
+	id_cmd = -1;
+	while (split[++id_cmd])
+	{
+		cmds[id_cmd] = ft_lexer_type(split[id_cmd]);
+		ft_lexer_command(cmds[id_cmd], split[id_cmd]);
+		ft_remove_redirection(cmds + id_cmd);
+		ft_lstprint(cmds[id_cmd], TYPE);
+		ft_lstprint(cmds[id_cmd], COMMAND);
+	}
 }

@@ -88,20 +88,20 @@ int	ft_cnt_arg(t_lexer *lexer)
 	return (count);
 }
 
-void ft_parse_cmds(t_lexer **lexer, char *line)
-{
-	char	**command;
+// void ft_parse_cmds(t_lexer **lexer, char *line)
+// {
+// 	char	**command;
 
-	*lexer = ft_lexer_type(line);
-	command = ft_lexer_command(lexer, line);
-	if (!command || !*lexer)
-		return (ft_putstr_fd("PARSING FAILED. ABORT\n", _STD_ERR));
-	printf("BEFORE PARSING\n");
-	ft_lstprint(*lexer, TYPE);
-	ft_lstprint(*lexer, COMMAND);
-	t_lexer *this = (*lexer)->next->next;
-	t_lexer *target = (*lexer)->next;
-	ft_lstinsert(lexer, target, this);
-	ft_lstprint(*lexer, TYPE);
-	ft_lstprint(*lexer, COMMAND);
-}
+// 	*lexer = ft_lexer_type(line);
+// 	command = ft_lexer_command(lexer, line);
+// 	if (!command || !*lexer)
+// 		return (ft_putstr_fd("PARSING FAILED. ABORT\n", _STD_ERR));
+// 	printf("BEFORE PARSING\n");
+// 	ft_lstprint(*lexer, TYPE);
+// 	ft_lstprint(*lexer, COMMAND);
+// 	t_lexer *this = (*lexer)->next->next;
+// 	t_lexer *target = (*lexer)->next;
+// 	ft_lstinsert(lexer, target, this);
+// 	ft_lstprint(*lexer, TYPE);
+// 	ft_lstprint(*lexer, COMMAND);
+// }

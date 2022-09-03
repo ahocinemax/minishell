@@ -47,10 +47,13 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	t_lexer	*tmp;
 	char	*split;
 
+	if (!lex)
+		return ;
 	tmp = lex;
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
+		printf("{%s}\n", split);
 		if (tmp->type == EXPENDER)
 			split = ft_expender(&tmp, split);
 		else if (tmp->type == CMD)
@@ -75,8 +78,6 @@ t_lexer	*ft_lexer_type(char *s)
 	{
 		if (s[i] == '<' || s[i] == '>')
 			ft_is_redirect(&lex, s, &i);
-		else if (s[i] == '|')
-			ft_is_pipe(&lex, s, &i);
 		else if (s[i] == '$')
 			ft_is_expend(&lex, s, &i);
 		else if ((s[i]) && (ft_isspace(s[i])))

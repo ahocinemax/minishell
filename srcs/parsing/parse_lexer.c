@@ -34,9 +34,9 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 	a = -1;
 	while (++a < *index)
 	{
-		if (s[a] == '\'')
+		if (s[a] == '\'' && (!a || s[a - 1] == '\\'))
 			s_quote++;
-		if (s[a] == '\"')
+		if (s[a] == '\"' && (!a || s[a - 1] == '\\'))
 			d_quote++;
 	}
 	if (d_quote % 2 == 0 && s_quote % 2 == 0)

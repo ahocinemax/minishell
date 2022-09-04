@@ -41,7 +41,7 @@ t_lexer	**ft_split_cmds(t_lexer **lexer)
 	cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), nb_pipes + 1);
 	cmds[cmd_id] = *lexer;
 	temp = *lexer;
-	while (cmd_id < nb_pipes + 1)
+	while (cmd_id < nb_pipes)
 	{
 		cmds[cmd_id] = temp;
 		while (temp && temp->next && temp->next->type != PIPES)

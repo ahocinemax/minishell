@@ -26,7 +26,8 @@ void	ft_lstprint(t_lexer *lst, int key)
 			else
 				ft_putnbr_fd(lst->type, _STD_OUT);
 			ft_putstr_fd("] ", _STD_OUT);
-			ft_putstr_fd("-> ", _STD_OUT);
+			if (lst->next)
+				ft_putstr_fd("-> ", _STD_OUT);
 			lst = lst->next;
 		}
 	}

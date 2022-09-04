@@ -65,13 +65,16 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	while (tmp)
 	{
 		split = ft_malloc_cmd(tmp, line);
-		// printf("{%s}\n", split);
 		if (tmp->type == EXPENDER)
 			split = ft_expender(&tmp, split);
 		else if (tmp->type == CMD)
 			split = ft_get_path(split);
 		if (split)
+		{
+			if (split[ft_strlen(split) - 1] == ' ')
+				split[ft_strlen(split) - 1] = 0;
 			tmp->cmd = split;
+		}
 		else
 		{
 			free(split);

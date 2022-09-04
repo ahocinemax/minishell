@@ -142,15 +142,14 @@ void ft_parse_cmds(char *line)
 	// t_lexer **cmds;
 	t_lexer	*lexer;
 
-	// cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), ft_count_pipes(line) + 1);
-	// cmds[ft_count_pipes(line)] = NULL;
-	// id_cmd = -1;
-	// while (split[++id_cmd])
-	// {
+
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
-	// ft_remove_redirection(&lexer);
+	ft_remove_redirection(&lexer);
+	ft_push_fd_back(&lexer);
 	ft_lstprint(lexer, TYPE);
 	ft_lstprint(lexer, COMMAND);
-	// }
+	// cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), ft_count_pipes(line) + 1);
+	// cmds[ft_count_pipes(line)] = NULL;
+	// cmds = split_cmds(lexer);
 }

@@ -12,9 +12,24 @@
 
 #include "../../includes/proto.h"
 
+int	ft_first_string(t_lexer *lexer)
+{
+	t_lexer	*tmp;
+
+	tmp = lexer;
+	while (tmp)
+	{
+		if (tmp->type == CMD)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
 void	ft_is_str(t_lexer **lex, char *s, int *index)
 {
-	if (!(*lex) || ft_lstlast(*lex)->type == PIPES)
+	if (!(*lex) || ft_lstlast(*lex)->type == PIPES || \
+	ft_first_string(*lex))
 		ft_lstadd_back(lex, ft_lstnew(NULL, CMD, TYPE));
 	else
 		ft_lstadd_back(lex, ft_lstnew(NULL, STRING, TYPE));

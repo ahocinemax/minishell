@@ -24,36 +24,6 @@ void	ft_skip_word(char *s, int *i)
 		(*i)++;
 }
 
-int	ft_count_pipes(char *str)
-{
-	char	quote;
-	int		count;
-	int		i;
-
-	count = 1;
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i];
-			i++;
-			while (str[i] && str[i] != quote)
-			{
-				if (str[i] == '\\' && str[i + 1] && str[i + 1] == quote)
-					i++;
-				i++;
-			}
-		}
-		if (str[i] == '|')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 void	ft_lexer_command(t_lexer *lex, char *line)
 {
 	t_lexer	*tmp;
@@ -64,22 +34,13 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	tmp = lex;
 	while (tmp)
 	{
-		split = ft_malloc_cmd(tmp, line);
+		split = ft_split_cmd(tmp, line);
 		if (tmp->type == EXPENDER)
-			split = ft_expender(&tmp, split);
+			tmp->cmd = ft_expender(tmp, &split);
 		else if (tmp->type == CMD)
-			split = ft_get_path(split);
-		if (split)
-		{
-			if (split[ft_strlen(split) - 1] == ' ')
-				split[ft_strlen(split) - 1] = 0;
-			tmp->cmd = split;
-		}
+			tmp->cmd = ft_get_path(&split);
 		else
-		{
-			free(split);
-			tmp->cmd = ft_malloc_cmd(tmp, line);;
-		}
+			tmp->cmd = split;
 		tmp = tmp->next;
 	}
 }

@@ -29,7 +29,7 @@
 
 typedef struct s_list	t_list;
 typedef struct s_lexer	t_lexer;
-typedef	enum e_type		t_type;
+typedef enum e_type		t_type;
 
 enum	e_type
 {

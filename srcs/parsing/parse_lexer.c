@@ -67,7 +67,8 @@ void	ft_is_expend(t_lexer **lex, char *s, int *index)
 	ft_lstadd_back(lex, ft_lstnew(NULL, EXPENDER, TYPE));
 	(*index)++;
 	ft_lstlast(*lex)->index = *index;
-	ft_skip_word(s, index);
+	while (s[*index] >= 'A' && s[*index] <= 'Z')
+		(*index)++;
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)

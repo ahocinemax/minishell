@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-char	*ft_get_path(char *cmd)
+char	*ft_get_path(char **cmd)
 {
 	t_env	**env;
 	t_env	*tmp;
@@ -30,7 +30,7 @@ char	*ft_get_path(char *cmd)
 		tmp = (tmp)->next;
 	}
 	if (!(tmp))
-		return (printf("ENV PATH IS NULL\n"), NULL);
+		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
 	fd = -1;
 	start = 0;
 	end = start + 1;
@@ -38,12 +38,12 @@ char	*ft_get_path(char *cmd)
 	{
 		while (tmp->value[end] != ':')
 			end++;
-		path = ft_calloc(end - start + ft_strlen(cmd) + 2, sizeof(char));
+		path = ft_calloc(end - start + ft_strlen(*cmd) + 2, sizeof(char));
 		if (!path)
-			return (ft_putstr_fd("MALLOC FAILED, NO_PATH\n", _STD_ERR), NULL);
+			return (ft_putstr_fd("MALLOC FAILED, NO ABSOLUT PATH\n", _STD_ERR), NULL);
 		ft_strlcpy(path, tmp->value + start, end - start + 1);
 		ft_strlcat(path, "/", end - start + 2);
-		ft_strlcat(path, cmd, ft_strlen(cmd) + ft_strlen(path) + 1);
+		ft_strlcat(path, *cmd, ft_strlen(*cmd) + ft_strlen(path) + 1);
 		start = end + 1;
 		fd = open(path, O_RDONLY);
 		if (fd < 0)
@@ -52,11 +52,11 @@ char	*ft_get_path(char *cmd)
 			end++;
 	}
 	if (fd < 0)
-		return (NULL);
-	return (close(fd), path);
+		return (*cmd);
+	return (free(*cmd), close(fd), path);
 }
 
-char *ft_malloc_cmd(t_lexer *lex, char *line)
+char *ft_split_cmd(t_lexer *lex, char *line)
 {
 	char *res;
 	int len;
@@ -72,6 +72,9 @@ char *ft_malloc_cmd(t_lexer *lex, char *line)
 		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
 	ft_strlcpy(res, line + lex->index, len);
 	res[len] = 0;
+	char *tmp = res;
+	res = ft_strtrim(res, " \t\n\r\v\f");
+	free(tmp);
 	return (res);
 }
 
@@ -90,29 +93,6 @@ int	ft_cnt_arg(t_lexer *lexer)
 	return (count);
 }
 
-static int	ft_not_only_fd_left(t_lexer *lexer)
-{
-	while (lexer)
-	{
-		if (lexer->type != INFILE && lexer->type != OUTFILE && \
-		lexer->type != D_INFILE && lexer->type != D_OUTFILE)
-			return (1);
-		lexer = lexer->next;
-	}
-	return (0);
-}
-
-void	ft_push_fd_back(t_lexer **lexer)
-{
-	t_lexer	*tmp;
-
-	tmp = *lexer;
-	while (tmp && ft_not_only_fd_left(tmp))
-	{
-		;
-	}
-}
-
 void	ft_remove_redirection(t_lexer **start)
 {
 	t_lexer	*tmp;
@@ -127,7 +107,7 @@ void	ft_remove_redirection(t_lexer **start)
 			ft_lstdelone(tmp, NULL);
 			tmp = *start;
 		}
-		else if (tmp->next && tmp->next->type == REDIRECTION)
+		if (tmp && tmp->next && tmp->next->type == REDIRECTION)
 		{
 			to_del = tmp->next;
 			tmp->next = to_del->next;
@@ -139,17 +119,17 @@ void	ft_remove_redirection(t_lexer **start)
 
 void ft_parse_cmds(char *line)
 {
-	// t_lexer **cmds;
+	t_lexer **cmds;
 	t_lexer	*lexer;
-
 
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
-	ft_push_fd_back(&lexer);
 	ft_lstprint(lexer, TYPE);
 	ft_lstprint(lexer, COMMAND);
-	// cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), ft_count_pipes(line) + 1);
-	// cmds[ft_count_pipes(line)] = NULL;
-	// cmds = split_cmds(lexer);
+	cmds = ft_split_cmds(&lexer);
+	int	i = 0;
+	write(1, "\n\n", 2);
+	while (i < 1)
+		ft_lstprint(cmds[i++], COMMAND);
 }

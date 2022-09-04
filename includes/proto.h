@@ -35,7 +35,7 @@ extern int	g_signal;
 /////////////////////////////////////////////////////////
 
 void	ft_parse_cmds(char *line);
-void	ft_free_cmd(t_lexer **command, char *line);
+void	ft_free_cmd(t_lexer ***command, char *line);
 void	ft_remove_redirection(t_lexer **lexer);
 t_lexer	**ft_split_cmds(t_lexer **lexer);
 

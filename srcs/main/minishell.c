@@ -52,24 +52,36 @@ void	stop_cmd(int sig)
 
 static int	check_line(char *str)
 {
+	if (!str)
+		return (0);
 	if (!(ft_check_quote(str, '\"') % 2) || !(ft_check_quote(str, '\'') % 2))
 		return (0);
 	return (1);
 }
 
-void	ft_free_cmd(t_lexer **command, char *line)
+void	ft_free_cmd(t_lexer ***command, char *line)
 {
 	t_lexer	*tmp;
+	t_lexer	**tab;
+	int		i;
 
+	i = 0;
 	if (!*command)
 		return ;
-	while (*command)
+	while (*command[i])
 	{
-		tmp = *command;
-		*command = (*command)->next;
-		if (tmp->cmd)
-			free(tmp->cmd);
-		free(tmp);
+		while (**command)
+		{
+			printf("tab : %p // cell : %p\n", *command, **command);
+			tmp = **command;
+			**command = (**command)->next;
+			if (tmp->cmd)
+				free(tmp->cmd);
+			free(tmp);
+		}
+		tab = *command;
+		i++;
+		free(tab);
 	}
 	if (line)
 		free(line);
@@ -93,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
-			return (free(line), 1);
+			return (1);
 		if (check_line(line))
 			free(line);
 		else

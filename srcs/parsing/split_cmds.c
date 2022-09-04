@@ -53,6 +53,7 @@ t_lexer	**ft_split_cmds(t_lexer **lexer)
 			temp = to_del->next;
 			ft_lstdelone(to_del, free);
 		}
+		printf("tab : %p // cell : %p\n", temp, *lexer);
 		cmd_id++;
 	}
 	cmds[cmd_id] = NULL;

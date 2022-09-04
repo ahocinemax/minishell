@@ -68,8 +68,9 @@ void	ft_free_cmd(t_lexer ***command, char *line)
 	i = 0;
 	if (!*command)
 		return ;
-	while (*command[i])
+	while (command[i])
 	{
+		tab = command[i];
 		while (**command)
 		{
 			printf("tab : %p // cell : %p\n", *command, **command);
@@ -79,12 +80,14 @@ void	ft_free_cmd(t_lexer ***command, char *line)
 				free(tmp->cmd);
 			free(tmp);
 		}
-		tab = *command;
 		i++;
 		free(tab);
 	}
 	if (line)
+	{
 		free(line);
+		line = NULL;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -107,7 +110,10 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			return (1);
 		if (check_line(line))
+		{
 			free(line);
+			line = NULL;
+		}
 		else
 			ft_parse_cmds(line);
 		stop_cmd(50);

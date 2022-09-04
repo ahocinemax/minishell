@@ -50,6 +50,7 @@ void	ft_clean_env_list(t_env **env)
 		tmp = new;
 		new = new->next;
 		free(tmp->str);
+		free(tmp->value);
 		free(tmp);
 	}
 }

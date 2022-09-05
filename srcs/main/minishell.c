@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
-			return (1);
+			return (1);	// call ft_clean_t_env()
 		if (check_line(line))
 		{
 			free(line);

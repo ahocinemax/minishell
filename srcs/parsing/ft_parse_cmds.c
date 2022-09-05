@@ -68,6 +68,7 @@ char *ft_split_cmd(t_lexer *lex, char *line)
 	res = (char *)ft_calloc(sizeof(char), len + 1);
 	if (!res)
 		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
+	printf("len = %d\n", len);
 	ft_strlcpy(res, line + lex->index, len);
 	res[len] = 0;
 	char *tmp = res;

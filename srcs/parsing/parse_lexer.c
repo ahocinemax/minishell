@@ -67,8 +67,8 @@ void	ft_is_expend(t_lexer **lex, char *s, int *index)
 	ft_lstadd_back(lex, ft_lstnew(NULL, EXPENDER, TYPE));
 	(*index)++;
 	ft_lstlast(*lex)->index = *index;
-	while (s[*index] >= 'A' && s[*index] <= 'Z')
-		(*index)++;
+	while (ft_isalpha(s[*index]))	// Les noms des variables comporte des Maj, des chiffres, des '_' mais ne commence pas par un digit et ne contiennent pas de '='
+		(*index)++;									// Si le $ est solo, on le compte comme un STRING
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)

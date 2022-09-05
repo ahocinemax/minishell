@@ -74,5 +74,6 @@ void	ft_cd(char *str);
 void	ft_add_trash(void *to_free);
 int		ft_init_t_env(char **env);
 t_env	**ft_get_env(void);
+void	ft_clean_env_list(t_env **env);
 
 #endif

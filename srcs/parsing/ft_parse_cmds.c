@@ -128,5 +128,6 @@ void ft_parse_cmds(char *line)
 	ft_lstprint(lexer, TYPE);
 	ft_lstprint(lexer, COMMAND);
 	cmds = ft_split_cmds(&lexer);
+	// exec()
 	ft_free_cmd(&cmds, line);
 }

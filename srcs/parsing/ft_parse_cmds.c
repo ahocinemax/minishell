@@ -66,8 +66,6 @@ char *ft_split_cmd(t_lexer *lex, char *line)
 	else
 		len = ft_strlen(line + lex->index) + 1;
 	res = (char *)ft_calloc(sizeof(char), len + 1);
-	if (lex->index && line[lex->index - 1] != ' ')
-		len += 1;
 	if (!res)
 		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
 	ft_strlcpy(res, line + lex->index, len);
@@ -125,8 +123,13 @@ void ft_parse_cmds(char *line)
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
-	ft_lstprint(lexer, TYPE);
-	ft_lstprint(lexer, COMMAND);
 	cmds = ft_split_cmds(&lexer);
-	ft_free_cmd(&cmds, line);
+	int	i = 0;
+	while (cmds[i])
+	{
+		ft_lstprint(cmds[i], TYPE);
+		ft_lstprint(cmds[i], COMMAND);
+		i++;
+	}
+	// ft_free_cmd(&cmds, line);
 }

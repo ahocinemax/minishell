@@ -14,7 +14,6 @@
 # define STRUCT_H
 
 typedef struct s_garbage	t_garbage;
-typedef struct s_lexer		t_lexer;
 typedef struct s_env		t_env;
 typedef struct s_cmd		t_cmd;
 

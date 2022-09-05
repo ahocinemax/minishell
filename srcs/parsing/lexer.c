@@ -35,6 +35,7 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	while (tmp)
 	{
 		split = ft_split_cmd(tmp, line);
+		printf("split: {%s}\n", split);
 		if (tmp->type == EXPENDER)
 			tmp->cmd = ft_expender(tmp, &split);
 		else if (tmp->type == CMD)

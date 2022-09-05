@@ -38,7 +38,7 @@ t_lexer	**ft_split_cmds(t_lexer **lexer)
 	nb_pipes = ft_count_pipes(*lexer);
 	if (nb_pipes == 1)
 		return (cmds = lexer);
-	cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), nb_pipes + 1);
+	cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), nb_pipes);
 	cmds[cmd_id] = *lexer;
 	temp = *lexer;
 	while (cmd_id < nb_pipes)
@@ -53,7 +53,6 @@ t_lexer	**ft_split_cmds(t_lexer **lexer)
 			temp = to_del->next;
 			ft_lstdelone(to_del, free);
 		}
-		printf("tab : %p // cell : %p\n", temp, *lexer);
 		cmd_id++;
 	}
 	cmds[cmd_id] = NULL;

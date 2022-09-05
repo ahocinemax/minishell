@@ -61,28 +61,13 @@ static int	check_line(char *str)
 
 void	ft_free_cmd(t_lexer ***command, char *line)
 {
-	t_lexer	*tmp;
-	t_lexer	**tab;
 	int		i;
 
 	i = 0;
 	if (!*command)
 		return ;
-	while (command[i])
-	{
-		tab = command[i];
-		while (**command)
-		{
-			printf("tab : %p // cell : %p\n", *command, **command);
-			tmp = **command;
-			**command = (**command)->next;
-			if (tmp->cmd)
-				free(tmp->cmd);
-			free(tmp);
-		}
-		i++;
-		free(tab);
-	}
+	while (*command + i)
+		ft_lstclear(*command + i++, free);
 	if (line)
 	{
 		free(line);

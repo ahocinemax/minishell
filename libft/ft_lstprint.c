@@ -20,16 +20,14 @@ void	ft_lstprint(t_lexer *lst, int key)
 	{
 		while (lst)
 		{
-			ft_putchar_fd('[', _STD_OUT);
 			if (key == COMMAND)
-				ft_putstr_fd((char *)lst->cmd, _STD_OUT);
+				printf("\e[33m[%s] \e[0m", (char *)lst->cmd);
 			else
-				ft_putnbr_fd(lst->type, _STD_OUT);
-			ft_putstr_fd("] ", _STD_OUT);
+				printf("\e[31m[%d] \e[0m", lst->type);
 			if (lst->next)
-				ft_putstr_fd("-> ", _STD_OUT);
+				printf("-> ");
 			lst = lst->next;
 		}
 	}
-	ft_putchar_fd('\n', _STD_OUT);
+	printf("\n");
 }

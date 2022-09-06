@@ -36,10 +36,10 @@ t_lexer	**ft_split_cmds(t_lexer **lexer)
 
 	cmd_id = 0;
 	nb_pipes = ft_count_pipes(*lexer);
-	if (nb_pipes == 1)
-		return (cmds = lexer);
 	cmds = (t_lexer **)ft_calloc(sizeof(t_lexer *), nb_pipes);
 	cmds[cmd_id] = *lexer;
+	if (nb_pipes == 1)
+		return (cmds);
 	temp = *lexer;
 	while (cmd_id < nb_pipes)
 	{
@@ -55,6 +55,5 @@ t_lexer	**ft_split_cmds(t_lexer **lexer)
 		}
 		cmd_id++;
 	}
-	cmds[cmd_id] = NULL;
 	return (cmds);
 }

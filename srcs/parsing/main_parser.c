@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_cmds.c                                    :+:      :+:    :+:   */
+/*   main_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -29,7 +29,7 @@ char	*ft_get_path(char **cmd)
 			break ;
 		tmp = (tmp)->next;
 	}
-	if (!(tmp))
+	if (!tmp)
 		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
 	fd = -1;
 	start = 0;
@@ -41,40 +41,18 @@ char	*ft_get_path(char **cmd)
 		path = ft_calloc(end - start + ft_strlen(*cmd) + 2, sizeof(char));
 		if (!path)
 			return (ft_putstr_fd("MALLOC FAILED, NO ABSOLUT PATH\n", _STD_ERR), NULL);
+		ft_add_trash((void *)path);
 		ft_strlcpy(path, tmp->value + start, end - start + 1);
 		ft_strlcat(path, "/", end - start + 2);
 		ft_strlcat(path, *cmd, ft_strlen(*cmd) + ft_strlen(path) + 1);
 		start = end + 1;
 		fd = open(path, O_RDONLY);
-		if (fd < 0)
-			free(path);
 		if (end <= start)
 			end++;
 	}
 	if (fd < 0)
 		return (*cmd);
 	return (free(*cmd), close(fd), path);
-}
-
-char *ft_split_cmd(t_lexer *lex, char *line)
-{
-	char *res;
-	int len;
-
-	if (lex && lex->next)
-		len = lex->next->index - lex->index ;
-	else
-		len = ft_strlen(line + lex->index) + 1;
-	res = (char *)ft_calloc(sizeof(char), len + 1);
-	if (!res)
-		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
-	printf("len = %d\n", len);
-	ft_strlcpy(res, line + lex->index, len);
-	res[len] = 0;
-	char *tmp = res;
-	res = ft_strtrim(res, " \t\n\r\v\f");
-	free(tmp);
-	return (res);
 }
 
 int	ft_cnt_arg(t_lexer *lexer)
@@ -116,7 +94,7 @@ void	ft_remove_redirection(t_lexer **start)
 	}
 }
 
-void ft_parse_cmds(char *line)
+void ft_main_parser(char *line)
 {
 	t_lexer **cmds;
 	t_lexer	*lexer;
@@ -128,6 +106,7 @@ void ft_parse_cmds(char *line)
 	int	i = 0;
 	while (cmds[i])
 	{
+		printf("cmds[%d] = %p\n", i, cmds[i]);
 		ft_lstprint(cmds[i], TYPE);
 		ft_lstprint(cmds[i], COMMAND);
 		i++;

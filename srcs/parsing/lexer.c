@@ -18,6 +18,29 @@ int	ft_dont_skip(char c)
 	c == '\"' || c == '\\');
 }
 
+char *ft_split_cmd(t_lexer *lex, char *line)
+{
+	char *res;
+	int len;
+
+	if (lex && lex->next)
+		len = lex->next->index - lex->index ;
+	else
+		len = ft_strlen(line + lex->index) + 1;
+	if ((lex->type == EXPENDER || (lex->next && lex->next->type == REDIRECTION)) && !ft_isspace(line[len]))
+		len++;
+	res = (char *)ft_calloc(sizeof(char), len + 1);
+	if (!res)
+		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
+	ft_add_trash((void *)res);
+	ft_strlcpy(res, line + lex->index, len);
+	res = ft_strtrim(res, " \t\n\r\v\f");
+	if (!res)
+		return (NULL);
+	ft_add_trash((void *)res);
+	return (res);
+}
+
 void	ft_skip_word(char *s, int *i)
 {
 	while (s[*i] && !ft_dont_skip(s[*i]) && !ft_isspace(s[*i]))
@@ -35,7 +58,6 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	while (tmp)
 	{
 		split = ft_split_cmd(tmp, line);
-		printf("split: {%s}\n", split);
 		if (tmp->type == EXPENDER)
 			tmp->cmd = ft_expender(tmp, &split);
 		else if (tmp->type == CMD)
@@ -61,9 +83,9 @@ t_lexer	*ft_lexer_type(char *s)
 			ft_is_redirect(&lex, s, &i);
 		else if (s[i] == '$')
 			ft_is_expend(&lex, s, &i);
-		else if ((s[i]) && (ft_isspace(s[i])))
+		else if (s[i] && ft_isspace(s[i]))
 			i++;
-		else if ((s[i]) && s[i] == '|')
+		else if (s[i] && s[i] == '|')
 			ft_is_pipe(&lex, s, &i);
 		else if (s[i] == '\'' || s[i] == '\"')
 			ft_is_quote(&lex, s, &i);

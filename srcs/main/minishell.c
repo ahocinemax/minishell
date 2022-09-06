@@ -93,15 +93,16 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
 		if (!line)
-			return (1);	// call ft_clean_t_env()
+			return (ft_empty_trash(), 1);
 		if (check_line(line))
 		{
 			free(line);
 			line = NULL;
 		}
 		else
-			ft_parse_cmds(line);
+			ft_main_parser(line);
 		stop_cmd(50);
 	}
+	ft_empty_trash();
 	return (0);
 }

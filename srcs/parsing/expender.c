@@ -16,6 +16,7 @@ char	*ft_expender(t_lexer *lexer, char **to_find)
 {
 	t_env	**env;
 	t_env	*tmp;
+	char	*res;
 
 	if (!*to_find)
 		return (NULL);
@@ -26,7 +27,11 @@ char	*ft_expender(t_lexer *lexer, char **to_find)
 	while (tmp)
 	{
 		if (!ft_strncmp(*to_find, tmp->str, ft_strlen(tmp->str)))
-			return (free(*to_find), strdup(tmp->value));
+		{
+			res = strdup(tmp->value);
+			ft_add_trash((void *)res);
+			return (free(*to_find), res);
+		}
 		tmp = tmp->next;
 	}
 	return (*to_find);

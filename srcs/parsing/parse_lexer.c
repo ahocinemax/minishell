@@ -28,11 +28,17 @@ int	ft_first_string(t_lexer *lexer)
 
 void	ft_is_str(t_lexer **lex, char *s, int *index)
 {
+	t_lexer	*res;
+	t_type	type;
+
 	if (!(*lex) || ft_lstlast(*lex)->type == PIPES || \
 	ft_first_string(*lex))
-		ft_lstadd_back(lex, ft_lstnew(NULL, CMD, TYPE));
+		type = CMD;
 	else
-		ft_lstadd_back(lex, ft_lstnew(NULL, STRING, TYPE));
+		type = STRING;
+	res = ft_lstnew(NULL, type, TYPE);
+	ft_add_trash((void *)res);
+	ft_lstadd_back(lex, res);
 	ft_lstlast(*lex)->index = *index;
 	(*index)++;
 	ft_skip_word(s, index);
@@ -40,6 +46,7 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 
 void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 {
+	t_lexer	*res;
 	int	s_quote;
 	int	d_quote;
 	int	a;
@@ -56,7 +63,9 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 	}
 	if (d_quote % 2 == 0 && s_quote % 2 == 0)
 	{
-		ft_lstadd_back(lex, ft_lstnew(NULL, PIPES, TYPE));
+		res = ft_lstnew(NULL, PIPES, TYPE);
+		ft_add_trash((void *)res);
+		ft_lstadd_back(lex, res);
 		ft_lstlast(*lex)->index = *index;
 	}
 	(*index)++;
@@ -64,25 +73,39 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 
 void	ft_is_expend(t_lexer **lex, char *s, int *index)
 {
-	ft_lstadd_back(lex, ft_lstnew(NULL, EXPENDER, TYPE));
+	t_lexer	*res;
+	if (!s[*index + 1] || (s[*index + 1] && ft_isdigit(s[*index + 1])))
+		return ;
+	res = ft_lstnew(NULL, EXPENDER, TYPE);
+	ft_add_trash((void *)res);
+	ft_lstadd_back(lex, res);
 	(*index)++;
 	ft_lstlast(*lex)->index = *index;
-	while (ft_isalpha(s[*index]))	// Les noms des variables comporte des Maj, des chiffres, des '_' mais ne commence pas par un digit et ne contiennent pas de '='
+	while (s[*index] && (ft_isalpha(s[*index]) || \
+	s[*index] == '_' || ft_isdigit(s[*index])))	// Les noms des variables comporte des Maj, des chiffres, des '_' mais ne commence pas par un digit et ne contiennent pas de '='
 		(*index)++;									// Si le $ est solo, on le compte comme un STRING
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 {
-	ft_lstadd_back(lex, ft_lstnew(NULL, REDIRECTION, TYPE));
+	t_lexer	*res1;
+	t_lexer	*res2;
+	t_type	fd_type;
+
+	res1 = ft_lstnew(NULL, REDIRECTION, TYPE);
+	ft_lstadd_back(lex, res1);
 	ft_lstlast(*lex)->index = *i;
 	if (!strncmp(s + *i, "<<", 2))
-		ft_lstadd_back(lex, ft_lstnew(NULL, D_INFILE, TYPE));
+		fd_type = D_INFILE;
 	else if (!strncmp(s + *i, ">>", 2))
-		ft_lstadd_back(lex, ft_lstnew(NULL, D_OUTFILE, TYPE));
+		fd_type = D_OUTFILE;
 	else if (!strncmp(s + *i, "<", 1))
-		ft_lstadd_back(lex, ft_lstnew(NULL, INFILE, TYPE));
+		fd_type = INFILE;
 	else if (!strncmp(s + *i, ">", 1))
-		ft_lstadd_back(lex, ft_lstnew(NULL, OUTFILE, TYPE));
+		fd_type = OUTFILE;
+	res2 = ft_lstnew(NULL, fd_type, TYPE);
+	ft_add_trash((void *)res2);
+	ft_lstadd_back(lex, res2);
 	ft_lstlast(*lex)->index = *i;
 	(*i)++;
 	if (s[*i] && (s[*i] == '>' || s[*i] == '<'))
@@ -105,6 +128,7 @@ void	ft_is_quote(t_lexer **lex, char *s, int *i)
 	t_lexer	*new;
 
 	new = ft_lstnew(NULL, STRING, TYPE);
+	ft_add_trash((void *)new);
 	ft_lstadd_back(lex, new);
 	new->index = *i;
 	quote = s[*i];

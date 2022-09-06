@@ -46,8 +46,7 @@ void	ft_clean_env_list(void)
 
 	get_env = ft_get_env();
 	new = *get_env;
-	tmp = new;
-	while (tmp)
+	while (new)
 	{
 		tmp = new;
 		new = new->next;

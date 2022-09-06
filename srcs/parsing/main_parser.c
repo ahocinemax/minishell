@@ -103,13 +103,13 @@ void ft_main_parser(char *line)
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
 	cmds = ft_split_cmds(&lexer);
-	int	i = 0;
-	while (cmds[i])
-	{
-		printf("cmds[%d] = %p\n", i, cmds[i]);
-		ft_lstprint(cmds[i], TYPE);
-		ft_lstprint(cmds[i], COMMAND);
-		i++;
-	}
-	// ft_free_cmd(&cmds, line);
+	// int	i = 0;
+	// while (cmds[i])
+	// {
+	// 	printf("cmds[%d] = %p\n", i, cmds[i]);
+	// 	ft_lstprint(cmds[i], TYPE);
+	// 	ft_lstprint(cmds[i], COMMAND);
+	// 	i++;
+	// }
+	(void)cmds;
 }

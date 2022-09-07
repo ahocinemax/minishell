@@ -16,7 +16,7 @@ SRC_DIR 	=	srcs/
 SRCS 		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
 SRC_FILE 	=	parsing/lexer.c parsing/parse_lexer.c \
 				parsing/main_parser.c parsing/expender.c \
-				main/minishell.c tools/env.c parsing/split_cmds.c \
+				minishell.c tools/env.c parsing/split_cmds.c \
 				tools/garbage_manager.c exec/builtin_finder.c \
 				exec/execute.c exec/ft_bzeros.c exec/ft_calloc.c \
 				exec/ft_strdup.c exec/ft_strjoin.c \

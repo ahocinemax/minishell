@@ -12,16 +12,14 @@
 
 #include "../../includes/proto.h"
 
-char	*ft_get_path(char **cmd)
+t_env	*path_env(void)
 {
 	t_env	**env;
 	t_env	*tmp;
-	int		fd;
-	int		start;
-	int		end;
-	char	*path;
 
 	env = ft_get_env();
+	if (!*env)
+		return (NULL);
 	tmp = *env;
 	while (tmp)
 	{
@@ -29,12 +27,24 @@ char	*ft_get_path(char **cmd)
 			break ;
 		tmp = (tmp)->next;
 	}
+	return (tmp);
+}
+
+char	*ft_get_path(char **cmd)
+{
+	t_env	*tmp;
+	int		fd;
+	int		start;
+	int		end;
+	char	*path;
+
+	tmp = path_env();
 	if (!tmp)
 		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
 	fd = -1;
 	start = 0;
 	end = start + 1;
-	while (fd < 0 && (tmp)->value[start])
+	while (fd < 0 && tmp->value[start])
 	{
 		while (tmp->value[end] != ':')
 			end++;
@@ -52,7 +62,7 @@ char	*ft_get_path(char **cmd)
 	}
 	if (fd < 0)
 		return (*cmd);
-	return (free(*cmd), close(fd), path);
+	return (close(fd), path);
 }
 
 int	ft_cnt_arg(t_lexer *lexer)
@@ -81,14 +91,12 @@ void	ft_remove_redirection(t_lexer **start)
 		if (tmp && tmp->type == REDIRECTION && tmp == *start)
 		{
 			*start = tmp->next;
-			ft_lstdelone(tmp, NULL);
 			tmp = *start;
 		}
 		if (tmp && tmp->next && tmp->next->type == REDIRECTION)
 		{
 			to_del = tmp->next;
 			tmp->next = to_del->next;
-			ft_lstdelone(to_del, NULL);
 		}
 		tmp = tmp->next;
 	}
@@ -103,13 +111,12 @@ void ft_main_parser(char *line)
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
 	cmds = ft_split_cmds(&lexer);
-	// int	i = 0;
-	// while (cmds[i])
-	// {
-	// 	printf("cmds[%d] = %p\n", i, cmds[i]);
-	// 	ft_lstprint(cmds[i], TYPE);
-	// 	ft_lstprint(cmds[i], COMMAND);
-	// 	i++;
-	// }
-	(void)cmds;
+	int	i = 0;
+	while (cmds[i])
+	{
+		ft_lstprint(cmds[i], TYPE);
+		ft_lstprint(cmds[i], COMMAND);
+		i++;
+	}
+	free(cmds);
 }

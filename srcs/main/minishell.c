@@ -9,7 +9,7 @@
 /*   Updated: 2022/07/22 02:16:42 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-// < infile cp -r < ../../includes ../../../0.piscine/ $DISPLAY|grep "cat \"echo\"" >> outfile
+// <infile cp -r < ../../includes ../../../0.piscine/ $DISPLAY|grep "cat \"echo\"">>outfile
 #include "../../includes/proto.h"
 
 int	g_signal;
@@ -20,6 +20,7 @@ static int	ft_check_quote(char *str, char sep)
 	int	i;
 
 	i = 0;
+	count = 0;
 	if (!str)
 		return (0);
 	while (str[i])
@@ -38,7 +39,7 @@ void	stop_cmd(int sig)
 	if (sig == 2)
 	{
 		g_signal = 130;
-		printf("exit\n");
+		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -52,34 +53,24 @@ void	stop_cmd(int sig)
 
 static int	check_line(char *str)
 {
+	char	simple_quote;
+	char	double_quote;
+
+	simple_quote = '\'';
+	double_quote = '\"';
 	if (!str)
 		return (0);
-	if (!(ft_check_quote(str, '\"') % 2) || !(ft_check_quote(str, '\'') % 2))
+	if (!(ft_check_quote(str, simple_quote) % 2) || \
+	!(ft_check_quote(str, double_quote) % 2))
 		return (0);
 	return (1);
-}
-
-void	ft_free_cmd(t_lexer ***command, char *line)
-{
-	int		i;
-
-	i = 0;
-	if (!*command)
-		return ;
-	while (*command + i)
-		ft_lstclear(*command + i++, free);
-	if (line)
-	{
-		free(line);
-		line = NULL;
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
-	if (!ft_init_t_env(envp))
+	if (!ft_init_t_env(envp) || !ft_init_trash())
 		return (0);
 	g_signal = 0;
 	signal(SIGINT, stop_cmd);

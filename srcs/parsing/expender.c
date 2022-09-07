@@ -30,7 +30,7 @@ char	*ft_expender(t_lexer *lexer, char **to_find)
 		{
 			res = strdup(tmp->value);
 			ft_add_trash((void *)res);
-			return (free(*to_find), res);
+			return (res);
 		}
 		tmp = tmp->next;
 	}

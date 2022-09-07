@@ -18,26 +18,28 @@ int	ft_dont_skip(char c)
 	c == '\"' || c == '\\');
 }
 
-char *ft_split_cmd(t_lexer *lex, char *line)
+char	*ft_split_cmd(t_lexer *lex, char *line)
 {
-	char *res;
-	int len;
+	char	*res;
+	int		len;
 
 	if (lex && lex->next)
 		len = lex->next->index - lex->index ;
 	else
 		len = ft_strlen(line + lex->index) + 1;
-	if ((lex->type == EXPENDER || (lex->next && lex->next->type == REDIRECTION)) && !ft_isspace(line[len]))
-		len++;
 	res = (char *)ft_calloc(sizeof(char), len + 1);
 	if (!res)
-		return (ft_putstr_fd("MALLOC FAILED FT_PARSE_ARGS.C", _STD_ERR), NULL);
-	ft_add_trash((void *)res);
+		return (ft_putstr_fd("MALLOC FAILED FT_SPLIT_ARGS.C", _STD_ERR), NULL);
+	if (!ft_add_trash((void *)res))
+		return (NULL);
+	if (line[lex->index] != ' ')
+		len++;
 	ft_strlcpy(res, line + lex->index, len);
 	res = ft_strtrim(res, " \t\n\r\v\f");
 	if (!res)
 		return (NULL);
-	ft_add_trash((void *)res);
+	if (!ft_add_trash((void *)res))
+		return (NULL);
 	return (res);
 }
 

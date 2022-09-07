@@ -29,7 +29,6 @@ void	ft_empty_trash(void)
 	while (*next)
 	{
 		*next = curr->next;
-		printf("removing \e[30m[%p] \e[0mfrom trash\n", curr->to_free);
 		free(curr->to_free);
 		free(curr);
 		curr = *next;
@@ -37,23 +36,30 @@ void	ft_empty_trash(void)
 	ft_clean_env_list();
 }
 
-void	ft_add_trash(void *to_free)
+int	ft_add_trash(void *to_free)
 {
 	t_garbage	*new_cell;
 	t_garbage	**bin;
-	t_garbage	*tmp;
 
 	bin = ft_get_trash();
-	new_cell = ft_calloc(sizeof(t_garbage), 1);
+	new_cell = (t_garbage *)ft_calloc(sizeof(t_garbage), 1);
 	if (!new_cell)
-		ft_empty_trash();
+		return (ft_empty_trash(), 0);
 	new_cell->to_free = to_free;
 	new_cell->next = NULL;
-	printf("adding \e[33m[%p] \e[0mto trash\n", new_cell->to_free);
-	tmp = *bin;
-	while (tmp)
-	{
-		tmp = tmp->next;
-	}
-	
+	if (*bin)
+		new_cell->next = *bin;
+	*bin = new_cell;
+	return (1);
+}
+
+int	ft_init_trash(void)
+{
+	t_garbage	**bin;
+
+	bin = ft_get_trash();
+	if (!bin)
+		return (0);
+	*bin = NULL;
+	return (1);
 }

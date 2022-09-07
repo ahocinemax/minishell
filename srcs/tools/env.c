@@ -41,18 +41,16 @@ int	ft_add_front(char *env, t_env **start, int declare)
 void	ft_clean_env_list(void)
 {
 	t_env	**get_env;
-	t_env	*new;
-	t_env	*tmp;
+	t_env	*next;
+	t_env	*curr;
 
 	get_env = ft_get_env();
-	new = *get_env;
-	while (new)
+	next = *get_env;
+	while (next)
 	{
-		tmp = new;
-		new = new->next;
-		free(tmp->str);
-		free(tmp->value);
-		free(tmp);
+		curr = next;
+		next = curr->next;
+		free(curr);
 	}
 }
 
@@ -64,14 +62,16 @@ static int	ft_init_env(t_env **env_lst)
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (ft_clean_env_list(), 0);
+	ft_add_trash((void *)path);
 	str = ft_strjoin("PWD=", path);
 	if (!str)
 		return (0);
+	ft_add_trash((void *)str);
 	if (!ft_add_front("SHLVL=1", env_lst, 1) || !ft_add_front(str, env_lst, 1))
-		return (free(str), ft_clean_env_list(), 0);
+		return (ft_clean_env_list(), 0);
 	if (!ft_add_front("OLDPWD=", env_lst, 1))
-		return (free(str), ft_clean_env_list(), 0);
-	return (free(str), 1);
+		return (ft_clean_env_list(), 0);
+	return (1);
 }
 
 t_env	**ft_get_env(void)
@@ -89,6 +89,7 @@ int	ft_init_t_env(char **env)
 	env_list = ft_get_env();
 	if (!env_list)
 		return (0);
+	*env_list = NULL;
 	i = 0;
 	while (env[i])
 		i++;

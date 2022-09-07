@@ -34,7 +34,6 @@ extern int	g_signal;
 //                   PARSEUR - LEXER                   //
 /////////////////////////////////////////////////////////
 
-void		ft_free_cmd(t_lexer ***command, char *line);
 void		ft_remove_redirection(t_lexer **lexer);
 t_lexer		**ft_split_cmds(t_lexer **lexer);
 void		ft_main_parser(char *line);
@@ -76,11 +75,12 @@ void		ft_export(char *str);
 //                    TOOLS - UTILS                    //
 /////////////////////////////////////////////////////////
 
-void		ft_add_trash(void *to_free);
+int 		ft_add_trash(void *to_free);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_garbage	**ft_get_trash(void);
 void		ft_empty_trash(void);
 t_env		**ft_get_env(void);
+int	        ft_init_trash(void);
 
 #endif

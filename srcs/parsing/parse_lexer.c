@@ -74,6 +74,7 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 void	ft_is_expend(t_lexer **lex, char *s, int *index)
 {
 	t_lexer	*res;
+
 	if (!s[*index + 1] || (s[*index + 1] && ft_isdigit(s[*index + 1])))
 		return ;
 	res = ft_lstnew(NULL, EXPENDER, TYPE);
@@ -93,6 +94,7 @@ void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 	t_type	fd_type;
 
 	res1 = ft_lstnew(NULL, REDIRECTION, TYPE);
+	ft_add_trash((void *)res1);
 	ft_lstadd_back(lex, res1);
 	ft_lstlast(*lex)->index = *i;
 	if (!strncmp(s + *i, "<<", 2))

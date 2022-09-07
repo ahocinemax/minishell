@@ -12,50 +12,50 @@
 
 #include "../../includes/proto.h"
 
+static int	ft_handle_fd(t_lexer *tmp, int *fd)
+{
+	int	fd;
+
+	if (tmp->type == INFILE || tmp->type == D_INFILE)
+	{
+		fd = open(tmp->cmd, O_RDONLY);
+		if (fd == -1)
+			return (free_all(my_arg), NULL);
+		dup2(fd, STDIN_FILENO);
+	}
+	else if (tmp->type == OUTFILE || tmp->type == D_OUTFILE)
+	{
+		fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0666);
+		if (fd == -1)
+			return (free_all(my_arg), NULL);
+		dup2(fd, STDOUT_FILENO);
+	}
+	close(fd);
+}
+
 char	**my_args(t_lexer *start)
 {
 	t_lexer	*tmp;
 	char	**my_arg;
-	int		fd;
 
 	tmp = start;
 	my_arg = NULL;
 	while (tmp)
 	{
-		if (tmp->type == INFILE)
+		if (tmp->type == INFILE || tmp->type == D_INFILE || \
+		tmp->type == OUTFILE || tmp->type == D_OUTFILE)
 		{
-			fd = open(ft_strtrim(tmp->cmd, " \t\n\r\v\f"), O_RDONLY);
-			if (fd == -1)
-			{
-				free_all(my_arg);
-				return (NULL);
-			}
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-			tmp = tmp->next;
-			continue ;
-		}
-		else if (tmp->type == OUTFILE)
-		{
-			fd = open(ft_strtrim(tmp->cmd, " \t\n\r\v\f"), O_RDWR | O_CREAT | O_TRUNC, 0666);
-			if (fd == -1)
-			{
-				free_all(my_arg);
-				return (NULL);
-			}
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-			tmp = tmp->next;
-			continue ;
+			if (!ft_handle_fd(tmp))
+				return (free_all(my_arg), NULL);
 		}
 		else if (tmp->type != STRING && tmp->type != CMD)
-		{
 			tmp = tmp->next;
-			continue ;
+		else
+		{
+			my_arg = ft_tabstradd(my_arg, tmp->cmd);
+			if (!my_arg)
+				return (NULL);
 		}
-		my_arg = ft_tabstradd(my_arg, tmp->cmd);
-		if (!my_arg)
-			return (NULL);
 		tmp = tmp->next;
 	}
 	return (my_arg);

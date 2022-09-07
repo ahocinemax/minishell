@@ -12,20 +12,6 @@
 
 #include "../../includes/proto.h"
 
-int	ft_first_string(t_lexer *lexer)
-{
-	t_lexer	*tmp;
-
-	tmp = lexer;
-	while (tmp)
-	{
-		if (tmp->type == CMD)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (1);
-}
-
 void	ft_is_str(t_lexer **lex, char *s, int *index)
 {
 	t_lexer	*res;
@@ -97,29 +83,12 @@ void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 	ft_add_trash((void *)res1);
 	ft_lstadd_back(lex, res1);
 	ft_lstlast(*lex)->index = *i;
-	if (!strncmp(s + *i, "<<", 2))
-		fd_type = D_INFILE;
-	else if (!strncmp(s + *i, ">>", 2))
-		fd_type = D_OUTFILE;
-	else if (!strncmp(s + *i, "<", 1))
-		fd_type = INFILE;
-	else if (!strncmp(s + *i, ">", 1))
-		fd_type = OUTFILE;
+	fd_type = ft_find_redir(s, *i);
 	res2 = ft_lstnew(NULL, fd_type, TYPE);
 	ft_add_trash((void *)res2);
 	ft_lstadd_back(lex, res2);
 	ft_lstlast(*lex)->index = *i;
-	(*i)++;
-	if (s[*i] && (s[*i] == '>' || s[*i] == '<'))
-		(*i)++;
-	if (s[*i] && (s[*i] == '>' || s[*i] == '<'))
-		ft_putstr_fd("ERROR REDIRECTION SYMBOL\n", _STD_ERR);
-	while (s[*i] && ft_isspace(s[*i]))
-		(*i)++;
-	if (!s[*i] || ft_dont_skip(s[*i]))
-		ft_putstr_fd("ERROR REDIRECTION FILE\n", _STD_ERR);
-	while (s[*i] && ft_isspace(s[*i]))
-		(*i)++;
+	ft_skip_redir(s, i);
 	ft_lstlast(*lex)->index = *i;
 	ft_skip_word(s, i);
 }

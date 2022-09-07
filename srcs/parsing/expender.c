@@ -12,13 +12,13 @@
 
 #include "../../includes/proto.h"
 
-char	*ft_expender(t_lexer *lexer, char **to_find)
+char	*ft_expender(t_lexer *lexer, char *to_find)
 {
 	t_env	**env;
 	t_env	*tmp;
 	char	*res;
 
-	if (!*to_find)
+	if (!to_find)
 		return (NULL);
 	env = ft_get_env();
 	tmp = *env;
@@ -26,7 +26,7 @@ char	*ft_expender(t_lexer *lexer, char **to_find)
 		return (NULL);
 	while (tmp)
 	{
-		if (!ft_strncmp(*to_find, tmp->str, ft_strlen(tmp->str)))
+		if (!ft_strncmp(to_find, tmp->str, ft_strlen(tmp->str)))
 		{
 			res = strdup(tmp->value);
 			ft_add_trash((void *)res);
@@ -34,5 +34,5 @@ char	*ft_expender(t_lexer *lexer, char **to_find)
 		}
 		tmp = tmp->next;
 	}
-	return (*to_find);
+	return (to_find);
 }

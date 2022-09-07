@@ -35,13 +35,13 @@ int	execute(t_lexer **cmd_block)
 	status = 0;
 	if (cmd_block[0])
 	{
+		return (single_cmd(cmd_block[0]));
+	}
+	return (status);
+}
 		/*if (nb_cmd(cmd_block) > 1)
 		{
 			printf("ok\n");
 			return (piped(cmd_block));
 		}
 		else */
-		return (single_cmd(cmd_block[0]));
-	}
-	return (status);
-}

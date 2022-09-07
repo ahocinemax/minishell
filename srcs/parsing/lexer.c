@@ -61,9 +61,9 @@ void	ft_lexer_command(t_lexer *lex, char *line)
 	{
 		split = ft_split_cmd(tmp, line);
 		if (tmp->type == EXPENDER)
-			tmp->cmd = ft_expender(tmp, &split);
+			tmp->cmd = ft_expender(tmp, split);
 		else if (tmp->type == CMD)
-			tmp->cmd = ft_get_path(&split);
+			tmp->cmd = ft_get_path(split);
 		else
 			tmp->cmd = split;
 		tmp = tmp->next;

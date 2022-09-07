@@ -30,7 +30,7 @@ t_env	*path_env(void)
 	return (tmp);
 }
 
-char	*ft_get_path(char **cmd)
+char	*ft_get_path(char *cmd)
 {
 	t_env	*tmp;
 	int		fd;
@@ -48,20 +48,14 @@ char	*ft_get_path(char **cmd)
 	{
 		while (tmp->value[end] != ':')
 			end++;
-		path = ft_calloc(end - start + ft_strlen(*cmd) + 2, sizeof(char));
+		path = ft_build_path(tmp, cmd, end, start);
 		if (!path)
-			return (ft_putstr_fd("MALLOC FAILED, NO PATH\n", _STD_ERR), NULL);
-		ft_add_trash((void *)path);
-		ft_strlcpy(path, tmp->value + start, end - start + 1);
-		ft_strlcat(path, "/", end - start + 2);
-		ft_strlcat(path, *cmd, ft_strlen(*cmd) + ft_strlen(path) + 1);
+			return (ft_putstr_fd("MALLOC FAILED, NO PATH.\n", _STD_ERR), NULL);
 		start = end + 1;
 		fd = open(path, O_RDONLY);
-		if (end <= start)
-			end++;
 	}
 	if (fd < 0)
-		return (*cmd);
+		return (cmd);
 	return (close(fd), path);
 }
 

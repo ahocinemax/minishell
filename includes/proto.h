@@ -48,10 +48,10 @@ void		ft_is_str(t_lexer **lexer, char *s, int *index_of_line);
 t_lexer		*ft_lexer_type(char *line);
 
 /*		PARSE_CMDS		*/
-char		*ft_expender(t_lexer *lexer, char **env_to_find);
+char		*ft_expender(t_lexer *lexer, char *env_to_find);
 void		ft_lexer_command(t_lexer *lexer, char *line);
 char		*ft_split_cmd(t_lexer *lex, char *line);
-char		*ft_get_path(char **command_to_find);
+char		*ft_get_path(char *command_to_find);
 int			ft_check_path(char *path);
 
 /*		  UTILS  		*/
@@ -76,13 +76,15 @@ void		ft_export(char *str);
 //                    TOOLS - UTILS                    //
 /////////////////////////////////////////////////////////
 
+t_type		ft_find_redir(char *str, int i);
+void		ft_skip_redir(char *s, int *i);
 int			ft_add_trash(void *to_free);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_garbage	**ft_get_trash(void);
 void		ft_empty_trash(void);
-t_env		**ft_get_env(void);
 int			ft_init_trash(void);
+t_env		**ft_get_env(void);
 
 /////////////////////////////////////////////////////////
 //                     EXEC - PART                     //

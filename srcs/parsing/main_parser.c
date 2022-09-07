@@ -50,7 +50,7 @@ char	*ft_get_path(char **cmd)
 			end++;
 		path = ft_calloc(end - start + ft_strlen(*cmd) + 2, sizeof(char));
 		if (!path)
-			return (ft_putstr_fd("MALLOC FAILED, NO ABSOLUT PATH\n", _STD_ERR), NULL);
+			return (ft_putstr_fd("MALLOC FAILED, NO PATH\n", _STD_ERR), NULL);
 		ft_add_trash((void *)path);
 		ft_strlcpy(path, tmp->value + start, end - start + 1);
 		ft_strlcat(path, "/", end - start + 2);
@@ -102,21 +102,14 @@ void	ft_remove_redirection(t_lexer **start)
 	}
 }
 
-void ft_main_parser(char *line)
+void	ft_main_parser(char *line)
 {
-	t_lexer **cmds;
+	t_lexer	**cmds;
 	t_lexer	*lexer;
 
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
 	cmds = ft_split_cmds(&lexer);
-	int	i = 0;
-	while (cmds[i])
-	{
-		ft_lstprint(cmds[i], TYPE);
-		ft_lstprint(cmds[i], COMMAND);
-		i++;
-	}
-	free(cmds);
+	execute(cmds);
 }

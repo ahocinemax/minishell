@@ -17,7 +17,11 @@ SRCS 		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
 SRC_FILE 	=	parsing/lexer.c parsing/parse_lexer.c \
 				parsing/main_parser.c parsing/expender.c \
 				main/minishell.c tools/env.c parsing/split_cmds.c \
-				tools/garbage_manager.c
+				tools/garbage_manager.c exec/builtin_finder.c \
+				exec/execute.c exec/ft_bzeros.c exec/ft_calloc.c \
+				exec/ft_strdup.c exec/ft_strjoin.c \
+				exec/ft_strncmp.c exec/ft_tabstradd.c exec/my_args.c \
+				exec/my_env.c exec/single_cmd.c
 
 #------------------------------------#
 #               OBJECTS              #
@@ -57,7 +61,7 @@ $(NAME): $(OBJS)
 	@echo $(GREEN)"- Project compiled -"$(NONE)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
-	@mkdir -p $(OBJ_DIR)/parsing/ $(OBJ_DIR)/main/ $(OBJ_DIR)/tools/ 
+	@mkdir -p $(OBJ_DIR)/parsing/ $(OBJ_DIR)/main/ $(OBJ_DIR)/tools/ $(OBJ_DIR)/exec/ 
 	@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@ -I includes
 
 

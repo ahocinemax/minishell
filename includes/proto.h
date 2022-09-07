@@ -34,6 +34,7 @@ extern int	g_signal;
 //                   PARSEUR - LEXER                   //
 /////////////////////////////////////////////////////////
 
+/* <infile cp -r < ../../includes $DISPLAY|grep "cat \"echo\"">>outfile */
 void		ft_remove_redirection(t_lexer **lexer);
 t_lexer		**ft_split_cmds(t_lexer **lexer);
 void		ft_main_parser(char *line);
@@ -75,12 +76,33 @@ void		ft_export(char *str);
 //                    TOOLS - UTILS                    //
 /////////////////////////////////////////////////////////
 
-int 		ft_add_trash(void *to_free);
+int			ft_add_trash(void *to_free);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_garbage	**ft_get_trash(void);
 void		ft_empty_trash(void);
 t_env		**ft_get_env(void);
-int	        ft_init_trash(void);
+int			ft_init_trash(void);
+
+/////////////////////////////////////////////////////////
+//                     EXEC - PART                     //
+/////////////////////////////////////////////////////////
+
+char		**get_block_cmd(t_lexer *start, int nb_cmd);
+char		**ft_tabstradd(char **old, char *new_str);
+char		***create_cmd_blk(t_lexer *start);
+int			execute(t_lexer **cmd_block);
+int			fork_and_exec(t_lexer *cmd);
+int			exec_child(t_lexer *start);
+int			builtin_finder(char *name);
+int			count_pipe(t_lexer *start);
+char		**my_args(t_lexer *start);
+void		replug(int stdio_cpy[2]);
+int			single_cmd(t_lexer *cmd);
+void		replug(int stdio_cpy[2]);
+int			single_cmd(t_lexer *cmd);
+int			nb_cmd(t_lexer **blck);
+char		**get_clean_env(void);
+void		free_all(char **tab);
 
 #endif

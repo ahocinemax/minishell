@@ -47,9 +47,9 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 {
 	t_lexer	*res;
-	int	s_quote;
-	int	d_quote;
-	int	a;
+	int		s_quote;
+	int		d_quote;
+	int		a;
 
 	s_quote = 0;
 	d_quote = 0;
@@ -83,8 +83,8 @@ void	ft_is_expend(t_lexer **lex, char *s, int *index)
 	(*index)++;
 	ft_lstlast(*lex)->index = *index;
 	while (s[*index] && (ft_isalpha(s[*index]) || \
-	s[*index] == '_' || ft_isdigit(s[*index])))	// Les noms des variables comporte des Maj, des chiffres, des '_' mais ne commence pas par un digit et ne contiennent pas de '='
-		(*index)++;									// Si le $ est solo, on le compte comme un STRING
+	s[*index] == '_' || ft_isdigit(s[*index])))
+		(*index)++;
 }
 
 void	ft_is_redirect(t_lexer **lex, char *s, int *i)

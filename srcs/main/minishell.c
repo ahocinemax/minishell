@@ -9,7 +9,7 @@
 /*   Updated: 2022/07/22 02:16:42 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-// <infile cp -r < ../../includes ../../../0.piscine/ $DISPLAY|grep "cat \"echo\"">>outfile
+
 #include "../../includes/proto.h"
 
 int	g_signal;
@@ -86,10 +86,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			return (ft_empty_trash(), 1);
 		if (check_line(line))
-		{
 			free(line);
-			line = NULL;
-		}
 		else
 			ft_main_parser(line);
 		stop_cmd(50);

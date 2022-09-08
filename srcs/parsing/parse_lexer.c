@@ -23,7 +23,8 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 	else
 		type = STRING;
 	res = ft_lstnew(NULL, type, TYPE);
-	ft_add_trash((void *)res);
+	if (!ft_add_trash((void *)res))
+		return (ft_empty_trash());
 	ft_lstadd_back(lex, res);
 	ft_lstlast(*lex)->index = *index;
 	(*index)++;
@@ -50,7 +51,8 @@ void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 	if (d_quote % 2 == 0 && s_quote % 2 == 0)
 	{
 		res = ft_lstnew(NULL, PIPES, TYPE);
-		ft_add_trash((void *)res);
+		if (!ft_add_trash((void *)res))
+			return (ft_empty_trash());
 		ft_lstadd_back(lex, res);
 		ft_lstlast(*lex)->index = *index;
 	}
@@ -64,7 +66,8 @@ void	ft_is_expend(t_lexer **lex, char *s, int *index)
 	if (!s[*index + 1] || (s[*index + 1] && ft_isdigit(s[*index + 1])))
 		return ;
 	res = ft_lstnew(NULL, EXPENDER, TYPE);
-	ft_add_trash((void *)res);
+	if (!ft_add_trash((void *)res))
+		return (ft_empty_trash());
 	ft_lstadd_back(lex, res);
 	(*index)++;
 	ft_lstlast(*lex)->index = *index;
@@ -80,12 +83,18 @@ void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 	t_type	fd_type;
 
 	res1 = ft_lstnew(NULL, REDIRECTION, TYPE);
-	ft_add_trash((void *)res1);
+	if (!res1)
+		return (ft_empty_trash());
+	if (!ft_add_trash((void *)res1))
+		return (ft_empty_trash());
 	ft_lstadd_back(lex, res1);
 	ft_lstlast(*lex)->index = *i;
 	fd_type = ft_find_redir(s, *i);
 	res2 = ft_lstnew(NULL, fd_type, TYPE);
-	ft_add_trash((void *)res2);
+	if (!res2)
+		return (ft_empty_trash());
+	if (!ft_add_trash((void *)res2))
+		return (ft_empty_trash());
 	ft_lstadd_back(lex, res2);
 	ft_lstlast(*lex)->index = *i;
 	ft_skip_redir(s, i);

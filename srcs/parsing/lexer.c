@@ -12,13 +12,7 @@
 
 #include "../../includes/proto.h"
 
-int	ft_dont_skip(char c)
-{
-	return (c == '<' || c == '>' || c == '|' || c == '$' || c == '\'' || \
-	c == '\"' || c == '\\');
-}
-
-char	*ft_split_cmd(t_lexer *lex, char *line)
+static char	*ft_split_cmd(t_lexer *lex, char *line)
 {
 	char	*res;
 	int		len;
@@ -41,12 +35,6 @@ char	*ft_split_cmd(t_lexer *lex, char *line)
 	if (!ft_add_trash((void *)res))
 		return (NULL);
 	return (res);
-}
-
-void	ft_skip_word(char *s, int *i)
-{
-	while (s[*i] && !ft_dont_skip(s[*i]) && !ft_isspace(s[*i]))
-		(*i)++;
 }
 
 void	ft_lexer_command(t_lexer *lex, char *line)

@@ -62,11 +62,13 @@ static int	ft_init_env(t_env **env_lst)
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (ft_clean_env_list(), 0);
-	ft_add_trash((void *)path);
+	if (!ft_add_trash((void *)path))
+		return (ft_empty_trash(), 0);
 	str = ft_strjoin("PWD=", path);
 	if (!str)
 		return (0);
-	ft_add_trash((void *)str);
+	if (!ft_add_trash((void *)str))
+		return (ft_empty_trash(), 0);
 	if (!ft_add_front("SHLVL=1", env_lst, 1) || !ft_add_front(str, env_lst, 1))
 		return (ft_clean_env_list(), 0);
 	if (!ft_add_front("OLDPWD=", env_lst, 1))

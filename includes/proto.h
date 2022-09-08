@@ -35,7 +35,6 @@ extern int	g_signal;
 /////////////////////////////////////////////////////////
 
 /* <infile cp -r < ../../includes $DISPLAY|grep "cat \"echo\"">>outfile */
-void		ft_remove_redirection(t_lexer **lexer);
 t_lexer		**ft_split_cmds(t_lexer **lexer);
 void		ft_main_parser(char *line);
 
@@ -50,15 +49,13 @@ t_lexer		*ft_lexer_type(char *line);
 /*		PARSE_CMDS		*/
 char		*ft_expender(t_lexer *lexer, char *env_to_find);
 void		ft_lexer_command(t_lexer *lexer, char *line);
-char		*ft_split_cmd(t_lexer *lex, char *line);
 char		*ft_get_path(char *command_to_find);
-int			ft_check_path(char *path);
 
 /*		  UTILS  		*/
+void		ft_skip_redir(char *str, int *index);
+void		ft_skip_word(char *str, int *index);
 int			ft_first_string(t_lexer *lexer);
-void		ft_skip_word(char *str, int *i);
 int			ft_count_pipes(t_lexer *lexer);
-int			ft_cnt_arg(t_lexer *lexer);
 int			ft_dont_skip(char c);
 
 /////////////////////////////////////////////////////////
@@ -78,14 +75,16 @@ void		ft_export(char *str);
 
 t_type		ft_find_redir(char *str, int i);
 void		ft_skip_redir(char *s, int *i);
+/*      trash      */
 int			ft_add_trash(void *to_free);
-int			ft_init_t_env(char **env);
-void		ft_clean_env_list(void);
 t_garbage	**ft_get_trash(void);
 void		ft_empty_trash(void);
 int			ft_init_trash(void);
-t_env		**ft_get_env(void);
+/*       env      */
 char		*ft_build_path(t_env *env, char *cmd, int start, int end);
+int			ft_init_t_env(char **env);
+void		ft_clean_env_list(void);
+t_env		**ft_get_env(void);
 
 /////////////////////////////////////////////////////////
 //                     EXEC - PART                     //

@@ -12,18 +12,18 @@
 
 #include "../../includes/proto.h"
 
-char	*ft_build_path(t_env *path, char *cmd, int start, int len)
+int	ft_dont_skip(char c)
 {
-	char	*res;
+	return (c == '<' || c == '>' || c == '|' || c == '$' || c == '\'' || \
+	c == '\"' || c == '\\');
+}
 
-	res = ft_calloc(len + ft_strlen(cmd) + 2, sizeof(char));
-	if (!res)
-		return (NULL);
-	ft_add_trash((void *)res);
-	ft_strlcpy(res, path->value + start, len + 1);
-	ft_strlcat(res, "/", len + 2);
-	ft_strlcat(res, cmd, ft_strlen(cmd) + ft_strlen(res) + 1);
-	return (res);
+void	ft_skip_word(char *s, int *i)
+{
+	if (!s)
+		return ;
+	while (s[*i] && !ft_dont_skip(s[*i]) && !ft_isspace(s[*i]))
+		(*i)++;
 }
 
 int	ft_first_string(t_lexer *lexer)
@@ -45,6 +45,8 @@ t_type	ft_find_redir(char *str, int i)
 	t_type	fd_type;
 
 	fd_type = 0;
+	if (!str || !(str + i))
+		return (0);
 	if (!strncmp(str + i, "<<", 2))
 		fd_type = D_INFILE;
 	else if (!strncmp(str + i, ">>", 2))

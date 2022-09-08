@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-int	ft_check_path(char *path)
+static int	ft_check_path(char *path)
 {
 	int	fd;
 

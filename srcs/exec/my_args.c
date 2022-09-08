@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-static int	ft_handle_fd(t_lexer *tmp, int *fd)
+static int	ft_handle_fd(t_lexer *tmp)
 {
 	int	fd;
 
@@ -20,17 +20,17 @@ static int	ft_handle_fd(t_lexer *tmp, int *fd)
 	{
 		fd = open(tmp->cmd, O_RDONLY);
 		if (fd == -1)
-			return (free_all(my_arg), NULL);
+			return (0);
 		dup2(fd, STDIN_FILENO);
 	}
 	else if (tmp->type == OUTFILE || tmp->type == D_OUTFILE)
 	{
 		fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0666);
 		if (fd == -1)
-			return (free_all(my_arg), NULL);
+			return (0);
 		dup2(fd, STDOUT_FILENO);
 	}
-	close(fd);
+	return (close(fd), 1);	
 }
 
 char	**my_args(t_lexer *start)
@@ -49,13 +49,10 @@ char	**my_args(t_lexer *start)
 				return (free_all(my_arg), NULL);
 		}
 		else if (tmp->type != STRING && tmp->type != CMD)
-			tmp = tmp->next;
-		else
-		{
-			my_arg = ft_tabstradd(my_arg, tmp->cmd);
-			if (!my_arg)
-				return (NULL);
-		}
+			continue ;
+		my_arg = ft_tabstradd(my_arg, tmp->cmd);
+		if (!my_arg)
+			return (NULL);
 		tmp = tmp->next;
 	}
 	return (my_arg);

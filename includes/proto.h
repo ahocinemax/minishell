@@ -85,6 +85,7 @@ t_garbage	**ft_get_trash(void);
 void		ft_empty_trash(void);
 int			ft_init_trash(void);
 t_env		**ft_get_env(void);
+char		*ft_build_path(t_env *env, char *cmd, int start, int end);
 
 /////////////////////////////////////////////////////////
 //                     EXEC - PART                     //

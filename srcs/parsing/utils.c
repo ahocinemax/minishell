@@ -12,18 +12,18 @@
 
 #include "../../includes/proto.h"
 
-char	*ft_build_path(t_lexer *lexer)
+char	*ft_build_path(t_env *path, char *cmd, int start, int len)
 {
-	char	*path;
+	char	*res;
 
-	path = ft_calloc(end - start + ft_strlen(*cmd) + 2, sizeof(char));
-	if (!path)
+	res = ft_calloc(len + ft_strlen(cmd) + 2, sizeof(char));
+	if (!res)
 		return (NULL);
-	ft_add_trash((void *)path);
-	ft_strlcpy(path, lexer->value + start, end - start + 1);
-	ft_strlcat(path, "/", end - start + 2);
-	ft_strlcat(path, cmd, ft_strlen(cmd) + ft_strlen(path) + 1);
-	return (path);
+	ft_add_trash((void *)res);
+	ft_strlcpy(res, path->value + start, len + 1);
+	ft_strlcat(res, "/", len + 2);
+	ft_strlcat(res, cmd, ft_strlen(cmd) + ft_strlen(res) + 1);
+	return (res);
 }
 
 int	ft_first_string(t_lexer *lexer)

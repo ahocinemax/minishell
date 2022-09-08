@@ -32,26 +32,26 @@ t_env	*path_env(void)
 
 char	*ft_get_path(char *cmd)
 {
-	t_env	*tmp;
+	t_env	*env;
 	int		fd;
 	int		start;
-	int		end;
+	int		len;
 	char	*path;
 
-	tmp = path_env();
-	if (!tmp)
+	env = path_env();
+	if (!env)
 		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
 	fd = -1;
 	start = 0;
-	end = start + 1;
-	while (fd < 0 && tmp->value[start])
+	while (fd < 0 && env->value[start])
 	{
-		while (tmp->value[end] != ':')
-			end++;
-		path = ft_build_path(tmp, cmd, end, start);
+		len = 1;
+		while (env->value[start + len] && env->value[start + len] != ':')
+			len++;
+		path = ft_build_path(env, cmd, start, len);
 		if (!path)
 			return (ft_putstr_fd("MALLOC FAILED, NO PATH.\n", _STD_ERR), NULL);
-		start = end + 1;
+		start += len + 1;
 		fd = open(path, O_RDONLY);
 	}
 	if (fd < 0)
@@ -102,8 +102,11 @@ void	ft_main_parser(char *line)
 	t_lexer	*lexer;
 
 	lexer = ft_lexer_type(line);
+	ft_lstprint(lexer, TYPE);
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
+	ft_lstprint(lexer, COMMAND);
 	cmds = ft_split_cmds(&lexer);
 	execute(cmds);
+	free(cmds);
 }

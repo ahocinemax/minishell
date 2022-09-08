@@ -30,7 +30,7 @@ static int	ft_handle_fd(t_lexer *tmp)
 			return (0);
 		dup2(fd, STDOUT_FILENO);
 	}
-	return (close(fd), 1);	
+	return (close(fd), 1);
 }
 
 char	**my_args(t_lexer *start)

@@ -36,13 +36,17 @@ static void	ft_remove_redirection(t_lexer **start)
 
 void	ft_main_parser(char *line)
 {
-	t_lexer	**cmds;
+	// t_lexer	**cmds;
 	t_lexer	*lexer;
 
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
-	cmds = ft_split_cmds(&lexer);
-	execute(cmds);
-	free(cmds);
+	printf("TYPE : ");
+	ft_lstprint(lexer, TYPE);
+	printf("CMDS : ");
+	ft_lstprint(lexer, COMMAND);
+	// cmds = ft_split_cmds(&lexer);
+	// execute(cmds);
+	// free(cmds);
 }

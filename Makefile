@@ -4,7 +4,7 @@
 
 NAME		= minishell
 
-FLAGS		= -Wall -Wextra -Werror -g3 #-fsanitize=thread
+FLAGS		= -Wall -Wextra -Werror -g3
 INCLUDE		= -I $(HEAD_DIR) -L/usr/include -lreadline
 CC			= gcc
 
@@ -39,16 +39,16 @@ HEADER 		= $(addprefix $(HEAD_DIR), $(HEAD_FILE))
 HEAD_DIR 	= includes/
 HEAD_FILE 	= proto.h struct.h
 
-LIBFT		=	$(addprefix $(LIB_DIR), $(LIBFT_A))
-LIB_DIR		=	libft/
-LIBFT_A		=	libft.a
+LIBFT		= $(addprefix $(LIB_DIR), $(LIBFT_A))
+LIB_DIR		= libft/
+LIBFT_A		= libft.a
 
 
-NONE		= '\033[0m'
-GREEN		= '\033[32m'
-YELLOW		= '\033[33m'
-GRAY		= '\033[2;37m'
-CURSIVE		= '\033[3m'
+NONE		= "\033[0m"
+GREEN		= "\033[32m"
+YELLOW		= "\033[33m"
+GRAY		= "\033[2;37m"
+CURSIVE		= "\033[3m"
 
 all: $(NAME)
 

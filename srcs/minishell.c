@@ -79,7 +79,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	while (1)
 	{
-		line = readline("minishell$> ");
+		line = readline("\e[33mminishell$\e[0m> ");
 		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);

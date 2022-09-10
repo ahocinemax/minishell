@@ -37,21 +37,23 @@ static char	*ft_split_cmd(t_lexer *lex, char *line)
 	return (res);
 }
 
-void	ft_lexer_command(t_lexer *lex, char *line)
+void	ft_lexer_command(t_lexer *lexer, char *line)
 {
 	t_lexer	*tmp;
 	char	*split;
 
-	if (!lex)
+	if (!lexer)
 		return ;
-	tmp = lex;
+	tmp = lexer;
 	while (tmp)
 	{
 		split = ft_split_cmd(tmp, line);
 		if (tmp->type == EXPENDER)
-			tmp->cmd = ft_expender(tmp, split);
+			tmp->cmd = ft_expender(split, ft_strlen(split));
 		else if (tmp->type == CMD)
 			tmp->cmd = ft_get_path(split);
+		else if (tmp->type == D_INFILE)
+			tmp->cmd = ft_heredoc(tmp, split);
 		else
 			tmp->cmd = split;
 		tmp = tmp->next;

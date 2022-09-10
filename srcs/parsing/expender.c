@@ -59,7 +59,7 @@ char	*ft_get_path(char *cmd)
 	return (close(fd), path);
 }
 
-char	*ft_expender(t_lexer *lexer, char *to_find)
+char	*ft_expender(char *to_find, int len)
 {
 	t_env	**env;
 	t_env	*tmp;
@@ -67,13 +67,12 @@ char	*ft_expender(t_lexer *lexer, char *to_find)
 
 	if (!to_find)
 		return (NULL);
+	res = "\0";
 	env = ft_get_env();
 	tmp = *env;
-	if (!lexer)
-		return (NULL);
 	while (tmp)
 	{
-		if (!ft_strncmp(to_find, tmp->str, ft_strlen(tmp->str)))
+		if (!ft_strncmp(to_find, tmp->str, len))
 		{
 			res = strdup(tmp->value);
 			if (!ft_add_trash((void *)res))
@@ -82,7 +81,7 @@ char	*ft_expender(t_lexer *lexer, char *to_find)
 		}
 		tmp = tmp->next;
 	}
-	return (to_find);
+	return (res);
 }
 
 char	*ft_build_path(t_env *path, char *cmd, int start, int len)

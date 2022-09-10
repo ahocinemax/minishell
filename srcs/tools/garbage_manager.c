@@ -33,6 +33,9 @@ void	ft_empty_trash(void)
 		free(curr);
 		curr = *next;
 	}
+	close(0);
+	close(1);
+	close(2);
 	ft_clean_env_list();
 }
 

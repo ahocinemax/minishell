@@ -67,8 +67,8 @@ void	ft_skip_redir(char *str, int *i)
 		ft_putstr_fd("ERROR REDIRECTION SYMBOL\n", _STD_ERR);
 	while (str[*i] && ft_isspace(str[*i]))
 		(*i)++;
-	if (!str[*i] || ft_dont_skip(str[*i]))
-		ft_putstr_fd("ERROR REDIRECTION FILE\n", _STD_ERR);
+	// if (!str[*i] || (ft_dont_skip(str[*i])))
+	// 	ft_putstr_fd("ERROR REDIRECTION FILE\n", _STD_ERR);
 	while (str[*i] && ft_isspace(str[*i]))
 		(*i)++;
 }

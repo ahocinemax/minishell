@@ -36,7 +36,7 @@ extern int	g_signal;
 
 /* <infile cp -r < ../../includes $DISPLAY|grep "cat \"echo\"">>outfile */
 t_lexer		**ft_split_cmds(t_lexer **lexer);
-char	    *ft_heredoc(t_lexer *lexer, char *line);
+char		*ft_heredoc(t_lexer *lexer, char *line);
 void		ft_main_parser(char *line);
 
 /*		PARSE_TYPE		*/

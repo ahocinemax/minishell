@@ -58,7 +58,7 @@ void	ft_cd(char *str)
 		ft_putstr_fd("Can't find directory\n", _STD_ERR);
 		return ;
 	}
-	path = getcwd(NULL, 50);
+	path = getcwd(NULL, 0);
 	nb_of_prev = ft_prev_folder(str);
 	while (*str && (*str == '/' || *str == '.'))
 		str++;

@@ -12,6 +12,42 @@
 
 #include "../../includes/proto.h"
 
+void	ft_skip_expend(char *str, int *i)
+{
+	*i = 0;
+	while (str[*i] && (ft_isalpha(str[*i]) || \
+	str[*i] == '_' || ft_isdigit(str[*i])))
+		(*i)++;
+}
+
+static char	*ft_expend_text2(char *str)
+{
+	char	*exp;
+	char	*res;
+	int		i;
+	int		j;
+
+	i = -1;
+	res = (char *)ft_calloc(sizeof(char), 10000);
+	if (!ft_add_trash((void *)res))
+		return (ft_empty_trash(), NULL);
+	while (++i < ft_strlen(str))
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			ft_skip_expend(str + i, &j);
+			exp = ft_expender(str + i, j);
+			if (exp && ft_strncmp(exp, str, i - j))
+				ft_strlcat(res, exp, ft_strlen(exp) + 2);
+			i += j;
+		}
+		else
+			ft_strlcat(res, str + i, i + 2);
+	}
+	return (res);
+}
+
 static char	*ft_split_cmd(t_lexer *lex, char *line)
 {
 	char	*res;
@@ -55,11 +91,9 @@ void	ft_lexer_command(t_lexer *lexer, char *line)
 		else if (tmp->type == D_INFILE)
 			tmp->cmd = ft_heredoc(tmp, split);
 		else if (tmp->type == EXPEND_STRING)
-			tmp->cmd = ft_expend_string(split);
+			tmp->cmd = ft_expend_text2(split);
 		else
 			tmp->cmd = split;
-		if (tmp->type == EXPENDER && line[tmp->index - 2] != ' ')
-			tmp->cmd = NULL;
 		tmp = tmp->next;
 	}
 }

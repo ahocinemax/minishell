@@ -37,8 +37,9 @@ extern int	g_signal;
 /* <infile cp -r < ../../includes $DISPLAY|grep "cat \"echo\"">>outfile */
 char		*ft_heredoc(t_lexer *lexer, char *line);
 t_lexer		**ft_split_cmds(t_lexer **lexer);
+int			ft_is_strexpend(char *split);
 void		ft_main_parser(char *line);
-void    	ft_unlink_heredoc(void);
+void		ft_unlink_heredoc(void);
 
 /*		PARSE_TYPE		*/
 void		ft_is_redirect(t_lexer **lexer, char *str, int *index_of_line);
@@ -49,8 +50,8 @@ void		ft_is_str(t_lexer **lexer, char *s, int *index_of_line);
 t_lexer		*ft_lexer_type(char *line);
 
 /*		PARSE_CMDS		*/
+char		*ft_expender(char *env_to_find, int size_elem);
 void		ft_lexer_command(t_lexer *lexer, char *line);
-char		*ft_expender(char *env_to_find, int len);
 char		*ft_get_path(char *command_to_find);
 
 /*		  UTILS  		*/
@@ -87,6 +88,8 @@ char		*ft_build_path(t_env *env, char *cmd, int start, int end);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_env		**ft_get_env(void);
+
+int			max(int a, int b);
 
 /////////////////////////////////////////////////////////
 //                     EXEC - PART                     //

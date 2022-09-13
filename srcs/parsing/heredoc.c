@@ -47,9 +47,9 @@ static char	*ft_find_available_name(void)
 	if (!res || !ft_add_trash((void *)res))
 		return (ft_empty_trash(), NULL);
 	ft_strlcat(res, "/tmp/.heredoc_", 15);
-	fd = -1;
+	fd = 0;
 	j = 0;
-	while (fd == -1 && j < 10)
+	while (fd != -1 && j < 10)
 	{
 		res[14] = j + '0';
 		fd = open(res, O_RDONLY);
@@ -77,7 +77,7 @@ static void	ft_expend_text(char *str, int fd)
 			expended = ft_expender(str + i, j);
 			if (expended || ft_strncmp(expended, str, ft_strlen(str)) \
 			|| !ft_add_trash((void *)expended))
-				write (fd, expended, ft_strlen(expended));
+				write(fd, expended, ft_strlen(expended));
 			i += j;
 		}
 		else

@@ -12,26 +12,19 @@
 
 #include "../../includes/proto.h"
 
-char	*ft_expend_string(char *split)
+int	ft_is_strexpend(char *split)
 {
-	char	*res;
 	int		i;
 
 	if (!split)
-		return (NULL);
-	res = NULL;
+		return (0);
 	i = 0;
-	while(split[i])
-	{
-		if (i == '$')
-		{
-			;
-		}
-		else
-		
-	}
-	return (res);
-
+	while (split[i] && split[i] != '$' && !ft_isspace(split[i]) && \
+	!ft_dont_skip(split[i]))
+		i++;
+	if (split[i] && split[i] == '$')
+		return (1);
+	return (0);
 }
 
 t_env	*path_env(void)
@@ -81,19 +74,21 @@ char	*ft_get_path(char *cmd)
 	return (close(fd), path);
 }
 
-char	*ft_expender(char *to_find, int len)
+char	*ft_expender(char *to_find, int size_elem)
 {
-	t_env	**env;
 	t_env	*tmp;
 	char	*res;
+	int		len;
 
 	if (!to_find)
 		return (NULL);
 	res = "\0";
-	env = ft_get_env();
-	tmp = *env;
+	tmp = *(ft_get_env());
+	if (*to_find == '$')
+		to_find++;
 	while (tmp)
 	{
+		len = max(ft_strlen(tmp->env_name), size_elem);
 		if (!ft_strncmp(to_find, tmp->env_name, len))
 		{
 			res = strdup(tmp->value);

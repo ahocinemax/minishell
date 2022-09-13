@@ -12,6 +12,14 @@
 
 #include "../../includes/proto.h"
 
+int	max(int a, int b)
+{
+	if (a < b)
+		return (b);
+	else
+		return (a);
+}
+
 void	ft_close_fds(t_lexer **cmds)
 {
 	t_lexer	*tmp;
@@ -63,12 +71,13 @@ void	ft_main_parser(char *line)
 {
 	t_lexer	**cmds;
 	t_lexer	*lexer;
+	int		i;
 
+	i = 0;
 	lexer = ft_lexer_type(line);
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
 	cmds = ft_split_cmds(&lexer);
-	int	i = 0;
 	while (cmds[i])
 	{
 		ft_lstprint(cmds[i], TYPE);

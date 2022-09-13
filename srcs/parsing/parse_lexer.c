@@ -17,11 +17,11 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 	t_lexer	*res;
 	t_type	type;
 
-	if (!(*lex) || ft_lstlast(*lex)->type == PIPES || \
-	ft_first_string(*lex))
-		type = CMD;
-	else if (ft_is_strexpend(s, *index))
+	if (ft_is_strexpend(s + *index))
 		type = EXPEND_STRING;
+	else if (!(*lex) || ft_lstlast(*lex)->type == PIPES || \
+	(ft_first_string(*lex) && !ft_is_strexpend(s + *index)))
+		type = CMD;
 	else
 		type = STRING;
 	res = ft_lstnew(NULL, type, TYPE);
@@ -35,9 +35,9 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 
 void	ft_is_pipe(t_lexer **lex, char *s, int *index)
 {
-	t_lexer	*res;
 	int		s_quote;
 	int		d_quote;
+	t_lexer	*res;
 	int		a;
 
 	s_quote = 0;
@@ -71,8 +71,8 @@ void	ft_is_expend(t_lexer **lex, char *s, int *index)
 	if (!ft_add_trash((void *)res))
 		return (ft_empty_trash());
 	ft_lstadd_back(lex, res);
-	(*index)++;
 	ft_lstlast(*lex)->index = *index;
+	(*index)++;
 	while (s[*index] && (ft_isalpha(s[*index]) || \
 	s[*index] == '_' || ft_isdigit(s[*index])))
 		(*index)++;

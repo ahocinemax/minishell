@@ -12,32 +12,30 @@ CC			= gcc
 #               SOURCES              #
 #------------------------------------#
 
-SRC_DIR 	=	srcs/
-SRCS 		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
-SRC_FILE 	=	parsing/lexer.c parsing/parse_lexer.c parsing/utils.c\
+SRC_DIR		=	srcs/
+SRCS		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
+SRC_FILE	=	parsing/lexer.c parsing/parse_lexer.c parsing/utils.c\
 				parsing/main_parser.c parsing/expender.c parsing/heredoc.c \
 				minishell.c tools/env.c parsing/split_cmds.c \
 				tools/garbage_manager.c exec/builtin_finder.c \
-				exec/execute.c exec/ft_bzeros.c exec/ft_calloc.c \
-				exec/ft_strdup.c exec/ft_strjoin.c \
-				exec/ft_strncmp.c exec/ft_tabstradd.c exec/my_args.c \
+				exec/execute.c exec/ft_tabstradd.c exec/my_args.c \
 				exec/my_env.c exec/single_cmd.c
 
 #------------------------------------#
 #               OBJECTS              #
 #------------------------------------#
 
-OBJS 		= $(addprefix $(OBJ_DIR), $(OBJ))
-OBJ_DIR 	= obj/
-OBJ 		= $(SRC_FILE:.c=.o)
+OBJS		= $(addprefix $(OBJ_DIR), $(OBJ))
+OBJ_DIR		= obj/
+OBJ			= $(SRC_FILE:.c=.o)
 
 #------------------------------------#
 #              INCLUDES              #
 #------------------------------------#
 
-HEADER 		= $(addprefix $(HEAD_DIR), $(HEAD_FILE))
-HEAD_DIR 	= includes/
-HEAD_FILE 	= proto.h struct.h
+HEADER		= $(addprefix $(HEAD_DIR), $(HEAD_FILE))
+HEAD_DIR	= includes/
+HEAD_FILE	= proto.h struct.h
 
 LIBFT		= $(addprefix $(LIB_DIR), $(LIBFT_A))
 LIB_DIR		= libft/

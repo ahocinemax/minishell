@@ -20,6 +20,8 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 	if (!(*lex) || ft_lstlast(*lex)->type == PIPES || \
 	ft_first_string(*lex))
 		type = CMD;
+	else if (ft_is_strexpend(s, *index))
+		type = EXPEND_STRING;
 	else
 		type = STRING;
 	res = ft_lstnew(NULL, type, TYPE);

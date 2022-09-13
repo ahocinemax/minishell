@@ -14,8 +14,8 @@
 
 int	ft_dont_skip(char c)
 {
-	return (c == '<' || c == '>' || c == '|' || c == '$' || c == '\'' || \
-	c == '\"' || c == '\\');
+	return (c == '<' || c == '>' || c == '|' || \
+		c == '\'' || c == '\"' || c == '\\');
 }
 
 void	ft_skip_word(char *s, int *i)

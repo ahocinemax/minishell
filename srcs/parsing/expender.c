@@ -12,6 +12,28 @@
 
 #include "../../includes/proto.h"
 
+char	*ft_expend_string(char *split)
+{
+	char	*res;
+	int		i;
+
+	if (!split)
+		return (NULL);
+	res = NULL;
+	i = 0;
+	while(split[i])
+	{
+		if (i == '$')
+		{
+			;
+		}
+		else
+		
+	}
+	return (res);
+
+}
+
 t_env	*path_env(void)
 {
 	t_env	**env;

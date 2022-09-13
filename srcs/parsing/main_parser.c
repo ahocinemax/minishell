@@ -24,7 +24,7 @@ void	ft_close_fds(t_lexer **cmds)
 		tmp = cmds[i];
 		while (tmp)
 		{
-			if (tmp->type > 4)
+			if (tmp->type > 5)
 			{
 				fd = ft_atoi(tmp->cmd);
 				if (fd > 0)
@@ -34,6 +34,7 @@ void	ft_close_fds(t_lexer **cmds)
 		}
 		i++;
 	}
+	ft_unlink_heredoc();
 }
 
 static void	ft_remove_redirection(t_lexer **start)
@@ -67,14 +68,14 @@ void	ft_main_parser(char *line)
 	ft_lexer_command(lexer, line);
 	ft_remove_redirection(&lexer);
 	cmds = ft_split_cmds(&lexer);
-	execute(cmds);
+	int	i = 0;
+	while (cmds[i])
+	{
+		ft_lstprint(cmds[i], TYPE);
+		ft_lstprint(cmds[i], COMMAND);
+		i++;
+	}
 	ft_close_fds(cmds);
 	free(cmds);
 }
-// while (cmds[i])
-// int	i = 0;
-// {
-// 	ft_lstprint(cmds[i], TYPE);
-// 	ft_lstprint(cmds[i], COMMAND);
-// 	i++;
-// }
+	// execute(cmds);

@@ -54,8 +54,12 @@ void	ft_lexer_command(t_lexer *lexer, char *line)
 			tmp->cmd = ft_get_path(split);
 		else if (tmp->type == D_INFILE)
 			tmp->cmd = ft_heredoc(tmp, split);
+		else if (tmp->type == EXPEND_STRING)
+			tmp->cmd = ft_expend_string(split);
 		else
 			tmp->cmd = split;
+		if (tmp->type == EXPENDER && line[tmp->index - 2] != ' ')
+			tmp->cmd = NULL;
 		tmp = tmp->next;
 	}
 }

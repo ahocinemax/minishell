@@ -12,23 +12,46 @@
 
 #include "../../includes/proto.h"
 
+void	ft_unlink_heredoc(void)
+{
+	char	*res;
+	int		fd;
+	int		j;
+
+	res = (char *)ft_calloc(sizeof(char), 20);
+	if (!res || !ft_add_trash((void *)res))
+		return (ft_empty_trash(), (void)0);
+	ft_strlcat(res, "/tmp/.heredoc_", 15);
+	fd = 0;
+	j = 0;
+	while (j < 10)
+	{
+		res[14] = j + '0';
+		fd = open(res, O_RDONLY);
+		if (fd > 0)
+		{
+			close(fd);
+			unlink(res);
+		}
+		j++;
+	}
+}
+
 static char	*ft_find_available_name(void)
 {
 	char	*res;
 	int		fd;
 	int		j;
 
-	res = (char *)ft_calloc(sizeof(char), 11);
+	res = (char *)ft_calloc(sizeof(char), 20);
 	if (!res || !ft_add_trash((void *)res))
 		return (ft_empty_trash(), NULL);
-	ft_strlcat(res, ".heredoc_", 10);
-	fd = 0;
+	ft_strlcat(res, "/tmp/.heredoc_", 15);
+	fd = -1;
 	j = 0;
-	while (fd != -1 && j < 10)
+	while (fd == -1 && j < 10)
 	{
-		if (fd > 0)
-			close(fd);
-		res[9] = j + '0';
+		res[14] = j + '0';
 		fd = open(res, O_RDONLY);
 		j++;
 	}
@@ -93,7 +116,6 @@ char	*ft_heredoc(t_lexer *lexer, char *line)
 	char	*file_name;
 	char	*prompt;
 	bool	expend;
-	char	*ret;
 	int		fd;
 
 	if (!line)
@@ -102,14 +124,13 @@ char	*ft_heredoc(t_lexer *lexer, char *line)
 	if (*line == '\'')
 		expend = true;
 	file_name = ft_find_available_name();
+	if (!file_name)
+		return (NULL);
 	fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
-	ret = ft_itoa(fd);
-	if (!ret || !ft_add_trash((void *)ret))
-		return (ft_empty_trash(), NULL);
 	if (ft_count_pipes(lexer) > 1)
 		prompt = "pipe heredoc> ";
 	else
 		prompt = "heredoc> ";
 	ft_open_text_area(fd, expend, prompt, line);
-	return (ret);
+	return (close(fd), file_name);
 }

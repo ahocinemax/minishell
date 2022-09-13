@@ -23,7 +23,7 @@ t_env	*path_env(void)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->str, "PATH", 5))
+		if (!ft_strncmp(tmp->env_name, "PATH", 5))
 			break ;
 		tmp = (tmp)->next;
 	}
@@ -72,7 +72,7 @@ char	*ft_expender(char *to_find, int len)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strncmp(to_find, tmp->str, len))
+		if (!ft_strncmp(to_find, tmp->env_name, len))
 		{
 			res = strdup(tmp->value);
 			if (!ft_add_trash((void *)res))

@@ -27,7 +27,7 @@ struct	s_cmd
 
 struct s_env
 {
-	char		*str;
+	char		*env_name;
 	char		*value;
 	int			declare;
 	t_env		*next;

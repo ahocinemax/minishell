@@ -18,49 +18,13 @@ int	exec_builtin(t_lexer *cmd)
 	return (0);
 }
 
-int	single_cmd(t_lexer *cmd)
+void	replug(int fd_cpy[2])
 {
-	int	stdio_cpy[2];
-	int	status;
-
-	status = 0;
-	if (builtin_finder(cmd->cmd) == -1)
-		status = fork_and_exec(cmd);
-	else
-	{
-		stdio_cpy[0] = dup(STDIN_FILENO);
-		stdio_cpy[1] = dup(STDOUT_FILENO);
-		status = exec_builtin(cmd);
-		replug(stdio_cpy);
-	}
-	return (status);
+	dup2(fd_cpy[0], STDIN_FILENO);
+	dup2(fd_cpy[1], STDOUT_FILENO);
 }
 
-void	replug(int stdio_cpy[2])
-{
-	dup2(stdio_cpy[0], STDIN_FILENO);
-	dup2(stdio_cpy[1], STDOUT_FILENO);
-}
-
-int	fork_and_exec(t_lexer *cmd)
-{
-	int	pid;
-	int	status;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork failed");
-		return (-1);
-	}
-	if (pid == 0)
-		exec_child(cmd);
-	else
-		wait(&status);
-	return (status);
-}
-
-int	exec_child(t_lexer *start)
+int	exec_child(t_lexer *start_cmd)
 {
 	char	**args;
 	char	**env;
@@ -69,30 +33,57 @@ int	exec_child(t_lexer *start)
 
 	fd[0] = dup(STDIN_FILENO);
 	fd[1] = dup(STDOUT_FILENO);
-	args = my_args(start);
+	args = my_args(start_cmd);
 	if (!args)
 		return (-1);
 	env = get_clean_env();
 	if (!env)
-	{
-		free_all(args);
-		return (-1);
-	}
-	tmp = start;
+		return (free_all(args), -1);
+	tmp = start_cmd;
 	while (tmp && (tmp->type != STRING && tmp->type != CMD))
 		tmp = tmp->next;
 	if (tmp == NULL)
-	{
-		free_all(args);
-		free_all(env);
-		exit(EXIT_FAILURE);
-	}
+		return (free_all(args), free_all(env), exit(EXIT_FAILURE), 0);
 	execve(tmp->cmd, args, env);
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
+	replug(fd);
 	close(fd[0]);
 	close(fd[1]);
-	free_all(args);
-	free_all(env);
-	exit(EXIT_SUCCESS);
+	return (free_all(args), free_all(env), exit(EXIT_SUCCESS), 0);
+}
+
+int	fork_and_exec(t_lexer *cmd)
+{
+	int	pid;
+	int	status;
+
+	pid = fork();
+	status = 0;
+	if (pid == -1)
+	{
+		perror("fork failed");
+		return (-1);
+	}
+	else if (!pid)
+		exec_child(cmd);
+	else
+		wait(&status);
+	return (status);
+}
+
+int	single_cmd(t_lexer *cmd)
+{
+	int	fd_cpy[2];
+	int	status;
+
+	status = 0;
+	if (builtin_finder(cmd->cmd) == -1)
+		status = fork_and_exec(cmd);
+	else
+	{
+		fd_cpy[0] = dup(STDIN_FILENO);
+		fd_cpy[1] = dup(STDOUT_FILENO);
+		status = exec_builtin(cmd);
+		replug(fd_cpy);
+	}
+	return (status);
 }

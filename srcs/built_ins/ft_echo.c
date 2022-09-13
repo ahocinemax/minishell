@@ -16,7 +16,7 @@
 int	is_expend(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!str)
 		return (0);

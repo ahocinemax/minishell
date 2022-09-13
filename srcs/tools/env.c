@@ -21,7 +21,7 @@ int	ft_add_front(char *env, t_env **start, int declare)
 	new_env = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!new_env)
 		return (0);
-	new_env->str = env;
+	new_env->env_name = env;
 	while (env[i])
 	{
 		if (env[i++] == '=')

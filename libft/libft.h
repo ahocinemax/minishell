@@ -36,12 +36,12 @@ enum	e_type
 	STRING,
 	CMD,
 	PIPES,
+	EXPENDER,
 	REDIRECTION,
 	INFILE,
 	D_INFILE,
 	OUTFILE,
-	D_OUTFILE,
-	EXPENDER
+	D_OUTFILE
 };
 
 struct s_list

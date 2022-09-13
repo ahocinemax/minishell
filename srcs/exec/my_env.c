@@ -17,7 +17,7 @@ static char	*create_str_env(t_env *elem)
 	char	*new;
 	char	*news;
 
-	new = ft_strjoin(elem->str, "=");
+	new = ft_strjoin(elem->env_name, "=");
 	if (!new)
 		return (NULL);
 	news = ft_strjoin(new, elem->value);

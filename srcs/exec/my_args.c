@@ -18,7 +18,10 @@ static int	ft_handle_fd(t_lexer *tmp)
 
 	if (tmp->type == INFILE || tmp->type == D_INFILE)
 	{
-		fd = open(tmp->cmd, O_RDONLY);
+		if (tmp->type == INFILE)
+			fd = open(tmp->cmd, O_RDONLY);
+		else
+			fd = ft_atoi(tmp->cmd);
 		if (fd == -1)
 			return (0);
 		dup2(fd, STDIN_FILENO);

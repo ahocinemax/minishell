@@ -60,6 +60,7 @@ void		ft_skip_word(char *str, int *index);
 int			ft_first_string(t_lexer *lexer);
 int			ft_count_pipes(t_lexer *lexer);
 int			ft_dont_skip(char c);
+void		stop_cmd(int signal);
 
 /////////////////////////////////////////////////////////
 //                     BUILDS - IN                     //
@@ -95,6 +96,7 @@ int			max(int a, int b);
 //                     EXEC - PART                     //
 /////////////////////////////////////////////////////////
 
+int			exec_builtin(t_lexer *cmd, int function_index);
 char		**get_block_cmd(t_lexer *start, int nb_cmd);
 char		**ft_tabstradd(char **old, char *new_str);
 char		***create_cmd_blk(t_lexer *start);
@@ -111,5 +113,6 @@ int			single_cmd(t_lexer *cmd);
 int			nb_cmd(t_lexer **blck);
 char		**get_clean_env(void);
 void		free_all(char **tab);
+void		**builtin_tab(void);
 
 #endif

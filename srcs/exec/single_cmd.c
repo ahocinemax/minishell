@@ -12,8 +12,15 @@
 
 #include "../../includes/proto.h"
 
-int	exec_builtin(t_lexer *cmd)
+int	exec_builtin(t_lexer *cmd, int function_index)
 {
+	void	**fun_ptr;
+
+	if (!cmd->cmd)
+		return (0);
+	fun_ptr = builtin_tab();
+	if (!*fun_ptr[function_index])
+		fun_ptr[function_index](argv);
 	(void)cmd;
 	return (0);
 }
@@ -31,8 +38,6 @@ int	exec_child(t_lexer *start_cmd)
 	int		fd[2];
 	t_lexer	*tmp;
 
-	fd[0] = dup(STDIN_FILENO);
-	fd[1] = dup(STDOUT_FILENO);
 	args = my_args(start_cmd);
 	if (!args)
 		return (-1);
@@ -40,15 +45,13 @@ int	exec_child(t_lexer *start_cmd)
 	if (!env)
 		return (free_all(args), -1);
 	tmp = start_cmd;
-	while (tmp && (tmp->type != STRING && tmp->type != CMD))
+	while (tmp->type != STRING && tmp->type != CMD && \
+		tmp->type != EXPENDER && tmp->type != EXPEND_STRING)
 		tmp = tmp->next;
-	if (tmp == NULL)
+	if (tmp == NULL || !tmp->cmd)
 		return (free_all(args), free_all(env), exit(EXIT_FAILURE), 0);
-	execve(tmp->cmd, args, env);
-	replug(fd);
-	close(fd[0]);
-	close(fd[1]);
-	return (free_all(args), free_all(env), exit(EXIT_SUCCESS), 0);
+	return (execve(tmp->cmd, args, env), replug(fd), close(fd[0]), \
+	close(fd[1]), free_all(args), free_all(env), exit(EXIT_SUCCESS), 0);
 }
 
 int	fork_and_exec(t_lexer *cmd)
@@ -72,18 +75,23 @@ int	fork_and_exec(t_lexer *cmd)
 
 int	single_cmd(t_lexer *cmd)
 {
+	int	is_builtin;
 	int	fd_cpy[2];
 	int	status;
 
 	status = 0;
-	if (builtin_finder(cmd->cmd) == -1)
+	is_builtin = builtin_finder(cmd->cmd);
+	if (is_builtin == -1)
 		status = fork_and_exec(cmd);
 	else
 	{
 		fd_cpy[0] = dup(STDIN_FILENO);
 		fd_cpy[1] = dup(STDOUT_FILENO);
-		status = exec_builtin(cmd);
+		status = exec_builtin(cmd, is_builtin);
 		replug(fd_cpy);
 	}
+	signal(SIGINT, stop_cmd);
+	signal(SIGQUIT, SIG_IGN);
+
 	return (status);
 }

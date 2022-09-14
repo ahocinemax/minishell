@@ -12,14 +12,14 @@
 
 #include "../../includes/proto.h"
 
-void	free_file_name(char *file_name)
-{
-	if (file_name != NULL)
-	{
-		unlink(file_name);
-		free(file_name);
-	}
-}
+// void	free_file_name(char *file_name)
+// {
+// 	if (file_name != NULL)
+// 	{
+// 		unlink(file_name);
+// 		free(file_name);
+// 	}
+// }
 
 int	nb_cmd(t_lexer **block)
 {
@@ -56,4 +56,4 @@ int	execute(t_lexer **cmd_block)
 	}
 	return (status);
 }
-// free_file_name();
+	// free_file_name();

@@ -18,38 +18,38 @@ static int	ft_handle_fd(t_lexer *tmp)
 
 	if (tmp->type == INFILE || tmp->type == D_INFILE)
 	{
-		fd = open(tmp->cmd, O_RDONLY);
+		fd = open(tmp->cmd, O_RDONLY, 0644);
 		if (fd == -1)
 			return (0);
 		dup2(fd, STDIN_FILENO);
 	}
 	else if (tmp->type == OUTFILE || tmp->type == D_OUTFILE)
 	{
-		fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0666);
+		if (tmp->type == D_OUTFILE)
+			fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
+		else
+			fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 			return (0);
 		dup2(fd, STDOUT_FILENO);
 	}
-	return (close(fd), 1);
+	return (1);
 }
 
 char	**my_args(t_lexer *start)
 {
-	t_lexer	*tmp;
 	char	**my_arg;
+	t_lexer	*tmp;
 
-	tmp = start;
 	my_arg = NULL;
+	tmp = start;
 	while (tmp)
 	{
-		if (tmp->type == INFILE || tmp->type == D_INFILE || \
-		tmp->type == OUTFILE || tmp->type == D_OUTFILE)
+		if (tmp->type > REDIRECTION)
 		{
 			if (!ft_handle_fd(tmp))
 				return (free_all(my_arg), NULL);
 		}
-		else if (tmp->type != STRING && tmp->type != CMD)
-			continue ;
 		my_arg = ft_tabstradd(my_arg, tmp->cmd);
 		if (!my_arg)
 			return (NULL);

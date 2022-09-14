@@ -84,7 +84,7 @@ void	ft_main_parser(char *line)
 		ft_lstprint(cmds[i], COMMAND);
 		i++;
 	}
+	execute(cmds);
 	ft_close_fds(cmds);
 	free(cmds);
 }
-	// execute(cmds);

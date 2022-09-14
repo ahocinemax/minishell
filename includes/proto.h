@@ -38,6 +38,7 @@ extern int	g_signal;
 char		*ft_heredoc(t_lexer *lexer, char *line);
 t_lexer		**ft_split_cmds(t_lexer **lexer);
 int			ft_is_strexpend(char *split);
+void		ft_close_fds(void);
 void		ft_main_parser(char *line);
 void		ft_unlink_heredoc(void);
 
@@ -66,12 +67,13 @@ void		stop_cmd(int signal);
 //                     BUILDS - IN                     //
 /////////////////////////////////////////////////////////
 
-void		ft_echo(char *var);
-void		ft_cd(char *str);
-void		ft_unset(char *str);
-void		ft_env(char *str);
-void		ft_pwd(char *str);
-void		ft_export(char *str);
+void		ft_export(t_lexer *lexer);
+void		ft_unset(t_lexer *lexer);
+void		ft_echo(t_lexer *lexer);
+void		ft_exit(t_lexer *lexer);
+void		ft_env(t_lexer *lexer);
+void		ft_pwd(t_lexer *lexer);
+void		ft_cd(t_lexer *lexer);
 
 /////////////////////////////////////////////////////////
 //                    TOOLS - UTILS                    //
@@ -96,19 +98,18 @@ int			max(int a, int b);
 //                     EXEC - PART                     //
 /////////////////////////////////////////////////////////
 
-int			exec_builtin(t_lexer *cmd, int function_index);
+int			ft_fork_and_exec_builtin(t_lexer *cmd, int function_index);
 char		**get_block_cmd(t_lexer *start, int nb_cmd);
 char		**ft_tabstradd(char **old, char *new_str);
 char		***create_cmd_blk(t_lexer *start);
-int			execute(t_lexer **cmd_block);
+int			ft_execute(t_lexer **cmd_block);
 int			fork_and_exec(t_lexer *cmd);
-int			exec_child(t_lexer *start);
-int			builtin_finder(char *name);
+int			ft_exec_child(t_lexer *start);
+int			ft_builtin_finder(char *name);
 int			count_pipe(t_lexer *start);
-char		**my_args(t_lexer *start);
-void		replug(int stdio_cpy[2]);
+char		**ft_args_lst_to_str(t_lexer *start);
 int			single_cmd(t_lexer *cmd);
-void		replug(int stdio_cpy[2]);
+void		ft_replug_fd(int stdio_cpy[2]);
 int			single_cmd(t_lexer *cmd);
 int			nb_cmd(t_lexer **blck);
 char		**get_clean_env(void);

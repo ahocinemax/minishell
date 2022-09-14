@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-int	builtin_finder(char *name)
+int	ft_builtin_finder(char *name)
 {
 	static char	*builtin_lookup[7];
 	int			i;

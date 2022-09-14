@@ -35,9 +35,9 @@ enum	e_type
 {
 	STRING,
 	CMD,
-	PIPES,
 	EXPENDER,
 	EXPEND_STRING,
+	PIPES,
 	REDIRECTION,
 	INFILE,
 	D_INFILE,
@@ -53,10 +53,10 @@ struct s_list
 
 struct s_lexer
 {
-	int		index;
+	t_lexer	*next;
 	t_type	type;
 	char	*cmd;
-	t_lexer	*next;
+	int		index;
 };
 
 /*	Linked lists	*/

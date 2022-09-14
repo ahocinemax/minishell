@@ -20,28 +20,13 @@ int	max(int a, int b)
 		return (a);
 }
 
-void	ft_close_fds(t_lexer **cmds)
+void	ft_close_fds(void)
 {
-	t_lexer	*tmp;
 	int		fd;
-	int		i;
 
-	i = 0;
-	while (cmds[i])
-	{
-		tmp = cmds[i];
-		while (tmp)
-		{
-			if (tmp->type > 5)
-			{
-				fd = ft_atoi(tmp->cmd);
-				if (fd > 0)
-					close(fd);
-			}
-			tmp = tmp->next;
-		}
-		i++;
-	}
+	fd = 0;
+	while (fd < 10)
+		close(fd++);
 	ft_unlink_heredoc();
 }
 
@@ -84,7 +69,7 @@ void	ft_main_parser(char *line)
 		ft_lstprint(cmds[i], COMMAND);
 		i++;
 	}
-	execute(cmds);
-	ft_close_fds(cmds);
+	ft_execute(cmds);
+	ft_close_fds();
 	free(cmds);
 }

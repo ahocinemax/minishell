@@ -33,10 +33,11 @@ static int	ft_handle_fd(t_lexer *tmp)
 			return (0);
 		dup2(fd, STDOUT_FILENO);
 	}
+	ft_close_fds();
 	return (1);
 }
 
-char	**my_args(t_lexer *start)
+char	**ft_args_lst_to_str(t_lexer *start)
 {
 	char	**my_arg;
 	t_lexer	*tmp;

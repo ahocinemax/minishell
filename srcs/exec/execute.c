@@ -26,12 +26,14 @@ int	nb_cmd(t_lexer **block)
 	int	n;
 
 	n = 0;
+	if (!*block)
+		return (0);
 	while (block[n])
 		n++;
 	return (n);
 }
 
-int	piped(t_lexer **cmd_block)
+int	ft_piped(t_lexer **cmd_block)
 {
 	int		nb_commandd;
 	pid_t	*pid;
@@ -42,7 +44,7 @@ int	piped(t_lexer **cmd_block)
 	return (0);
 }
 
-int	execute(t_lexer **cmd_block)
+int	ft_execute(t_lexer **cmd_block)
 {
 	int	status;
 
@@ -50,7 +52,7 @@ int	execute(t_lexer **cmd_block)
 	if (*cmd_block)
 	{
 		if (nb_cmd(cmd_block) > 1)
-			status = piped(cmd_block);
+			status = ft_piped(cmd_block);
 		else
 			status = single_cmd(cmd_block[0]);
 	}

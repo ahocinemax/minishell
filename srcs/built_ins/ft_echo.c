@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/proto.h"
-#include <stdio.h>
 
 int	is_expend(char *str)
 {

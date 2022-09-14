@@ -12,18 +12,18 @@
 
 #include "../../includes/proto.h"
 
-int	ft_fork_and_exec_builtin(t_lexer *cmd, int function_index)
-{
-	void	**fun_ptr;
+// int	ft_fork_and_exec_builtin(t_lexer *cmd, int function_index)
+// {
+// 	void	**fun_ptr;
 
-	if (!cmd->cmd)
-		return (0);
-	fun_ptr = builtin_tab();
-	if (!fun_ptr[function_index])
-		fun_ptr[function_index](char *);
-	(void)cmd;
-	return (0);
-}
+// 	if (!cmd->cmd)
+// 		return (0);
+// 	fun_ptr = builtin_tab();
+// 	if (!fun_ptr[function_index])
+// 		fun_ptr[function_index](char *);
+// 	(void)cmd;
+// 	return (0);
+// }
 
 void	ft_replug_fd(int fd_cpy[2])
 {
@@ -38,16 +38,16 @@ int	ft_exec_child(t_lexer *start_cmd)
 	int		fd[2];
 	t_lexer	*tmp;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	args = ft_args_lst_to_str(start_cmd);
-	if (!args)
-		return (-1);
 	env = get_clean_env();
-	if (!env)
-		return (free_all(args), -1);
+	if (!args || !env)
+		return (free_all(args), free_all(env), -1);
 	tmp = start_cmd;
 	while (tmp->type > EXPEND_STRING)
 		tmp = tmp->next;
-	if (tmp == NULL || !tmp->cmd)
+	if (tmp == NULL || tmp->cmd == NULL)
 		return (free_all(args), free_all(env), exit(EXIT_FAILURE), 0);
 	return (execve(tmp->cmd, args, env), ft_replug_fd(fd), close(fd[0]), \
 	close(fd[1]), free_all(args), free_all(env), exit(EXIT_SUCCESS), 0);
@@ -66,8 +66,11 @@ int	fork_and_exec(t_lexer *cmd)
 		return (-1);
 	}
 	else if (!pid)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		ft_exec_child(cmd);
-	else
+	}else
 		wait(&status);
 	return (status);
 }
@@ -86,7 +89,7 @@ int	single_cmd(t_lexer *cmd)
 	{
 		fd_cpy[0] = dup(STDIN_FILENO);
 		fd_cpy[1] = dup(STDOUT_FILENO);
-		status = ft_fork_and_exec_builtin(cmd, is_builtin);
+		// status = ft_fork_and_exec_builtin(cmd, is_builtin);
 		ft_replug_fd(fd_cpy);
 	}
 	signal(SIGINT, stop_cmd);

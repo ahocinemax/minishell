@@ -10,4 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../../includes/proto.h>
+#include "../../includes/proto.h"
+
+void	ft_env(char *str)
+{
+	(void)str;
+}

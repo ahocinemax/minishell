@@ -1,1 +1,6 @@
-#include <../../includes/proto.h>
+#include "../../includes/proto.h"
+
+void	ft_unset(char *str)
+{
+	(void)str;
+}

@@ -12,19 +12,6 @@
 
 #include "../../includes/proto.h"
 
-int	is_expend(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		if (str[i++] == '$')
-			return (1);
-	return (0);
-}
-
 static int	ft_parse_flags(char *str, char flg)
 {
 	int		bad_flag;
@@ -48,17 +35,14 @@ static int	ft_parse_flags(char *str, char flg)
 	return (is_flag && !bad_flag);
 }
 
-void	ft_echo(char *var)
+void	ft_echo(t_lexer *lexer, int fd)
 {
 	int	flg;
 
-	flg = ft_parse_flags(var, 'n');
+	flg = ft_parse_flags(lexer->cmd, 'n');
 	if (flg)
-			var += 2;
-	if (is_expend(var))
-		ft_expend_text(var, _STD_OUT);
-	else
-		ft_putstr_fd(var, _STD_OUT);
+			lexer->cmd += 2;
+	ft_putstr_fd(lexer->cmd, _STD_OUT);
 	if (!flg)
 		ft_putchar_fd('\n', _STD_OUT);
 }

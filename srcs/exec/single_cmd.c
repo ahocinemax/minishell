@@ -76,7 +76,7 @@ int	fork_and_exec(t_lexer *cmd)
 	return (status);
 }
 
-int	single_cmd(t_lexer *cmd)
+int	ft_single_cmd(t_lexer *cmd)
 {
 	int	is_builtin;
 	int	fd_cpy[2];

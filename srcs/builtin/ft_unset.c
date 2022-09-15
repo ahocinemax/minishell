@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahocine <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 22:00:22 by ahocine           #+#    #+#             */
-/*   Updated: 2022/09/14 22:00:23 by ahocine          ###   ########.fr       */
+/*   Created: 2022/09/14 22:00:31 by ahocine           #+#    #+#             */
+/*   Updated: 2022/09/14 22:00:32 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/proto.h"
+#include"../../includes/proto.h"
 
-void	ft_unset(char *str)
+void	ft_unset(t_lexer *lexer)
 {
-	(void)str;
+	(void)lexer;
 }

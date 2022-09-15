@@ -74,7 +74,7 @@ void		ft_echo(t_lexer *lexer);
 void		ft_exit(t_lexer *lexer);
 void		ft_env(t_lexer *lexer);
 void		ft_pwd(t_lexer *lexer);
-void		ft_cd(t_lexer *lexer);
+void		ft_cd(char *str);
 
 /////////////////////////////////////////////////////////
 //                    TOOLS - UTILS                    //
@@ -89,6 +89,7 @@ void		ft_empty_trash(void);
 int			ft_init_trash(void);
 /*       env      */
 char		*ft_build_path(t_env *env, char *cmd, int start, int end);
+void		ft_update_env(char *env_name, char *new_value);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_env		**ft_get_env(void);
@@ -102,16 +103,15 @@ int			max(int a, int b);
 int			ft_fork_and_exec_builtin(t_lexer *cmd, int function_index);
 char		**get_block_cmd(t_lexer *start, int nb_cmd);
 char		**ft_tabstradd(char **old, char *new_str);
+char		**ft_args_lst_to_str(t_lexer *start);
 char		***create_cmd_blk(t_lexer *start);
 int			ft_execute(t_lexer **cmd_block);
-int			fork_and_exec(t_lexer *cmd);
+void		ft_replug_fd(int stdio_cpy[2]);
 int			ft_exec_child(t_lexer *start);
 int			ft_builtin_finder(char *name);
+int			ft_single_cmd(t_lexer *cmd);
+int			fork_and_exec(t_lexer *cmd);
 int			count_pipe(t_lexer *start);
-char		**ft_args_lst_to_str(t_lexer *start);
-int			single_cmd(t_lexer *cmd);
-void		ft_replug_fd(int stdio_cpy[2]);
-int			single_cmd(t_lexer *cmd);
 int			nb_cmd(t_lexer **blck);
 char		**get_clean_env(void);
 void		free_all(char **tab);

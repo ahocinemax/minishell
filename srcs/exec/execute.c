@@ -35,12 +35,17 @@ int	nb_cmd(t_lexer **block)
 
 int	ft_piped(t_lexer **cmd_block)
 {
-	int		nb_commandd;
+	int		nb_command;
 	pid_t	*pid;
+	int		i;
 
-	nb_commandd = nb_cmd(cmd_block);
-	pid = (pid_t *)ft_calloc(sizeof(pid_t), nb_commandd);
-	free(pid);
+	i = 0;
+	nb_command = nb_cmd(cmd_block);
+	pid = (pid_t *)ft_calloc(sizeof(pid_t), nb_command);
+	if (!pid || !ft_add_trash((void *)pid))
+		return (ft_empty_trash(), 1);
+	while (cmd_block[i])
+		ft_single_cmd(cmd_block[i++]);
 	return (0);
 }
 
@@ -54,7 +59,7 @@ int	ft_execute(t_lexer **cmd_block)
 		if (nb_cmd(cmd_block) > 1)
 			status = ft_piped(cmd_block);
 		else
-			status = single_cmd(cmd_block[0]);
+			status = ft_single_cmd(cmd_block[0]);
 	}
 	return (status);
 }

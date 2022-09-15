@@ -14,12 +14,33 @@ CC			= gcc
 
 SRC_DIR		=	srcs/
 SRCS		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
-SRC_FILE	=	parsing/lexer.c parsing/parse_lexer.c parsing/utils.c\
-				parsing/main_parser.c parsing/expender.c parsing/heredoc.c \
-				minishell.c tools/env.c parsing/split_cmds.c \
-				tools/garbage_manager.c exec/builtin_finder.c \
-				exec/execute.c exec/ft_tabstradd.c exec/my_args.c \
-				exec/my_env.c exec/single_cmd.c
+SRC_FILE	=	minishell.c				\
+				\
+				parsing/parse_lexer.c	\
+				parsing/main_parser.c	\
+				parsing/split_cmds.c	\
+				parsing/expender.c		\
+				parsing/heredoc.c		\
+				parsing/lexer.c			\
+				parsing/utils.c			\
+				\
+				builtin/ft_export.c	\
+				builtin/ft_unset.c	\
+				builtin/ft_echo.c		\
+				builtin/ft_exit.c		\
+				builtin/ft_env.c		\
+				builtin/ft_pwd.c		\
+				builtin/ft_cd.c		\
+				\
+				exec/builtin_finder.c	\
+				exec/ft_tabstradd.c		\
+				exec/single_cmd.c		\
+				exec/my_args.c			\
+				exec/execute.c			\
+				exec/my_env.c			\
+				\
+				tools/garbage_manager.c	\
+				tools/env.c
 
 #------------------------------------#
 #               OBJECTS              #
@@ -59,7 +80,7 @@ $(NAME): $(OBJS)
 	@echo $(GREEN)"- Project compiled -"$(NONE)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
-	@mkdir -p $(OBJ_DIR)/parsing/ $(OBJ_DIR)/main/ $(OBJ_DIR)/tools/ $(OBJ_DIR)/exec/ 
+	@mkdir -p $(OBJ_DIR)/parsing/ $(OBJ_DIR)/main/ $(OBJ_DIR)/tools/ $(OBJ_DIR)/exec/ $(OBJ_DIR)/builtin/ 
 	@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@ -I includes
 
 

@@ -60,6 +60,7 @@ void		ft_skip_redir(char *str, int *index);
 void		ft_skip_word(char *str, int *index);
 int			ft_first_string(t_lexer *lexer);
 int			ft_count_pipes(t_lexer *lexer);
+void		signal_cmd_2(int sig);
 int			ft_dont_skip(char c);
 void		stop_cmd(int signal);
 

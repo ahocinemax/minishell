@@ -12,6 +12,20 @@
 
 #include "../../includes/proto.h"
 
+int	g_exit_status;
+
+void	signal_cmd_2(int sig)
+{
+	g_exit_status += sig;
+	if (sig == 2)
+	{
+		g_exit_status = 130;
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
 static int	ft_handle_fd(t_lexer *tmp)
 {
 	int	fd;
@@ -26,14 +40,14 @@ static int	ft_handle_fd(t_lexer *tmp)
 	else if (tmp->type == OUTFILE || tmp->type == D_OUTFILE)
 	{
 		if (tmp->type == D_OUTFILE)
-			fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
+			fd = open(tmp->cmd, O_RDWR | O_CREAT | O_APPEND, 0644);
 		else
 			fd = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 			return (0);
 		dup2(fd, STDOUT_FILENO);
 	}
-	return (ft_close_fds(), 1);
+	return (1);
 }
 
 char	**ft_args_lst_to_str(t_lexer *start)

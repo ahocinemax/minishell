@@ -24,7 +24,7 @@ void	ft_close_fds(void)
 {
 	int		fd;
 
-	fd = 0;
+	fd = 2;
 	while (fd < 10)
 		close(fd++);
 	ft_unlink_heredoc();

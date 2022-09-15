@@ -70,7 +70,8 @@ int	fork_and_exec(t_lexer *cmd)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		ft_exec_child(cmd);
-	}else
+	}
+	else
 		wait(&status);
 	return (status);
 }

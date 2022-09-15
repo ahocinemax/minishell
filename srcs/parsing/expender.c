@@ -105,7 +105,7 @@ char	*ft_build_path(t_env *path, char *cmd, int start, int len)
 {
 	char	*res;
 
-	res = ft_calloc(len + ft_strlen(cmd) + 2, sizeof(char));
+	res = ft_calloc(len + ft_strlen(cmd) + 3, sizeof(char));
 	if (!res)
 		return (NULL);
 	if (!ft_add_trash((void *)res))

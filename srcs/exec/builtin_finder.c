@@ -35,16 +35,16 @@ int	ft_builtin_finder(char *name)
 	return (-1);
 }
 
-void	**builtin_tab(void)
-{
-	static void	*builtin_pointer[7];
+// void	**builtin_tab(void)
+// {
+// 	static void	*builtin_pointer[7];
 
-	builtin_pointer[0] = ft_cd;
-	builtin_pointer[1] = ft_pwd;
-	builtin_pointer[2] = ft_exit;
-	builtin_pointer[3] = ft_export;
-	builtin_pointer[4] = ft_env;
-	builtin_pointer[5] = ft_unset;
-	builtin_pointer[6] = ft_echo;
-	return (builtin_pointer);
-}
+// 	builtin_pointer[0] = ft_cd;
+// 	builtin_pointer[1] = ft_pwd;
+// 	builtin_pointer[2] = ft_exit;
+// 	builtin_pointer[3] = ft_export;
+// 	builtin_pointer[4] = ft_env;
+// 	builtin_pointer[5] = ft_unset;
+// 	builtin_pointer[6] = ft_echo;
+// 	return (builtin_pointer);
+// }

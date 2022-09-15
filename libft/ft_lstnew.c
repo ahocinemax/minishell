@@ -24,5 +24,6 @@ t_lexer	*ft_lstnew(char *content, int val, int key)
 	else
 		new->type = val;
 	new->next = NULL;
+	new->index = 0;
 	return (new);
 }

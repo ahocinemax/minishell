@@ -99,7 +99,8 @@ static void	ft_open_text_area(int fd, bool expend, char *prompt, char *eof)
 		str = readline(prompt);
 		if (!str)
 			return (free(str));
-		if (!ft_strncmp(str, sep, ft_strlen(sep)))
+		if (!ft_strncmp(str, sep, ft_strlen(sep)) && \
+		ft_strlen(sep) == ft_strlen(str))
 			break ;
 		if (*str && expend)
 			ft_expend_text(str, fd);

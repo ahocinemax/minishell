@@ -20,7 +20,7 @@ int	ft_fork_and_exec_builtin(t_lexer *cmd, int function_index)
 		return (1);
 	fun_ptr = builtin_tab();
 	if (fun_ptr[function_index])
-		fun_ptr[function_index](cmd);
+		fun_ptr[function_index](cmd->next->cmd);
 	return (0);
 }
 

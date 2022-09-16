@@ -20,7 +20,7 @@ int	ft_is_strexpend(char *split)
 		return (0);
 	i = 0;
 	while (split[i] && split[i] != '$' && !ft_isspace(split[i]) && \
-	!ft_dont_skip(split[i]))
+	split[i] != '<' && split[i] != '>' && split[i] != '|')
 		i++;
 	if (split[i] && split[i] == '$')
 		return (1);

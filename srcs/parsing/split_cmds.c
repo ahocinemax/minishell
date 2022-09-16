@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahocine <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 05:38:16 by ahocine           #+#    #+#             */
 /*   Updated: 2022/09/04 05:38:19 by ahocine          ###   ########.fr       */
@@ -11,6 +11,25 @@
 /* ************************************************************************** */
 
 #include "../../includes/proto.h"
+
+char	*ft_del_quote(char *str)
+{
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = (char *)ft_calloc(sizeof(char), ft_strlen(str) + 1);
+	if (!res || !ft_add_trash((void *)res))
+		return (ft_empty_trash(), NULL);
+	while (str[i])
+	{
+		if ((str[i] != '\'' && str[i] != '\"') || \
+		((str[i] == '\'' || str[i] == '\"') && (i && str[i - 1] != '\\')))
+			ft_strlcat(res, str + i, i + 1);
+		i++;
+	}
+	return (res);
+}
 
 int	ft_count_pipes(t_lexer *lexer)
 {

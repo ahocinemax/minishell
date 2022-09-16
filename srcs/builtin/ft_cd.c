@@ -33,15 +33,16 @@ void	ft_cd(char *str)
 
 	if (!str || *str == '~')
 	{
-		// set HOME. If not home, print error (HOME NOT SET);
+		;// set HOME. If not home, print error (HOME NOT SET);
 	}
 	path = (char *)getcwd(NULL, 1000);
 	if (!path || !ft_add_trash((void *)path))
 		return (ft_empty_trash());
-	ft_strlcat(path, "/", 2);
-	ft_strlcat(path, str);
+	ft_strlcat(path, "/", ft_strlen(path) + 2);
+	printf("%s\n", path);
+	ft_strlcat(path, str, ft_strlen(path) + ft_strlen(str) + 1);
 	ft_add_new_env("OLDPWD", path);
-	if (chdir(tmp) == -1)
+	if (chdir(path) == -1)
 		return (ft_putstr_fd("Folder does not exist.\n", _STD_ERR), (void)0);
 	path = getcwd(NULL, 0);
 	if (!path || !ft_add_trash((void *)path))

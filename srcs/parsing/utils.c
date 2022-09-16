@@ -12,18 +12,28 @@
 
 #include "../../includes/proto.h"
 
-int	ft_dont_skip(char c)
+void	ft_match_quote(char *str, int *i)
 {
-	return (c == '<' || c == '>' || c == '|' || \
-		c == '\'' || c == '\"' || c == '\\');
+	char	quote;
+
+	quote = str[*i];
+	(*i)++;
+	while ((str[*i] && str[*i] != quote) || \
+		(str[*i] && str[*i] == quote && str[*i - 1] == '\\'))
+		(*i)++;
 }
 
 void	ft_skip_word(char *s, int *i)
 {
 	if (!s)
 		return ;
-	while (s[*i] && !ft_dont_skip(s[*i]) && !ft_isspace(s[*i]))
+	while (s[*i] && s[*i] != '<' && s[*i] != '>' && s[*i] != '|' && \
+		!ft_isspace(s[*i]))
+	{
+		if (s[*i] == '\'' || s[*i] == '\"')
+			ft_match_quote(s, i);
 		(*i)++;
+	}
 }
 
 int	ft_first_string(t_lexer *lexer)

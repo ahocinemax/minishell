@@ -66,6 +66,7 @@ static char	*ft_split_cmd(t_lexer *lex, char *line)
 		len++;
 	ft_strlcpy(res, line + lex->index, len);
 	res = ft_strtrim(res, " \t\n\r\v\f");
+	res = ft_del_quote(res);
 	if (!res)
 		return (NULL);
 	if (!ft_add_trash((void *)res))

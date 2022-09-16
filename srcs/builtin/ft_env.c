@@ -14,5 +14,6 @@
 
 void	ft_env(t_lexer *lexer)
 {
+	printf("Entered in ft_env, my builtin.\n");
 	(void)lexer;
 }

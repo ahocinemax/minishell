@@ -35,7 +35,7 @@ static int	ft_parse_flags(char *str, char flg)
 	return (is_flag && !bad_flag);
 }
 
-void	ft_echo(t_lexer *lexer, int fd)
+void	ft_echo(t_lexer *lexer)
 {
 	int	flg;
 

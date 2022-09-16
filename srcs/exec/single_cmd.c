@@ -12,18 +12,17 @@
 
 #include "../../includes/proto.h"
 
-// int	ft_fork_and_exec_builtin(t_lexer *cmd, int function_index)
-// {
-// 	void	**fun_ptr;
+int	ft_fork_and_exec_builtin(t_lexer *cmd, int function_index)
+{
+	funcptr	*fun_ptr;
 
-// 	if (!cmd->cmd)
-// 		return (0);
-// 	fun_ptr = builtin_tab();
-// 	if (!fun_ptr[function_index])
-// 		fun_ptr[function_index](char *);
-// 	(void)cmd;
-// 	return (0);
-// }
+	if (!cmd->cmd)
+		return (1);
+	fun_ptr = builtin_tab();
+	if (fun_ptr[function_index])
+		fun_ptr[function_index](cmd);
+	return (0);
+}
 
 void	ft_replug_fd(int fd_cpy[2])
 {
@@ -90,7 +89,7 @@ int	ft_single_cmd(t_lexer *cmd)
 	{
 		fd_cpy[0] = dup(STDIN_FILENO);
 		fd_cpy[1] = dup(STDOUT_FILENO);
-		// status = ft_fork_and_exec_builtin(cmd, is_builtin);
+		status = ft_fork_and_exec_builtin(cmd, is_builtin);
 		ft_replug_fd(fd_cpy);
 	}
 	signal(SIGINT, stop_cmd);

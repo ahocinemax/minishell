@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-void	ft_update_env(char *env_name, char *new_value)
+void	ft_update_env(char *new_name, char *new_value)
 {
 	t_env	**env;
 	t_env	*tmp;
@@ -21,11 +21,10 @@ void	ft_update_env(char *env_name, char *new_value)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, env_name, ft_strlen(tmp->name)))
-			return (tmp->value = new_value, 1);
+		if (!ft_strncmp(tmp->env_name, new_name, ft_strlen(tmp->env_name)))
+			return (tmp->value = new_value, (void)1);
 		tmp = tmp->next;
 	}
-	return (0);
 }
 
 void	ft_cd(char *str)

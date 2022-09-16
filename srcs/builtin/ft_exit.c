@@ -12,7 +12,8 @@
 
 #include "../../includes/proto.h"
 
-void	ft_unset(t_lexer *lexer)
+void	ft_exit(t_lexer *lexer)
 {
+	printf("Entered in ft_exit, my builtin.\n");
 	(void)lexer;
 }

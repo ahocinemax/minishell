@@ -27,9 +27,11 @@
 # define COMMAND	0
 # define TYPE		1
 
-typedef struct s_list	t_list;
 typedef struct s_lexer	t_lexer;
+typedef struct s_list	t_list;
 typedef enum e_type		t_type;
+
+typedef void			(*funcptr)();
 
 enum	e_type
 {

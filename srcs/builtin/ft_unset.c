@@ -14,5 +14,6 @@
 
 void	ft_unset(t_lexer *lexer)
 {
+	printf("Entered in ft_unset, my builtin.\n");
 	(void)lexer;
 }

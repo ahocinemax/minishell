@@ -115,6 +115,6 @@ int			count_pipe(t_lexer *start);
 int			nb_cmd(t_lexer **blck);
 char		**get_clean_env(void);
 void		free_all(char **tab);
-void		**builtin_tab(void);
+funcptr		*builtin_tab(void);
 
 #endif

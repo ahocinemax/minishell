@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-void	ft_update_env(char *new_name, char *new_value)
+void	ft_add_new_env(char *new_name, char *new_value)
 {
 	t_env	**env;
 	t_env	*tmp;
@@ -36,11 +36,11 @@ void	ft_cd(char *str)
 	path = getcwd(NULL, 0);
 	if (!path || !ft_add_trash((void *)path))
 		return (ft_empty_trash());
-	ft_update_env("OLDPWD", path);
+	ft_add_new_env("OLDPWD", path);
 	if (chdir(str) == -1)
 		return (ft_putstr_fd("Folder does not exist.\n", _STD_ERR), (void)0);
 	path = getcwd(NULL, 0);
 	if (!path || !ft_add_trash((void *)path))
 		return (ft_empty_trash());
-	ft_update_env("PWD", path);
+	ft_add_new_env("PWD", path);
 }

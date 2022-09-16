@@ -89,7 +89,7 @@ void		ft_empty_trash(void);
 int			ft_init_trash(void);
 /*       env      */
 char		*ft_build_path(t_env *env, char *cmd, int start, int end);
-void		ft_update_env(char *env_name, char *new_value);
+void		ft_add_new_env(char *env_name, char *new_value);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_env		**ft_get_env(void);

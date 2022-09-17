@@ -31,7 +31,7 @@ typedef struct s_lexer	t_lexer;
 typedef struct s_list	t_list;
 typedef enum e_type		t_type;
 
-typedef void			(*funcptr)();
+typedef void			(*t_funcptr)();
 
 enum	e_type
 {

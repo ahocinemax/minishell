@@ -16,10 +16,9 @@ void	ft_match_quote(char *str, int *i)
 {
 	char	quote;
 
-	quote = str[*i];
-	(*i)++;
+	quote = str[(*i)++];
 	while ((str[*i] && str[*i] != quote) || \
-		(str[*i] && str[*i] == quote && str[*i - 1] == '\\'))
+	(i && str[*i] && str[*i] == quote && str[*i - 1] == '\\'))
 		(*i)++;
 }
 

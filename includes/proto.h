@@ -75,7 +75,7 @@ void		ft_echo(t_lexer *lexer);
 void		ft_exit(t_lexer *lexer);
 void		ft_env(t_lexer *lexer);
 void		ft_pwd(t_lexer *lexer);
-void		ft_cd(char *str);
+void		ft_cd(t_lexer *lexer);
 
 ////////////////////////////////////////////////////////
 //                    TOOLS - UTILS                   //
@@ -93,6 +93,7 @@ int			ft_init_trash(void);
 /*       env      */
 char		*ft_build_path(t_env *env, char *cmd, int start, int end);
 void		ft_add_new_env(char *env_name, char *new_value);
+t_env		*ft_find_env(char *env_to_find);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_env		**ft_get_env(void);
@@ -118,6 +119,6 @@ int			count_pipe(t_lexer *start);
 int			nb_cmd(t_lexer **blck);
 char		**get_clean_env(void);
 void		free_all(char **tab);
-funcptr		*builtin_tab(void);
+t_funcptr	*builtin_tab(void);
 
 #endif

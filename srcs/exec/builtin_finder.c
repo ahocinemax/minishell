@@ -35,9 +35,9 @@ int	ft_builtin_finder(char *name)
 	return (-1);
 }
 
-funcptr	*builtin_tab(void)
+t_funcptr	*builtin_tab(void)
 {
-	static funcptr	builtin_pointer[7];
+	static t_funcptr	builtin_pointer[7];
 
 	builtin_pointer[0] = ft_cd;
 	builtin_pointer[1] = ft_pwd;

@@ -29,7 +29,6 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 		return (ft_empty_trash());
 	ft_lstadd_back(lex, res);
 	ft_lstlast(*lex)->index = *index;
-	(*index)++;
 	ft_skip_word(s, index);
 }
 
@@ -107,9 +106,14 @@ void	ft_is_redirect(t_lexer **lex, char *s, int *i)
 void	ft_is_quote(t_lexer **lex, char *s, int *i)
 {
 	char	quote;
+	t_type	type;
 	t_lexer	*new;
 
-	new = ft_lstnew(NULL, STRING, TYPE);
+	if (!(*lex) || ft_lstlast(*lex)->type == PIPES || ft_first_string(*lex))
+		type = CMD;
+	else
+		type = STRING;
+	new = ft_lstnew(NULL, type, TYPE);
 	ft_add_trash((void *)new);
 	ft_lstadd_back(lex, new);
 	new->index = *i;

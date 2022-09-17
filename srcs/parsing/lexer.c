@@ -118,8 +118,8 @@ t_lexer	*ft_lexer_type(char *s)
 			i++;
 		else if (s[i] && s[i] == '|')
 			ft_is_pipe(&lex, s, &i);
-		else if (s[i] == '\'' || s[i] == '\"')
-			ft_is_quote(&lex, s, &i);
+		// else if (s[i] == '\'' || s[i] == '\"')
+		// 	ft_is_quote(&lex, s, &i);
 		else
 			ft_is_str(&lex, s, &i);
 	}

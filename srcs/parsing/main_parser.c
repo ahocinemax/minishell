@@ -62,7 +62,7 @@ void	ft_close_fds(void)
 	ft_unlink_heredoc();
 }
 
-static void	ft_remove_redirection(t_lexer **start)
+static void	ft_remove_useless_token(t_lexer **start)
 {
 	t_lexer	*tmp;
 	t_lexer	*to_del;
@@ -70,12 +70,15 @@ static void	ft_remove_redirection(t_lexer **start)
 	tmp = *start;
 	while (tmp)
 	{
-		if (tmp && tmp->type == REDIRECTION && tmp == *start)
+		if (tmp->cmd && !*(tmp->cmd))
+			tmp->cmd = NULL;
+		if (tmp && (tmp->type == REDIRECTION || !tmp->cmd) && tmp == *start)
 		{
 			*start = tmp->next;
 			tmp = *start;
 		}
-		if (tmp && tmp->next && tmp->next->type == REDIRECTION)
+		if (tmp && tmp->next && (tmp->next->type == REDIRECTION || \
+		!tmp->next->cmd))
 		{
 			to_del = tmp->next;
 			tmp->next = to_del->next;
@@ -95,7 +98,7 @@ void	ft_main_parser(char *line)
 	if (lexer)
 	{
 		ft_lexer_command(lexer, line);
-		ft_remove_redirection(&lexer);
+		ft_remove_useless_token(&lexer);
 		ft_open_fds(lexer);
 		cmds = ft_split_cmds(&lexer);
 		if (!cmds)

@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-void	ft_skip_expend(char *str, int *i)
+void	ft_size_expend(char *str, int *i)
 {
 	*i = 0;
 	while (str[*i] && (ft_isalpha(str[*i]) || \
@@ -36,15 +36,19 @@ static char	*ft_expend_text2(char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			ft_skip_expend(str + i, &j);
-			exp = ft_expender(str + i, j);
+			ft_size_expend(str + i, &j);
+			exp = ft_expender(str + i - 1, j);
 			if (exp && ft_strncmp(exp, str, i - j))
 				ft_strlcat(res, exp, ft_strlen(exp) + 2);
 			i += j;
 		}
 		else
+		{
 			ft_strlcat(res, str + i, i + 2);
+			// res = ft_del_quote(res);
+		}
 	}
+	res = ft_del_quote(res);
 	return (res);
 }
 
@@ -66,11 +70,11 @@ static char	*ft_split_cmd(t_lexer *lex, char *line)
 		len++;
 	ft_strlcpy(res, line + lex->index, len);
 	res = ft_strtrim(res, " \t\n\r\v\f");
-	res = ft_del_quote(res);
 	if (!res)
 		return (NULL);
 	if (!ft_add_trash((void *)res))
 		return (NULL);
+	printf("split : {%s}\n", res);
 	return (res);
 }
 
@@ -91,10 +95,10 @@ void	ft_lexer_command(t_lexer *lexer, char *line)
 			tmp->cmd = ft_get_path(split);
 		else if (tmp->type == D_INFILE)
 			tmp->cmd = ft_heredoc(tmp, split);
-		else if (tmp->type == EXPEND_STRING)
-			tmp->cmd = ft_expend_text2(split);
+		// else if (tmp->type == STRING)
 		else
 			tmp->cmd = split;
+		tmp->cmd = ft_expend_text2(tmp->cmd);
 		tmp = tmp->next;
 	}
 }
@@ -118,8 +122,8 @@ t_lexer	*ft_lexer_type(char *s)
 			i++;
 		else if (s[i] && s[i] == '|')
 			ft_is_pipe(&lex, s, &i);
-		// else if (s[i] == '\'' || s[i] == '\"')
-		// 	ft_is_quote(&lex, s, &i);
+		else if (s[i] == '\'' || s[i] == '\"')
+			ft_is_quote(&lex, s, &i);
 		else
 			ft_is_str(&lex, s, &i);
 	}

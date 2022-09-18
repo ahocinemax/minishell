@@ -14,6 +14,24 @@
 
 int	g_signal;
 
+void	stop_cmd(int sig)
+{
+	g_signal += sig;
+	if (sig == 2)
+	{
+		g_signal = 130;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", _STD_ERR);
+		exit (EXIT_FAILURE);
+	}
+}
+
 static int	ft_check_quote(char *str, char sep)
 {
 	int	count;
@@ -33,37 +51,11 @@ static int	ft_check_quote(char *str, char sep)
 	return (count);
 }
 
-void	stop_cmd(int sig)
-{
-	g_signal += sig;
-	if (sig == 2)
-	{
-		g_signal = 130;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	if (sig == SIGQUIT)
-	{
-		ft_putstr_fd("Quit (core dumped)\n", _STD_ERR);
-		exit (EXIT_FAILURE);
-	}
-}
-
 static int	check_line(char *str)
 {
-	char	simple_quote;
-	char	double_quote;
-
-	simple_quote = '\'';
-	double_quote = '\"';
 	if (!str)
 		return (0);
-	if (!(ft_check_quote(str, simple_quote) % 2) || \
-	!(ft_check_quote(str, double_quote) % 2))
-		return (0);
-	return (1);
+	return (ft_check_quote(str, '\'') % 2 || ft_check_quote(str, '\"') % 2);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -79,7 +71,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	while (1)
 	{
-		line = readline("\e[33mminishell$\e[0m> ");
+		line = readline("\e[35mminishell$\e[0m> ");
 		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);

@@ -58,6 +58,7 @@ char	*ft_get_path(char *cmd)
 		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
 	fd = -1;
 	start = 0;
+	cmd = ft_del_quote(cmd);
 	while (fd < 0 && env->value[start])
 	{
 		len = 1;
@@ -84,8 +85,11 @@ char	*ft_expender(char *to_find, int size_elem)
 		return (NULL);
 	res = "\0";
 	tmp = *(ft_get_env());
-	if (*to_find == '$')
-		to_find++; // Si ca respecte les regles de variable 
+	if (*to_find != '$')
+		return (NULL);
+	to_find++; // Si ca respecte les regles de variable
+	if (*to_find != '_' && !ft_isalnum(*to_find))
+		return (ft_putstr_fd("Error near '$'\n", _STD_ERR), NULL);
 	while (tmp)
 	{
 		len = max(ft_strlen(tmp->env_name), size_elem);

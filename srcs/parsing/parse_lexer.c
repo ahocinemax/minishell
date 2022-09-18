@@ -17,10 +17,7 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 	t_lexer	*res;
 	t_type	type;
 
-	if (ft_is_strexpend(s + *index))
-		type = EXPEND_STRING;
-	else if (!(*lex) || ft_lstlast(*lex)->type == PIPES || \
-	(ft_first_string(*lex) && !ft_is_strexpend(s + *index)))
+	if (!(*lex) || ft_lstlast(*lex)->type == PIPES || ft_first_string(*lex))
 		type = CMD;
 	else
 		type = STRING;
@@ -119,6 +116,8 @@ void	ft_is_quote(t_lexer **lex, char *s, int *i)
 	else
 		type = STRING;
 	new = ft_lstnew(NULL, type, TYPE);
+	new->fd[0] = 0;
+	new->fd[1] = 1;
 	ft_add_trash((void *)new);
 	ft_lstadd_back(lex, new);
 	new->index = *i;

@@ -83,10 +83,8 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
-		if (!line)
+		if (!line || check_line(line) || !ft_add_trash((void *)line))
 			return (ft_empty_trash(), 1);
-		if (check_line(line))
-			free(line);
 		else
 			ft_main_parser(line);
 		stop_cmd(50);

@@ -25,10 +25,15 @@ void	ft_is_str(t_lexer **lex, char *s, int *index)
 	else
 		type = STRING;
 	res = ft_lstnew(NULL, type, TYPE);
-	if (!ft_add_trash((void *)res))
+	if (!res || !ft_add_trash((void *)res))
 		return (ft_empty_trash());
+	if (res->type == CMD)
+	{
+		res->fd[0] = 0;
+		res->fd[1] = 1;
+	}
+	res->index = *index;
 	ft_lstadd_back(lex, res);
-	ft_lstlast(*lex)->index = *index;
 	ft_skip_word(s, index);
 }
 

@@ -133,5 +133,7 @@ char	*ft_heredoc(t_lexer *lexer, char *line)
 	else
 		prompt = "heredoc> ";
 	ft_open_text_area(fd, expend, prompt, line);
-	return (close(fd), file_name);
+	if (lexer->type == CMD)
+		lexer->fd[0] = fd;
+	return (file_name);
 }

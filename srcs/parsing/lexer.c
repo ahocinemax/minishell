@@ -87,7 +87,7 @@ void	ft_lexer_command(t_lexer *lexer, char *line)
 		split = ft_split_cmd(tmp, line);
 		if (tmp->type == EXPENDER)
 			tmp->cmd = ft_expender(split, ft_strlen(split));
-		else if (tmp->type == CMD)
+		else if (tmp->type == CMD && ft_builtin_finder(split) == -1)
 			tmp->cmd = ft_get_path(split);
 		else if (tmp->type == D_INFILE)
 			tmp->cmd = ft_heredoc(tmp, split);

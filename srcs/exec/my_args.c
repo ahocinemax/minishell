@@ -26,7 +26,7 @@ void	signal_cmd_2(int sig)
 	}
 }
 
-static int	ft_handle_fd(t_lexer *tmp)
+int	ft_handle_fd(t_lexer *tmp)
 {
 	int	fd;
 
@@ -59,11 +59,6 @@ char	**ft_args_lst_to_str(t_lexer *start)
 	tmp = start;
 	while (tmp)
 	{
-		if (tmp->type > REDIRECTION)
-		{
-			if (!ft_handle_fd(tmp))
-				return (free_all(my_arg), NULL);
-		}
 		my_arg = ft_tabstradd(my_arg, tmp->cmd);
 		if (!my_arg)
 			return (NULL);

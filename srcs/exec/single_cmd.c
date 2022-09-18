@@ -90,7 +90,7 @@ int	ft_single_cmd(t_lexer *cmd)
 		fd_cpy[0] = dup(STDIN_FILENO);
 		fd_cpy[1] = dup(STDOUT_FILENO);
 		status = ft_fork_and_exec_builtin(cmd, is_builtin);
-		ft_replug_fd(fd_cpy);
+		(void)fd_cpy;
 	}
 	signal(SIGINT, stop_cmd);
 	signal(SIGQUIT, SIG_IGN);

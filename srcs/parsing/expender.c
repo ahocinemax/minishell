@@ -85,7 +85,7 @@ char	*ft_expender(char *to_find, int size_elem)
 	res = "\0";
 	tmp = *(ft_get_env());
 	if (*to_find == '$')
-		to_find++;
+		to_find++; // Si ca respecte les regles de variable 
 	while (tmp)
 	{
 		len = max(ft_strlen(tmp->env_name), size_elem);

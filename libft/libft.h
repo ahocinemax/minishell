@@ -58,6 +58,7 @@ struct s_lexer
 	t_lexer	*next;
 	t_type	type;
 	char	*cmd;
+	int		fd[2];
 	int		index;
 };
 

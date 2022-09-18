@@ -12,7 +12,7 @@
 
 #include "../../includes/proto.h"
 
-void	ft_add_new_env(char *new_name, char *new_value)
+void	ft_update_env_value(char *new_name, char *new_value)
 {
 	t_env	**env;
 	t_env	*tmp;
@@ -30,13 +30,11 @@ void	ft_add_new_env(char *new_name, char *new_value)
 void	ft_cd(t_lexer *lex)
 {
 	char	*path;
-	t_env	*home;
 
 	if (!lex || lex->cmd[0] == '~')
 	{
-		home = ft_find_env("HOME");
-		if (home)
-			path = home->value;
+		if (ft_find_env("HOME"))
+			path = ft_find_env("HOME")->value;
 		else
 			return (ft_putstr_fd("$HOME is not set.\n", _STD_ERR), (void)0);
 	}
@@ -48,11 +46,11 @@ void	ft_cd(t_lexer *lex)
 		ft_strlcat(path, "/", ft_strlen(path) + 2);
 		ft_strlcat(path, lex->cmd, ft_strlen(path) + ft_strlen(lex->cmd) + 1);
 	}
-	ft_add_new_env("OLDPWD", path);
+	ft_update_env_value("OLDPWD", path);
 	if (chdir(path) == -1)
 		return (ft_putstr_fd("Folder does not exist.\n", _STD_ERR), (void)0);
 	path = getcwd(NULL, 0);
 	if (!path || !ft_add_trash((void *)path))
 		return (ft_empty_trash());
-	ft_add_new_env("PWD", path);
+	ft_update_env_value("PWD", path);
 }

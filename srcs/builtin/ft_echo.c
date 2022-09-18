@@ -21,7 +21,7 @@ static int	ft_parse_flags(char *str, char flg)
 	bad_flag = 0;
 	is_flag = 0;
 	i = 0;
-	while (str[i] && ft_isspace(str[i]) && !is_flag)
+	while (str[i] && !ft_isspace(str[i]) && !is_flag)
 	{
 		if (str[i] == '-')
 			is_flag = 1;
@@ -39,9 +39,12 @@ void	ft_echo(t_lexer *lexer)
 {
 	int	flg;
 
-	flg = ft_parse_flags(lexer->cmd, 'n');
-	if (flg)
-			lexer->cmd += 2;
+	lexer = lexer->next;
+	flg = 0;
+	if (lexer->cmd)
+		flg = ft_parse_flags(lexer->cmd, 'n');
+	while (lexer && !ft_strncmp(lexer->cmd, "-n", 2))
+		lexer = lexer->next;
 	while (lexer)
 	{
 		ft_putstr_fd(lexer->cmd, _STD_OUT);

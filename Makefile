@@ -40,6 +40,7 @@ SRC_FILE	=	minishell.c				\
 				exec/my_env.c			\
 				\
 				tools/garbage_manager.c	\
+				tools/ft_handle_fd.c	\
 				tools/env.c
 
 #------------------------------------#

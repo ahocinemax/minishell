@@ -14,5 +14,11 @@
 
 void	ft_pwd(t_lexer *lexer)
 {
-	(void)lexer;
+	char	*path;
+
+	if (lexer && lexer->next && lexer->next->type < REDIRECTION)
+		return (ft_putstr_fd("pwd: too many arguments\n", _STD_ERR), (void)0);
+	path = getcwd(NULL, 0);
+	printf("%s\n", path);
+	free(path);
 }

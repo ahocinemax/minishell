@@ -20,7 +20,14 @@ int	ft_fork_and_exec_builtin(t_lexer *cmd, int function_index)
 		return (1);
 	fun_ptr = builtin_tab();
 	if (fun_ptr[function_index])
-		fun_ptr[function_index](cmd->next);
+	{
+		if ((function_index == 1 || function_index == 4) && cmd->next)
+		{
+			return (ft_putstr_fd(cmd->cmd, _STD_ERR), \
+			ft_putstr_fd(": too many arguments\n", _STD_ERR), 1);
+		}
+		fun_ptr[function_index](cmd);
+	}
 	return (0);
 }
 

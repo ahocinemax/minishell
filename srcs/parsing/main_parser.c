@@ -31,37 +31,6 @@ t_lexer	*ft_first_occur_type(t_lexer *lexer, t_type type_to_find)
 	return (NULL);
 }
 
-void	ft_open_fds(t_lexer *lexer)
-{
-	t_lexer	*command;
-	t_lexer	*tmp;
-
-	command = ft_first_occur_type(lexer, CMD);
-	if (!command)
-		return ;
-	tmp = lexer;
-	while (tmp)
-	{
-		if (tmp->type == INFILE)
-			command->fd[0] = open(tmp->cmd, O_RDONLY, 0644);
-		else if (tmp->type == OUTFILE)
-			command->fd[1] = open(tmp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		else if (tmp->type == D_OUTFILE)
-			command->fd[1] = open(tmp->cmd, O_RDWR | O_CREAT | O_APPEND, 0644);
-		tmp = tmp->next;
-	}
-}
-
-void	ft_close_fds(void)
-{
-	int		fd;
-
-	fd = 2;
-	while (fd < 10)
-		close(fd++);
-	ft_unlink_heredoc();
-}
-
 static void	ft_remove_useless_token(t_lexer **start)
 {
 	t_lexer	*tmp;
@@ -78,7 +47,8 @@ static void	ft_remove_useless_token(t_lexer **start)
 			to_del = tmp->next;
 			tmp->next = to_del->next;
 		}
-		else if (tmp && (tmp->type == REDIRECTION || !tmp->cmd) && tmp == *start)
+		else if (tmp && (tmp->type == REDIRECTION || !tmp->cmd) \
+		&& tmp == *start)
 		{
 			*start = tmp->next;
 			tmp = *start;
@@ -103,7 +73,7 @@ void	ft_main_parser(char *line)
 		ft_open_fds(lexer);
 		cmds = ft_split_cmds(&lexer);
 		if (!cmds)
-			return ;
+			return (ft_close_fds());
 		while (cmds[i])
 		{
 			ft_lstprint(cmds[i], TYPE);

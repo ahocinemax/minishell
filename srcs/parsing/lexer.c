@@ -44,12 +44,11 @@ static char	*ft_expend_text2(char *str)
 		}
 		else
 		{
-			int a = 1;
+			j = 0;
 			if (str[i] == '\'')
-				ft_match_quote(str, &a);
-			ft_strlcat(res, str + i, a + i + 2);
-			i++;
-			i += a;
+				ft_match_quote(str, &j);
+			ft_strlcat(res, str + i, j + ft_strlen(res) + 2);
+			i += j + 1;
 		}
 	}
 	res = ft_del_quote(res, '\'');
@@ -67,7 +66,8 @@ static char	*ft_split_cmd(t_lexer *lex, char *line)
 		len = ft_strlen(line + lex->index) + 1;
 	res = (char *)ft_calloc(sizeof(char), len + 1);
 	if (!res)
-		return (ft_putstr_fd("MALLOC FAILED FT_SPLIT_ARGS.C", _STD_ERR), NULL);
+		return (ft_putstr_fd("MALLOC FAILED FT_SPLIT_ARGS.C", \
+		_STD_ERR), NULL);
 	if (!ft_add_trash((void *)res))
 		return (NULL);
 	if (line[lex->index] != ' ')
@@ -78,7 +78,6 @@ static char	*ft_split_cmd(t_lexer *lex, char *line)
 		return (NULL);
 	if (!ft_add_trash((void *)res))
 		return (NULL);
-	printf("split : {%s}\n", res);
 	return (res);
 }
 
@@ -95,18 +94,17 @@ void	ft_lexer_command(t_lexer *lexer, char *line)
 		split = ft_split_cmd(tmp, line);
 		if (tmp->type == EXPENDER)
 			tmp->cmd = ft_expender(split, ft_strlen(split));
-		else if (ft_first_string(tmp) && ft_builtin_finder(split) == -1)
+		else if (tmp->type == CMD && ft_builtin_finder(split) == -1)
 			tmp->cmd = ft_get_path(split);
 		else if (tmp->type == D_INFILE)
 			tmp->cmd = ft_heredoc(tmp, split);
-		// else if (tmp->type == STRING)
 		else
 			tmp->cmd = split;
 		tmp->cmd = ft_expend_text2(tmp->cmd);
 		tmp = tmp->next;
 	}
 }
-// $"USER$$USER" $DISPLAY$USER
+
 t_lexer	*ft_lexer_type(char *s)
 {
 	t_lexer	*lex;

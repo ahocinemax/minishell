@@ -37,6 +37,8 @@ char	*ft_del_quote(char *str, char quote)
 
 	i = 0;
 	c = 1;
+	if (!str)
+		return (NULL);
 	res = (char *)ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	if (!res || !ft_add_trash((void *)res))
 		return (ft_empty_trash(), NULL);

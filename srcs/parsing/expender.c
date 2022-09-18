@@ -55,7 +55,8 @@ char	*ft_get_path(char *cmd)
 
 	env = path_env();
 	if (!env)
-		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
+		return (ft_putstr_fd("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n", \
+		_STD_ERR), NULL);
 	fd = -1;
 	start = 0;
 	cmd = ft_del_quote(cmd, '"');
@@ -70,8 +71,9 @@ char	*ft_get_path(char *cmd)
 		start += len + 1;
 		fd = open(path, O_RDONLY);
 	}
-	if (fd < 0)
-		return (cmd);
+	if (fd < 2)
+		return (ft_putstr_fd(cmd, _STD_ERR), \
+		ft_putstr_fd(": command not found.\n", _STD_ERR), NULL);
 	return (close(fd), path);
 }
 
@@ -87,7 +89,7 @@ char	*ft_expender(char *to_find, int size_elem)
 	tmp = *(ft_get_env());
 	if (*to_find != '$')
 		return (NULL);
-	to_find++; // Si ca respecte les regles de variable
+	to_find++;
 	if (*to_find != '_' && !ft_isalnum(*to_find))
 		return (ft_putstr_fd("Error near '$'\n", _STD_ERR), NULL);
 	while (tmp)
@@ -95,13 +97,15 @@ char	*ft_expender(char *to_find, int size_elem)
 		len = max(ft_strlen(tmp->env_name), size_elem);
 		if (!ft_strncmp(to_find, tmp->env_name, len))
 		{
-			res = strdup(tmp->value);
+			res = ft_strdup(tmp->value);
 			if (!ft_add_trash((void *)res))
 				return (ft_empty_trash(), NULL);
 			return (res);
 		}
 		tmp = tmp->next;
 	}
+	if (!*res)
+		return (NULL);
 	return (res);
 }
 

@@ -31,6 +31,7 @@ void	ft_cd(t_lexer *lex)
 {
 	char	*path;
 
+	lex = lex->next;
 	if (!lex || lex->cmd[0] == '~')
 	{
 		if (ft_find_env("HOME"))

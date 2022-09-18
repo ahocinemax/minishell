@@ -40,7 +40,6 @@ t_lexer		**ft_split_cmds(t_lexer **lexer);
 int			ft_is_strexpend(char *split);
 void		ft_main_parser(char *line);
 void		ft_unlink_heredoc(void);
-void		ft_close_fds(void);
 
 /*		PARSE_TYPE		*/
 void		ft_is_redirect(t_lexer **lexer, char *str, int *index_of_line);
@@ -98,6 +97,10 @@ t_env		*ft_find_env(char *env_to_find);
 int			ft_init_t_env(char **env);
 void		ft_clean_env_list(void);
 t_env		**ft_get_env(void);
+
+/*       fds      */
+void		ft_open_fds(t_lexer *lexer);
+void		ft_close_fds(void);
 
 int			max(int a, int b);
 

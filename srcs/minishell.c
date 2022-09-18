@@ -75,8 +75,10 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		signal(SIGINT, stop_cmd);
 		signal(SIGQUIT, SIG_IGN);
-		if (!line || check_line(line) || !ft_add_trash((void *)line))
+		if (!line || !ft_add_trash((void *)line))
 			return (ft_empty_trash(), 1);
+		if (check_line(line))
+			(ft_putstr_fd("Missing matching quote\n", _STD_ERR));
 		else
 			ft_main_parser(line);
 		stop_cmd(50);

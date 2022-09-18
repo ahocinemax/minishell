@@ -58,7 +58,7 @@ char	*ft_get_path(char *cmd)
 		return (printf("NO ENV PATH : CANNOT FIND ABSOLUT PATH.\n"), NULL);
 	fd = -1;
 	start = 0;
-	cmd = ft_del_quote(cmd);
+	cmd = ft_del_quote(cmd, '"');
 	while (fd < 0 && env->value[start])
 	{
 		len = 1;

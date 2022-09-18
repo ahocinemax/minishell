@@ -29,7 +29,7 @@ t_env	*ft_find_env(char *env_to_find)
 	return (NULL);
 }
 
-char	*ft_del_quote(char *str)
+char	*ft_del_quote(char *str, char quote)
 {
 	char	*res;
 	int		i;
@@ -42,13 +42,14 @@ char	*ft_del_quote(char *str)
 		return (ft_empty_trash(), NULL);
 	while (str[i])
 	{
-		if ((str[i] != '\'' && str[i] != '\"') || \
-		((str[i] == '\'' || str[i] == '\"') && (i && str[i - 1] == '\\')))
+		if (str[i] != quote || (str[i] == quote && i && str[i - 1] == '\\'))
 			ft_strlcat(res, str + i, c++ + 1);
 		i++;
 	}
-	if (res[ft_strlen(str) - 1] == '\'' || res[ft_strlen(str) - 1] == '\"')
+	if (res[ft_strlen(str) - 1] == quote)
 		res[ft_strlen(str) - 1] = 0;
+	if (res && !*res)
+		return (NULL);
 	return (res);
 }
 

@@ -27,28 +27,32 @@ static char	*ft_expend_text2(char *str)
 	int		i;
 	int		j;
 
-	i = -1;
+	i = 0;
 	res = (char *)ft_calloc(sizeof(char), 10000);
 	if (!ft_add_trash((void *)res))
 		return (ft_empty_trash(), NULL);
-	while (++i < ft_strlen(str))
+	str = ft_del_quote(str, '"');
+	while (i < ft_strlen(str))
 	{
 		if (str[i] == '$')
 		{
 			i++;
 			ft_size_expend(str + i, &j);
 			exp = ft_expender(str + i - 1, j);
-			if (exp && ft_strncmp(exp, str, i - j))
-				ft_strlcat(res, exp, ft_strlen(exp) + 2);
+			ft_strlcat(res, exp, ft_strlen(res) + ft_strlen(exp) + 2);
 			i += j;
 		}
 		else
 		{
-			ft_strlcat(res, str + i, i + 2);
-			// res = ft_del_quote(res);
+			int a = 1;
+			if (str[i] == '\'')
+				ft_match_quote(str, &a);
+			ft_strlcat(res, str + i, a + i + 2);
+			i++;
+			i += a;
 		}
 	}
-	res = ft_del_quote(res);
+	res = ft_del_quote(res, '\'');
 	return (res);
 }
 
@@ -102,7 +106,7 @@ void	ft_lexer_command(t_lexer *lexer, char *line)
 		tmp = tmp->next;
 	}
 }
-
+// $"USER$$USER" $DISPLAY$USER
 t_lexer	*ft_lexer_type(char *s)
 {
 	t_lexer	*lex;

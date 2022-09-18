@@ -72,18 +72,19 @@ static void	ft_remove_useless_token(t_lexer **start)
 	{
 		if (tmp->cmd && !*(tmp->cmd))
 			tmp->cmd = NULL;
-		if (tmp && (tmp->type == REDIRECTION || !tmp->cmd) && tmp == *start)
-		{
-			*start = tmp->next;
-			tmp = *start;
-		}
 		if (tmp && tmp->next && (tmp->next->type == REDIRECTION || \
 		!tmp->next->cmd))
 		{
 			to_del = tmp->next;
 			tmp->next = to_del->next;
 		}
-		tmp = tmp->next;
+		else if (tmp && (tmp->type == REDIRECTION || !tmp->cmd) && tmp == *start)
+		{
+			*start = tmp->next;
+			tmp = *start;
+		}
+		else
+			tmp = tmp->next;
 	}
 }
 

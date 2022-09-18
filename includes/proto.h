@@ -56,12 +56,12 @@ void		ft_lexer_command(t_lexer *lexer, char *line);
 char		*ft_get_path(char *command_to_find);
 
 /*		  UTILS  		*/
+char		*ft_del_quote(char *str, char quote);
 void		ft_skip_redir(char *str, int *index);
 void		ft_skip_word(char *str, int *index);
 void		ft_match_quote(char *str, int *i);
 int			ft_first_string(t_lexer *lexer);
 int			ft_count_pipes(t_lexer *lexer);
-char		*ft_del_quote(char *str);
 void		signal_cmd_2(int sig);
 void		stop_cmd(int signal);
 

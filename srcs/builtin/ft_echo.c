@@ -42,7 +42,11 @@ void	ft_echo(t_lexer *lexer)
 	flg = ft_parse_flags(lexer->cmd, 'n');
 	if (flg)
 			lexer->cmd += 2;
-	ft_putstr_fd(lexer->cmd, _STD_OUT);
+	while (lexer)
+	{
+		ft_putstr_fd(lexer->cmd, _STD_OUT);
+		lexer = lexer->next;
+	}
 	if (!flg)
 		ft_putchar_fd('\n', _STD_OUT);
 }

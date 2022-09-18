@@ -81,7 +81,7 @@ void		ft_cd(t_lexer *lexer);
 //                    TOOLS - UTILS                   //
 ////////////////////////////////////////////////////////
 /*      redir      */
-t_lexer     *ft_first_occur_type(t_lexer *lexer, t_type type_to_find);
+t_lexer		*ft_first_occur_type(t_lexer *lexer, t_type type_to_find);
 t_type		ft_find_redir(char *str, int i);
 void		ft_skip_redir(char *s, int *i);
 

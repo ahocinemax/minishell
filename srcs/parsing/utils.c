@@ -42,7 +42,7 @@ int	ft_first_string(t_lexer *lexer)
 	tmp = lexer;
 	while (tmp)
 	{
-		if (tmp->type == CMD)
+		if (tmp->type < REDIRECTION)
 			return (0);
 		tmp = tmp->next;
 	}

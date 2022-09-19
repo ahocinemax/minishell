@@ -90,8 +90,11 @@ void	ft_main_parser(char *line)
 	{
 		ft_lexer_command(lexer, line);
 		// ft_join_tokens(lexer);
+		ft_lstprint(lexer, TYPE);
+		ft_lstprint(lexer, COMMAND);
 		ft_open_fds(lexer);
 		ft_remove_useless_token(&lexer);
+		printf("\n\n");
 		cmds = ft_split_cmds(&lexer);
 		if (!cmds)
 			return (ft_close_fds());
@@ -100,7 +103,7 @@ void	ft_main_parser(char *line)
 			ft_lstprint(cmds[i], TYPE);
 			ft_lstprint(cmds[i++], COMMAND);
 		}
-		ft_execute(cmds);
+		// ft_execute(cmds);
 	}
 	ft_close_fds();
 	free(cmds);

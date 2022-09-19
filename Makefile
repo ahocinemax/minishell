@@ -63,7 +63,6 @@ LIBFT		= $(addprefix $(LIB_DIR), $(LIBFT_A))
 LIB_DIR		= libft/
 LIBFT_A		= libft.a
 
-
 NONE		= "\033[0m"
 GREEN		= "\033[32m"
 YELLOW		= "\033[33m"
@@ -81,7 +80,7 @@ $(NAME): $(OBJS)
 	@echo $(GREEN)"- Project compiled -"$(NONE)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
-	@mkdir -p $(OBJ_DIR)/parsing/ $(OBJ_DIR)/main/ $(OBJ_DIR)/tools/ $(OBJ_DIR)/exec/ $(OBJ_DIR)/builtin/ 
+	@mkdir -p $(OBJ_DIR)/parsing/ $(OBJ_DIR)/tools/ $(OBJ_DIR)/exec/ $(OBJ_DIR)/builtin/ 
 	@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@ -I includes
 
 

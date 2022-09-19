@@ -6,7 +6,7 @@
 /*   By: ahocine <ahocine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 21:46:35 by ahocine           #+#    #+#             */
-/*   Updated: 2021/07/07 22:59:45 by ahocine          ###   ########.fr       */
+/*   Updated: 2022/09/20 00:29:54 by ahocine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	size_t	i;
 
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
+	{
 		f(i, &s[i]);
+		i++;
+	}
 }

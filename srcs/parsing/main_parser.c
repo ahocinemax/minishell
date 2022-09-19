@@ -58,28 +58,41 @@ static void	ft_remove_useless_token(t_lexer **start)
 	}
 }
 
+void	ft_join_tokens(t_lexer *lexer)
+{
+	t_lexer	*to_del;
+	t_lexer	*tmp;
+
+	if (!lexer)
+		return ;
+	tmp = lexer;
+	while (tmp)
+	{
+		to_del = tmp->next;
+		if (tmp->index && to_del && to_del->index - 1 != ' ')
+		{
+			tmp->cmd = ft_strjoin(tmp->cmd, to_del->cmd);
+			to_del->cmd = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	ft_main_parser(char *line)
 {
 	t_lexer	**cmds;
 	t_lexer	*lexer;
-	int		i;
 
-	i = 0;
 	lexer = ft_lexer_type(line);
 	if (lexer)
 	{
 		ft_lexer_command(lexer, line);
+		ft_join_tokens(lexer);
 		ft_open_fds(lexer);
 		ft_remove_useless_token(&lexer);
 		cmds = ft_split_cmds(&lexer);
 		if (!cmds)
 			return (ft_close_fds());
-		while (cmds[i])
-		{
-			ft_lstprint(cmds[i], TYPE);
-			ft_lstprint(cmds[i], COMMAND);
-			i++;
-		}
 		ft_execute(cmds);
 	}
 	ft_close_fds();

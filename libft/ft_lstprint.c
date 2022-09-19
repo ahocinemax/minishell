@@ -21,7 +21,11 @@ void	ft_lstprint(t_lexer *lst, int key)
 		while (lst)
 		{
 			if (key == COMMAND)
+			{
 				printf("\e[33m[%s] \e[0m", (char *)lst->cmd);
+				if (lst->type == CMD)
+					printf("fd_in : [%d] && fd_out : [%d]", lst->fd[0], lst->fd[1]);
+			}
 			else
 				printf("\e[31m[%d] \e[0m", lst->type);
 			if (lst->next)

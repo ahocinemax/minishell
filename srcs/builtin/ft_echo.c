@@ -37,19 +37,22 @@ static int	ft_parse_flags(char *str, char flg)
 
 void	ft_echo(t_lexer *lexer)
 {
-	int	flg;
+	t_lexer	*tmp;
+	int		flg;
 
-	lexer = lexer->next;
+	tmp = lexer->next;
 	flg = 0;
-	if (lexer->cmd)
-		flg = ft_parse_flags(lexer->cmd, 'n');
-	while (lexer && !ft_strncmp(lexer->cmd, "-n", 2))
-		lexer = lexer->next;
-	while (lexer)
+	if (tmp->cmd)
+		flg = ft_parse_flags(tmp->cmd, 'n');
+	while (tmp && !ft_strncmp(tmp->cmd, "-n", 2))
+		tmp = tmp->next;
+	while (tmp)
 	{
-		ft_putstr_fd(lexer->cmd, _STD_OUT);
-		lexer = lexer->next;
+		ft_putstr_fd(tmp->cmd, lexer->fd[1]);
+		tmp = tmp->next;
+		if (tmp)
+			ft_putchar_fd(' ', lexer->fd[1]);
 	}
 	if (!flg)
-		ft_putchar_fd('\n', _STD_OUT);
+		ft_putchar_fd('\n', lexer->fd[1]);
 }

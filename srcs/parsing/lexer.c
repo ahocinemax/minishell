@@ -46,7 +46,7 @@ static char	*ft_expend_text2(char *str)
 		{
 			j = 0;
 			if (str[i] == '\'')
-				ft_match_quote(str, &j);
+				ft_match_quote(str + i, &j);
 			ft_strlcat(res, str + i, j + ft_strlen(res) + 2);
 			i += j + 1;
 		}

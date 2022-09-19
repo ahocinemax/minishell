@@ -40,8 +40,12 @@ void	ft_echo(t_lexer *lexer)
 	t_lexer	*tmp;
 	int		flg;
 
+	if (!lexer)
+		return ;
 	tmp = lexer->next;
 	flg = 0;
+	if (lexer->fd[0] == 0 && !tmp)
+		return (ft_putchar_fd('\n', lexer->fd[1]));
 	if (tmp->cmd)
 		flg = ft_parse_flags(tmp->cmd, 'n');
 	while (tmp && !ft_strncmp(tmp->cmd, "-n", 2))

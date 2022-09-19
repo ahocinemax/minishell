@@ -112,11 +112,29 @@ static void	ft_open_text_area(int fd, bool expend, char *prompt, char *eof)
 	free(str);
 }
 
-char	*ft_heredoc(t_lexer *lexer, char *line)
+char	*ft_choose_prompt(t_lexer *lexer)
+{
+	char	*prompt;
+
+	if (!lexer)
+		return (NULL);
+	prompt = (char *)ft_calloc(sizeof(char), 15);
+	if (!prompt || !ft_add_trash((void *)prompt))
+		return (ft_empty_trash(), NULL);
+	if (ft_count_pipes(lexer) > 1)
+		ft_strlcat(prompt, "pipe heredoc> ", 15);
+	else
+		ft_strlcat(prompt, "heredoc> ", 10);
+	return (prompt);
+	
+}
+
+char	*ft_heredoc(t_lexer *start, t_lexer *lexer, char *line)
 {
 	char	*file_name;
 	char	*prompt;
 	bool	expend;
+	t_lexer	*cmd;
 	int		fd;
 
 	if (!line || !*line)
@@ -129,12 +147,10 @@ char	*ft_heredoc(t_lexer *lexer, char *line)
 	if (!file_name)
 		return (NULL);
 	fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
-	if (ft_count_pipes(lexer) > 1)
-		prompt = "pipe heredoc> ";
-	else
-		prompt = "heredoc> ";
+	prompt = ft_choose_prompt(lexer);
 	ft_open_text_area(fd, expend, prompt, line);
-	if (lexer->type == CMD)
-		lexer->fd[0] = fd;
+	cmd = ft_first_occur_type(start, CMD);
+	if (cmd && cmd->type == CMD)
+		cmd->fd[0] = fd;
 	return (file_name);
 }

@@ -82,7 +82,9 @@ void	ft_main_parser(char *line)
 {
 	t_lexer	**cmds;
 	t_lexer	*lexer;
+	int		i;
 
+	i = 0;
 	lexer = ft_lexer_type(line);
 	if (lexer)
 	{
@@ -93,6 +95,11 @@ void	ft_main_parser(char *line)
 		cmds = ft_split_cmds(&lexer);
 		if (!cmds)
 			return (ft_close_fds());
+		while (cmds[i])
+		{
+			ft_lstprint(cmds[i], TYPE);
+			ft_lstprint(cmds[i++], COMMAND);
+		}
 		ft_execute(cmds);
 	}
 	ft_close_fds();

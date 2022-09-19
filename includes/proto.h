@@ -35,7 +35,7 @@ extern int	g_signal;
 ////////////////////////////////////////////////////////
 
 /* <infile cp -r < ../../includes $DISPLAY|grep "cat \"echo\"">>outfile */
-char		*ft_heredoc(t_lexer *lexer, char *line);
+char		*ft_heredoc(t_lexer *start, t_lexer *lexer, char *line);
 t_lexer		**ft_split_cmds(t_lexer **lexer);
 int			ft_is_strexpend(char *split);
 void		ft_main_parser(char *line);
@@ -108,16 +108,16 @@ int			max(int a, int b);
 //                     EXEC - PART                    //
 ////////////////////////////////////////////////////////
 
-int			ft_fork_and_exec_builtin(t_lexer *cmd, int function_index);
+int			ft_exec_builtin(t_lexer *cmd, int function_index, pid_t pid);
 char		**get_block_cmd(t_lexer *start, int nb_cmd);
 char		**ft_tabstradd(char **old, char *new_str);
+int			ft_single_cmd(t_lexer *cmd, pid_t pid);
 char		**ft_args_lst_to_str(t_lexer *start);
 char		***create_cmd_blk(t_lexer *start);
 int			ft_execute(t_lexer **cmd_block);
 void		ft_replug_fd(int stdio_cpy[2]);
 int			ft_exec_child(t_lexer *start);
 int			ft_builtin_finder(char *name);
-int			ft_single_cmd(t_lexer *cmd);
 int			fork_and_exec(t_lexer *cmd);
 int			count_pipe(t_lexer *start);
 int			nb_cmd(t_lexer **blck);

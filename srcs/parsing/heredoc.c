@@ -119,8 +119,9 @@ char	*ft_heredoc(t_lexer *lexer, char *line)
 	bool	expend;
 	int		fd;
 
-	if (!line)
-		return (NULL);
+	if (!line || !*line)
+		return (ft_putstr_fd("minishell: parse error near '\\n\n", \
+		_STD_ERR), NULL);
 	expend = false;
 	if (*line == '\'')
 		expend = true;

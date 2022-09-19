@@ -87,7 +87,7 @@ void	ft_main_parser(char *line)
 	if (lexer)
 	{
 		ft_lexer_command(lexer, line);
-		ft_join_tokens(lexer);
+		// ft_join_tokens(lexer);
 		ft_open_fds(lexer);
 		ft_remove_useless_token(&lexer);
 		cmds = ft_split_cmds(&lexer);

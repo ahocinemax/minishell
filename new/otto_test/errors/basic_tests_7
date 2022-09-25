@@ -1,0 +1,2 @@
+[33m[minishell][0m [35motto_test[0m> echo $DOESNOTEXIST_YEAH_REALLY_DOES_NOT_OR_SHOULD_NOT_AT_LEAST
+[33m[minishell][0m [35motto_test[0m> [31mexit[0m

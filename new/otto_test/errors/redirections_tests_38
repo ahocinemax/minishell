@@ -1,0 +1,2 @@
+[33m[minishell][0m [35mredirection_38[0m> echo "Hell_o\n " | cat >> "$USER"_2 | echo $USER >> "$USER"_2
+[33m[minishell][0m [35mredirection_38[0m> [31mexit[0m

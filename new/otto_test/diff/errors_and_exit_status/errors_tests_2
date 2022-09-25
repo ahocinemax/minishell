@@ -1,0 +1,4 @@
+diff -r bash_output/errors_and_exit_status_2/err minishell_output/errors_and_exit_status_2/err
+0a1,2
+> [33m[minishell][0m [35merrors_and_exit_status_2[0m> export
+> [33m[minishell][0m [35merrors_and_exit_status_2[0m> [31mexit[0m

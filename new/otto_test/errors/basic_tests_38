@@ -1,0 +1,3 @@
+[33m[minishell][0m [35motto_test[0m> /usr/bin/who | cut -d " " -f1 | /usr/bin/cha1sum otto.sh | cut -d " " -f1
+[31mminishell:[0m /usr/bin/cha1sumNo such file or directory
+[33m[minishell][0m [35motto_test[0m> [31mexit[0m

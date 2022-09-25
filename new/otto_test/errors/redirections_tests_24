@@ -1,0 +1,2 @@
+[33m[minishell][0m [35mredirection_24[0m> echo hello >test1 > test2>test3
+[33m[minishell][0m [35mredirection_24[0m> [31mexit[0m

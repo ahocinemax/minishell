@@ -1,0 +1,5 @@
+diff -r bash_output/errors_and_exit_status_42/err minishell_output/errors_and_exit_status_42/err
+0a1
+> [33m[minishell][0m [35merrors_and_exit_status_42[0m> cat THIS_IS_Not_AN_EXISTING_FILE
+1a3
+> [33m[minishell][0m [35merrors_and_exit_status_42[0m> [31mexit[0m

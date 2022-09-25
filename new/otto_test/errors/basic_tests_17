@@ -1,0 +1,2 @@
+[33m[minishell][0m [35motto_test[0m> $THIS_VAR_DOES_NOT_EXIST_BUT_BASH_DOES_NOT_CARE_LOL
+[33m[minishell][0m [35motto_test[0m> [31mexit[0m

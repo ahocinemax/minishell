@@ -1,0 +1,5 @@
+diff -r bash_output/basic_tests_53/out minishell_output/basic_tests_53/out
+1c1
+< 
+---
+> 

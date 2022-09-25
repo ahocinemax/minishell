@@ -1,0 +1,7 @@
+diff -r bash_output/errors_and_exit_status_12/err minishell_output/errors_and_exit_status_12/err
+1,2c1,2
+< bash: line 1: unset: -e: invalid option
+< unset: usage: unset [-f] [-v] [-n] [name ...]
+---
+> [33m[minishell][0m [35merrors_and_exit_status_12[0m> unset -ep
+> [33m[minishell][0m [35merrors_and_exit_status_12[0m> [31mexit[0m

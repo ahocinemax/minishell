@@ -1,0 +1,3 @@
+diff -r bash_output/errors_and_exit_status_23/err minishell_output/errors_and_exit_status_23/err
+0a1
+> [33m[minishell][0m [35merrors_and_exit_status_23[0m> exit 3200

@@ -1,0 +1,2 @@
+[33m[minishell][0m [35mredirection_35[0m> >> test1 echo hello >> echo ' world' | echo foo >> test1
+[33m[minishell][0m [35mredirection_35[0m> [31mexit[0m

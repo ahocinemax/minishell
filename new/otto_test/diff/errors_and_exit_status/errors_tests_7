@@ -1,0 +1,3 @@
+diff -r bash_output/errors_and_exit_status_7/err minishell_output/errors_and_exit_status_7/err
+0a1
+> [33m[minishell][0m [35merrors_and_exit_status_7[0m> exit

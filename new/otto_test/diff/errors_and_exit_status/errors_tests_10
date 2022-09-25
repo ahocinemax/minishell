@@ -1,0 +1,6 @@
+diff -r bash_output/errors_and_exit_status_10/err minishell_output/errors_and_exit_status_10/err
+1c1,2
+< bash: line 1: exit: -p: numeric argument required
+---
+> [33m[minishell][0m [35merrors_and_exit_status_10[0m> exit -p
+> [31mminishell:[0m exit: -p: numeric argument required
